@@ -5,15 +5,15 @@ about: A small task that is, most likely, part of an Epic. It may be labeled as 
 
 <!-- Issue title should mirror the Task Title. -->
 
-# Task Title
+## Task Title
 
 Task: Some Awesome Task Title
 
-## Task Description
+### Task Description
 
 This Task will...
 
-## Epic Parent
+### Epic Parent
 
 <!-- The link below should link to its Epic Parent. -->
 
