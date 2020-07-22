@@ -1,16 +1,16 @@
-# Title
+## Title
 
 [This is the Issue Title](https://github.com/Zeronfinity/CPfy/issues/1)
 
-## Changes made
+### Changes made
 
 - made this
 - did that
 
-## How does the solution address the problem
+### How does this PR address the issue
 
 This PR will...
 
-## Linked issues
+### Linked issues
 
 Resolves #1

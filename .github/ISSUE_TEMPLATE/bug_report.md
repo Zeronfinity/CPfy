@@ -5,11 +5,11 @@ about: Create a report to help us improve
 
 <!-- Please search existing issues to avoid creating duplicates. -->
 
-# Bug Report
+## Bug Report
 
 Bug: Some Sad Bug Title
 
-## Description
+### Description
 
 Info about the bug goes here.
 
