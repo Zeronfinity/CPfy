@@ -2,6 +2,7 @@ package com.zeronfinity.cpfy
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
 import org.json.JSONObject
@@ -57,16 +58,27 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
         launch(Dispatchers.Main) {
             val jsonData = getHttpConnectionData(urlString)
 
-            launch(Dispatchers.Default) {
-                val jsonArray = JSONObject(jsonData).getJSONArray("objects")
-                for (i in 0 until jsonArray.length()) {
-                    val item = jsonArray.getJSONObject(i)
+            if (jsonData.equals("")) {
+                Toast.makeText(applicationContext,"Network failure!", Toast.LENGTH_SHORT).show()
+            } else {
+                launch(Dispatchers.Default) {
+                    val jsonArray = JSONObject(jsonData).getJSONArray("objects")
+                    for (i in 0 until jsonArray.length()) {
+                        val item = jsonArray.getJSONObject(i)
 
-                    contestList.add(ContestData(item.getString("event"), item.getInt("duration"),
-                        item.getJSONObject("resource").getString("name"),
-                        item.getString("start"), item.getString("end"), item.getString("href")))
+                        contestList.add(
+                            ContestData(
+                                item.getString("event"),
+                                item.getInt("duration"),
+                                item.getJSONObject("resource").getString("name"),
+                                item.getString("start"),
+                                item.getString("end"),
+                                item.getString("href")
+                            )
+                        )
+                    }
+                    Log.i("contestList", contestList.toString())
                 }
-                Log.i("contestList", contestList.toString())
             }
         }
     }
