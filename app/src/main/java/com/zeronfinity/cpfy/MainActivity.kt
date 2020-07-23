@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
+import org.json.JSONException
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -62,20 +63,25 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                 Toast.makeText(applicationContext,"Network failure!", Toast.LENGTH_SHORT).show()
             } else {
                 launch(Dispatchers.Default) {
-                    val jsonArray = JSONObject(jsonData).getJSONArray("objects")
-                    for (i in 0 until jsonArray.length()) {
-                        val item = jsonArray.getJSONObject(i)
+                    try {
+                        val jsonArray = JSONObject(jsonData).getJSONArray("objects")
+                        for (i in 0 until jsonArray.length()) {
+                            val item = jsonArray.getJSONObject(i)
 
-                        contestList.add(
-                            ContestData(
-                                item.getString("event"),
-                                item.getInt("duration"),
-                                item.getJSONObject("resource").getString("name"),
-                                item.getString("start"),
-                                item.getString("end"),
-                                item.getString("href")
+                            contestList.add(
+                                ContestData(
+                                    item.getString("event"),
+                                    item.getInt("duration"),
+                                    item.getJSONObject("resource").getString("name"),
+                                    item.getString("start"),
+                                    item.getString("end"),
+                                    item.getString("href")
+                                )
                             )
-                        )
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Toast.makeText(applicationContext,"JSON parsing failed!", Toast.LENGTH_SHORT).show()
                     }
                     Log.i("contestList", contestList.toString())
                 }
