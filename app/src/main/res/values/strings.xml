@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CPfy</string>
+    <string name="api_url">https://clist.by/api/v1/json/</string>
+    <string name="api_username">Zeronfinity</string>
 </resources>
