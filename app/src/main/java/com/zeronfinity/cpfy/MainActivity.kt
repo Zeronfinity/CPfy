@@ -21,11 +21,8 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    val contestApiUrl = "https://clist.by/api/v1/json/contest/"
-    val apiUsername = "Zeronfinity"
-    val apiKey = BuildConfig.CLIST_API_KEY
     val apiDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-    val numberOfDaysForApiEndDate = 7
+    val numberOfDaysBeforeContestsEnd = 7
 
     data class ContestData(val name: String, val duration: Int, val platformName: String, val startTime: String, val endTime: String, val url: String)
     val contestList = ArrayList<ContestData>()
@@ -49,9 +46,10 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
 
         val calendar = Calendar.getInstance()
         calendar.setTime(Date())
-        calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysForApiEndDate)
+        calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
 
-        val urlString = contestApiUrl + "?username=" + apiUsername + "&api_key=" + apiKey +
+        val urlString = getString(R.string.api_url) +
+            "contest/?username=" + getString(R.string.api_username)  + "&api_key=" + BuildConfig.CLIST_API_KEY +
             "&end__gt=" + SimpleDateFormat(apiDateFormat, Locale.getDefault()).format(Date()) +
             "&end__lt=" + SimpleDateFormat(apiDateFormat, Locale.getDefault()).format(Date(calendar.timeInMillis)) +
             "&order_by=end"
