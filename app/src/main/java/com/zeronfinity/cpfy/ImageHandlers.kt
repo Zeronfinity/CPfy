@@ -11,6 +11,7 @@ import java.net.URL
 val platformImages = mutableMapOf<String, Bitmap?>()
 val imageDownloadStarted = mutableMapOf<String, Boolean>()
 
+@Suppress("BlockingMethodInNonBlockingContext")
 suspend fun getBitmapFromURL(url: String): Bitmap? =
     withContext(Dispatchers.IO) {
         try {

@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_marginBottom="4dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="4dp"
@@ -20,8 +20,7 @@
             android:id="@+id/tvContestName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:text="TextView"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/primaryDarkColor"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/ivLaunch"
@@ -33,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="before contest starts!"
             android:textColor="@color/primaryDarkColor"
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@+id/tvStartsOnLabel"
@@ -45,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Starts on: "
+            android:text="@string/starts_on_tv_label"
             android:textColor="@color/primaryTextColor"
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@+id/tvDuration"
@@ -65,7 +63,7 @@
             android:id="@+id/tvDurationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Duration: "
+            android:text="@string/duration_tv_label"
             android:textColor="@color/primaryTextColor"
             android:textStyle="italic"
             app:layout_constraintStart_toStartOf="@+id/tvStartsOnLabel"
@@ -76,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/primaryDarkColor"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -91,20 +89,22 @@
             android:tint="@color/primaryDarkColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_launch_24" />
+            app:srcCompat="@drawable/ic_baseline_launch_24"
+            android:contentDescription="@string/launch_icon_content_desc" />
 
         <ImageView
             android:id="@+id/ivContestPlatform"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/platform_icon_content_desc" />
 
         <TextView
             android:id="@+id/tvContestPlatform"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivContestPlatform" />
     </androidx.constraintlayout.widget.ConstraintLayout>
