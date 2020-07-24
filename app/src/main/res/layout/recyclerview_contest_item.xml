@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="4dp"
+    app:contentPadding="8dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvContestName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:text="TextView"
+            android:textColor="@color/primaryDarkColor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ivLaunch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTimeLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="before contest starts!"
+            android:textColor="@color/primaryDarkColor"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/tvStartsOnLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvContestName"
+            app:layout_constraintTop_toBottomOf="@+id/tvContestName" />
+
+        <TextView
+            android:id="@+id/tvStartsOnLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Starts on: "
+            android:textColor="@color/primaryTextColor"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/tvDuration"
+            app:layout_constraintStart_toStartOf="@+id/tvContestName"
+            app:layout_constraintTop_toBottomOf="@+id/tvTimeLeft" />
+
+        <TextView
+            android:id="@+id/tvStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryDarkColor"
+            android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@+id/tvStartsOnLabel"
+            app:layout_constraintTop_toTopOf="@+id/tvStartsOnLabel" />
+
+        <TextView
+            android:id="@+id/tvDurationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duration: "
+            android:textColor="@color/primaryTextColor"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@+id/tvStartsOnLabel"
+            app:layout_constraintTop_toTopOf="@+id/tvDuration" />
+
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/primaryDarkColor"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvContestPlatform"
+            app:layout_constraintStart_toEndOf="@+id/tvDurationLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvStartsOnLabel" />
+
+        <ImageView
+            android:id="@+id/ivLaunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/primaryDarkColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_launch_24" />
+
+        <ImageView
+            android:id="@+id/ivContestPlatform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvContestPlatform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivContestPlatform" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
