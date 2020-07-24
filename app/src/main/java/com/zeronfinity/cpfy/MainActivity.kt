@@ -1,8 +1,5 @@
 package com.zeronfinity.cpfy
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -40,30 +37,7 @@ fun parseSecondsToString(durationInSeconds: Int) : String {
     return ret
 }
 
-private suspend fun getBitmapFromURL(url: String): Bitmap? =
-    withContext(Dispatchers.IO) {
-        try {
-            val urlConnection = URL(url).openConnection() as HttpURLConnection
-            urlConnection.connect()
-            BitmapFactory.decodeStream(urlConnection.inputStream)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-fun getResizedBitmap(bm: Bitmap, newWidth: Int, newHeight: Int): Bitmap {
-    val matrix = Matrix()
-    matrix.postScale(newWidth.toFloat() / bm.width, newHeight.toFloat() / bm.height)
-
-    val resizedBitmap = Bitmap.createBitmap(
-        bm, 0, 0, bm.width, bm.height, matrix, false
-    )
-    bm.recycle()
-    return resizedBitmap
-}
-
-val platformImages = mutableMapOf<String, Bitmap?>()
+const val LOG_TAG = "CPfyMainActivity"
 
 class MainActivity: AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
@@ -76,7 +50,8 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
     private lateinit var binding: ActivityMainBinding
     private lateinit var job: Job
 
-    data class ContestData(val name: String, val duration: Int, val platformName: String, val startTime: Date, val url: String)
+    data class ContestData(val name: String, val duration: Int,
+                           val platformName: String, val startTime: Date, val url: String)
     private val contestList = ArrayList<ContestData>()
 
     private suspend fun getHttpConnectionData(url: String) : String =
@@ -96,6 +71,8 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                 val jsonArray = JSONObject(jsonData).getJSONArray("objects")
                 val contestList = ArrayList<ContestData>()
 
+                imageDownloadStarted.clear()
+
                 for (i in 0 until jsonArray.length()) {
                     val item = jsonArray.getJSONObject(i)
                     contestList.add(
@@ -107,16 +84,23 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                             item.getString("href")
                         )
                     )
+
                     val resourceItem = item.getJSONObject("resource")
                     val key = resourceItem.getString("name")
-                    if (!platformImages.containsKey(key)) {
-                        var bitmapImage = getBitmapFromURL("https://clist.by" + resourceItem.getString("icon"))
-                        if (bitmapImage != null) {
-                            bitmapImage = getResizedBitmap(bitmapImage, 48, 48)
-                            platformImages[key] = bitmapImage
+                    if (!platformImages.containsKey(key) && !imageDownloadStarted.containsKey(key)) {
+                        imageDownloadStarted[key] = true
+                        CoroutineScope(Dispatchers.Main).launch {
+                            var bitmapImage =
+                                getBitmapFromURL("https://clist.by" + resourceItem.getString("icon"))
+                            if (bitmapImage != null) {
+                                bitmapImage = getResizedBitmap(bitmapImage, 48, 48)
+                                platformImages[key] = bitmapImage
+                                binding.rvMainActivity.adapter!!.notifyDataSetChanged()
+                            }
                         }
                     }
                 }
+
                 contestList
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -143,7 +127,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
             "&end__lt=" + simpleDateFormatUtc.format(Date(calendar.timeInMillis)) +
             "&order_by=end"
 
-        Log.i("apiUrl", urlString)
+        Log.i(LOG_TAG, "apiUrl = " + urlString)
 
         launch(Dispatchers.Main) {
             val jsonData = getHttpConnectionData(urlString)
@@ -157,7 +141,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                 } else {
                     contestList.clear()
                     contestList.addAll(retList)
-                    Log.i("contestList", contestList.toString())
+                    Log.i(LOG_TAG, contestList.toString())
                     binding.rvMainActivity.adapter!!.notifyDataSetChanged()
                 }
             }
