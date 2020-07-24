@@ -19,19 +19,19 @@ fun parseSecondsToString(durationInSeconds: Int) : String {
     val minutes = (durationInSeconds / 60) % 60
     val hours = (durationInSeconds / 60 / 60) % 60
     val days = durationInSeconds / 60 / 60 / 24
-    var ret: String = ""
+    var ret = ""
     if (days != 0) {
-        ret += days.toString() + " day"
+        ret += "$days day"
         if (days > 1) ret += "s"
     }
     if (hours != 0) {
         if (ret.isNotEmpty()) ret += " "
-        ret += hours.toString() + " hour"
+        ret += "$hours hour"
         if (hours > 1) ret += "s"
     }
     if (minutes != 0) {
         if (ret.isNotEmpty()) ret += " "
-        ret += minutes.toString() + " minute"
+        ret += "$minutes minute"
         if (minutes > 1) ret += "s"
     }
     return ret
@@ -43,9 +43,9 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    val apiDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-    val numberOfDaysBeforeContestsEnd = 7
-    val simpleDateFormatUtc = SimpleDateFormat(apiDateFormat)
+    private val apiDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    private val numberOfDaysBeforeContestsEnd = 7
+    private val simpleDateFormatUtc = SimpleDateFormat(apiDateFormat, Locale.US)
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var job: Job
@@ -54,6 +54,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                            val platformName: String, val startTime: Date, val url: String)
     private val contestList = ArrayList<ContestData>()
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun getHttpConnectionData(url: String) : String =
         withContext(Dispatchers.IO) {
             try {
@@ -118,7 +119,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
         simpleDateFormatUtc.timeZone = TimeZone.getTimeZone("UTC")
 
         val calendar = Calendar.getInstance()
-        calendar.setTime(Date())
+        calendar.time = Date()
         calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
 
         val urlString = getString(R.string.api_url) +
@@ -127,12 +128,12 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
             "&end__lt=" + simpleDateFormatUtc.format(Date(calendar.timeInMillis)) +
             "&order_by=end"
 
-        Log.i(LOG_TAG, "apiUrl = " + urlString)
+        Log.i(LOG_TAG, "apiUrl = $urlString")
 
         launch(Dispatchers.Main) {
             val jsonData = getHttpConnectionData(urlString)
 
-            if (jsonData.equals("")) {
+            if (jsonData.isEmpty()) {
                 Toast.makeText(applicationContext,"Network failure!", Toast.LENGTH_SHORT).show()
             } else {
                 val retList = parseJsonData(jsonData)

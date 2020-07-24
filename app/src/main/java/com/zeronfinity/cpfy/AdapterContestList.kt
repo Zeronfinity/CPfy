@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.zeronfinity.cpfy.databinding.RecyclerviewContestItemBinding
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 import kotlin.collections.ArrayList
 
 class AdapterContestList(private val dataset: ArrayList<MainActivity.ContestData>) :
@@ -16,22 +16,22 @@ class AdapterContestList(private val dataset: ArrayList<MainActivity.ContestData
             RecyclerView.ViewHolder(binding.root) {
         fun bind(contestData: MainActivity.ContestData) {
             binding.tvContestName.text = contestData.name
-            binding.tvStartTime.text =  SimpleDateFormat("E dd-MMM-yy hh:mm a").format(contestData.startTime)
+            binding.tvStartTime.text =  SimpleDateFormat("E dd-MMM-yy hh:mm a", Locale.getDefault()).format(contestData.startTime)
 
-            val diffInMillis = contestData.startTime.getTime() - Date().getTime()
+            val diffInMillis = contestData.startTime.time - Date().time
             if (diffInMillis < 0) {
-                binding.tvTimeLeft.text = "Contest already started!"
+                binding.tvTimeLeft.text = binding.tvTimeLeft.context.getString(R.string.contest_already_started)
                 binding.tvTimeLeft.setTextColor(ContextCompat.getColor(binding.tvTimeLeft.context, R.color.primaryTextColor))
 
-                binding.tvStartsOnLabel.text = "Started on: "
-                binding.tvDurationLabel.text = "Time left: "
+                binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(R.string.started_on_tv_label)
+                binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(R.string.time_left_tv_label)
                 binding.tvDuration.text = parseSecondsToString(contestData.duration + diffInMillis.toInt() / 1000)
             } else {
-                binding.tvTimeLeft.text = parseSecondsToString((diffInMillis / 1000).toInt()) + " to start"
+                binding.tvTimeLeft.text = binding.tvTimeLeft.context.getString(R.string.time_left_to_start, parseSecondsToString(diffInMillis.toInt() / 1000))
                 binding.tvTimeLeft.setTextColor(ContextCompat.getColor(binding.tvTimeLeft.context, R.color.primaryDarkColor))
 
-                binding.tvStartsOnLabel.text = "Starts on: "
-                binding.tvDurationLabel.text = "Duration: "
+                binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(R.string.starts_on_tv_label)
+                binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(R.string.duration_tv_label)
                 binding.tvDuration.text = parseSecondsToString(contestData.duration)
             }
 
@@ -42,13 +42,13 @@ class AdapterContestList(private val dataset: ArrayList<MainActivity.ContestData
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): AdapterContestList.ContestViewHolder {
-        val binding = RecyclerviewContestItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContestViewHolder {
+        val binding: RecyclerviewContestItemBinding =
+            RecyclerviewContestItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ContestViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: AdapterContestList.ContestViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ContestViewHolder, position: Int) {
         holder.bind(dataset[position])
     }
 
