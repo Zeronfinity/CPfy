@@ -16,7 +16,7 @@ class AdapterContestList(private val dataset: ArrayList<MainActivity.ContestData
             RecyclerView.ViewHolder(binding.root) {
         fun bind(contestData: MainActivity.ContestData) {
             binding.tvContestName.text = contestData.name
-            binding.tvStartTime.text =  SimpleDateFormat("dd MMM yyyy hh:mm a z").format(contestData.startTime)
+            binding.tvStartTime.text =  SimpleDateFormat("E dd-MMM-yy hh:mm a").format(contestData.startTime)
 
             val diffInMillis = contestData.startTime.getTime() - Date().getTime()
             if (diffInMillis < 0) {

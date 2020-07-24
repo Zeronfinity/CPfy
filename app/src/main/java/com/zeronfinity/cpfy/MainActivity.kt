@@ -1,8 +1,5 @@
 package com.zeronfinity.cpfy
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -40,31 +37,6 @@ fun parseSecondsToString(durationInSeconds: Int) : String {
     return ret
 }
 
-private suspend fun getBitmapFromURL(url: String): Bitmap? =
-    withContext(Dispatchers.IO) {
-        try {
-            val urlConnection = URL(url).openConnection() as HttpURLConnection
-            urlConnection.connect()
-            BitmapFactory.decodeStream(urlConnection.inputStream)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-fun getResizedBitmap(bm: Bitmap, newWidth: Int, newHeight: Int): Bitmap {
-    val matrix = Matrix()
-    matrix.postScale(newWidth.toFloat() / bm.width, newHeight.toFloat() / bm.height)
-
-    val resizedBitmap = Bitmap.createBitmap(
-        bm, 0, 0, bm.width, bm.height, matrix, false
-    )
-    bm.recycle()
-    return resizedBitmap
-}
-
-val platformImages = mutableMapOf<String, Bitmap?>()
-val imageDownloadStarted = mutableMapOf<String, Boolean>()
 const val LOG_TAG = "CPfyMainActivity"
 
 class MainActivity: AppCompatActivity(), CoroutineScope {
@@ -112,6 +84,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                             item.getString("href")
                         )
                     )
+
                     val resourceItem = item.getJSONObject("resource")
                     val key = resourceItem.getString("name")
                     if (!platformImages.containsKey(key) && !imageDownloadStarted.containsKey(key)) {
@@ -127,6 +100,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                         }
                     }
                 }
+
                 contestList
             } catch (e: Exception) {
                 e.printStackTrace()
