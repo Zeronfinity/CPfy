@@ -1,7 +1,5 @@
 package com.zeronfinity.cpfy
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat

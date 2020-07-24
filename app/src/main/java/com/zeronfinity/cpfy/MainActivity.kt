@@ -64,6 +64,8 @@ fun getResizedBitmap(bm: Bitmap, newWidth: Int, newHeight: Int): Bitmap {
 }
 
 val platformImages = mutableMapOf<String, Bitmap?>()
+val imageDownloadStarted = mutableMapOf<String, Boolean>()
+const val LOG_TAG = "CPfyMainActivity"
 
 class MainActivity: AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
@@ -76,7 +78,8 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
     private lateinit var binding: ActivityMainBinding
     private lateinit var job: Job
 
-    data class ContestData(val name: String, val duration: Int, val platformName: String, val startTime: Date, val url: String)
+    data class ContestData(val name: String, val duration: Int,
+                           val platformName: String, val startTime: Date, val url: String)
     private val contestList = ArrayList<ContestData>()
 
     private suspend fun getHttpConnectionData(url: String) : String =
@@ -96,6 +99,8 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                 val jsonArray = JSONObject(jsonData).getJSONArray("objects")
                 val contestList = ArrayList<ContestData>()
 
+                imageDownloadStarted.clear()
+
                 for (i in 0 until jsonArray.length()) {
                     val item = jsonArray.getJSONObject(i)
                     contestList.add(
@@ -109,11 +114,16 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                     )
                     val resourceItem = item.getJSONObject("resource")
                     val key = resourceItem.getString("name")
-                    if (!platformImages.containsKey(key)) {
-                        var bitmapImage = getBitmapFromURL("https://clist.by" + resourceItem.getString("icon"))
-                        if (bitmapImage != null) {
-                            bitmapImage = getResizedBitmap(bitmapImage, 48, 48)
-                            platformImages[key] = bitmapImage
+                    if (!platformImages.containsKey(key) && !imageDownloadStarted.containsKey(key)) {
+                        imageDownloadStarted[key] = true
+                        CoroutineScope(Dispatchers.Main).launch {
+                            var bitmapImage =
+                                getBitmapFromURL("https://clist.by" + resourceItem.getString("icon"))
+                            if (bitmapImage != null) {
+                                bitmapImage = getResizedBitmap(bitmapImage, 48, 48)
+                                platformImages[key] = bitmapImage
+                                binding.rvMainActivity.adapter!!.notifyDataSetChanged()
+                            }
                         }
                     }
                 }
@@ -143,7 +153,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
             "&end__lt=" + simpleDateFormatUtc.format(Date(calendar.timeInMillis)) +
             "&order_by=end"
 
-        Log.i("apiUrl", urlString)
+        Log.i(LOG_TAG, "apiUrl = " + urlString)
 
         launch(Dispatchers.Main) {
             val jsonData = getHttpConnectionData(urlString)
@@ -157,7 +167,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                 } else {
                     contestList.clear()
                     contestList.addAll(retList)
-                    Log.i("contestList", contestList.toString())
+                    Log.i(LOG_TAG, contestList.toString())
                     binding.rvMainActivity.adapter!!.notifyDataSetChanged()
                 }
             }
