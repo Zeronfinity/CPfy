@@ -4,16 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.zeronfinity.cpfy.databinding.RecyclerviewContestItemBinding
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AdapterContestList(private val dataset: ArrayList<MainActivity.ContestData>) :
-        RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
+class AdapterContestList(
+    private val dataset: ArrayList<MainActivity.ContestData>,
+    private val platformImageUrl: MutableMap<String, String>
+) : RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
 
-    class ContestViewHolder(private val binding: RecyclerviewContestItemBinding) :
-            RecyclerView.ViewHolder(binding.root) {
+    inner class ContestViewHolder(
+        private val binding: RecyclerviewContestItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(contestData: MainActivity.ContestData) {
             binding.tvContestName.text = contestData.name
             binding.tvStartTime.text =  SimpleDateFormat("E dd-MMM-yy hh:mm a", Locale.getDefault()).format(contestData.startTime)
@@ -35,14 +39,20 @@ class AdapterContestList(private val dataset: ArrayList<MainActivity.ContestData
                 binding.tvDuration.text = parseSecondsToString(contestData.duration)
             }
 
-            if (platformImages.containsKey(contestData.platformName)) {
-                binding.ivContestPlatform.setImageBitmap(platformImages[contestData.platformName])
+            if (platformImageUrl.containsKey(contestData.platformName)) {
+                Picasso.get()
+                    .load(platformImageUrl[contestData.platformName])
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(binding.ivContestPlatform)
             }
+
             binding.tvContestPlatform.text = contestData.platformName
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContestViewHolder {
+
         val binding: RecyclerviewContestItemBinding =
             RecyclerviewContestItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ContestViewHolder(binding)
