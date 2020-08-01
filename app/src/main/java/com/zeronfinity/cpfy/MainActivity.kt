@@ -52,13 +52,13 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                            val platformName: String, val startTime: Date, val url: String)
     private val contestList = ArrayList<ContestData>()
 
+    private val platformImageUrl = mutableMapOf<String, String>()
+
     private suspend fun processFetchedData(clistServerResponse: ClistServerResponse) : ArrayList<ContestData> =
         withContext(Dispatchers.Default) {
             try {
                 val list = clistServerResponse.contestList
                 val contestList = ArrayList<ContestData>()
-
-                imageDownloadStarted.clear()
 
                 for (i in list.indices) {
                     val contest = list[i]
@@ -74,17 +74,8 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                     )
 
                     val key = contest.platformResource.platformName
-                    if (!platformImages.containsKey(key) && !imageDownloadStarted.containsKey(key)) {
-                        imageDownloadStarted[key] = true
-                        CoroutineScope(Dispatchers.Main).launch {
-                            var bitmapImage =
-                                getBitmapFromURL("https://clist.by" + contest.platformResource.iconUrlSegment)
-                            if (bitmapImage != null) {
-                                bitmapImage = getResizedBitmap(bitmapImage, 48, 48)
-                                platformImages[key] = bitmapImage
-                                binding.rvMainActivity.adapter!!.notifyDataSetChanged()
-                            }
-                        }
+                    if (!platformImageUrl.containsKey(key)) {
+                        platformImageUrl[key] = "https://clist.by" + contest.platformResource.iconUrlSegment
                     }
                 }
 
@@ -102,7 +93,7 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
 
         job = Job()
 
-        binding.rvMainActivity.adapter = AdapterContestList(contestList)
+        binding.rvMainActivity.adapter = AdapterContestList(contestList, platformImageUrl)
         binding.rvMainActivity.layoutManager = LinearLayoutManager(this)
         binding.rvMainActivity.setHasFixedSize(true)
 
