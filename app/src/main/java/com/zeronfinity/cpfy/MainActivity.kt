@@ -2,14 +2,12 @@ package com.zeronfinity.cpfy
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zeronfinity.cpfy.Model.ClistServerResponse
+import com.zeronfinity.cpfy.Network.getContestData
 import com.zeronfinity.cpfy.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
-import org.json.JSONObject
-import java.net.HttpURLConnection
-import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,7 +35,7 @@ fun parseSecondsToString(durationInSeconds: Int) : String {
     return ret
 }
 
-const val LOG_TAG = "CPfyMainActivity"
+const val LOG_TAG = "CpfyMainActivity"
 
 class MainActivity: AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
@@ -54,45 +52,33 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
                            val platformName: String, val startTime: Date, val url: String)
     private val contestList = ArrayList<ContestData>()
 
-    @Suppress("BlockingMethodInNonBlockingContext")
-    private suspend fun getHttpConnectionData(url: String) : String =
-        withContext(Dispatchers.IO) {
-            try {
-                val urlConnection = URL(url).openConnection() as HttpURLConnection
-                urlConnection.inputStream.bufferedReader().readText()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                ""
-            }
-        }
-
-    private suspend fun parseJsonData(jsonData: String) : ArrayList<ContestData> =
+    private suspend fun processFetchedData(clistServerResponse: ClistServerResponse) : ArrayList<ContestData> =
         withContext(Dispatchers.Default) {
             try {
-                val jsonArray = JSONObject(jsonData).getJSONArray("objects")
+                val list = clistServerResponse.contestList
                 val contestList = ArrayList<ContestData>()
 
                 imageDownloadStarted.clear()
 
-                for (i in 0 until jsonArray.length()) {
-                    val item = jsonArray.getJSONObject(i)
+                for (i in list.indices) {
+                    val contest = list[i]
+                    val duration = (simpleDateFormatUtc.parse(contest.end).time - simpleDateFormatUtc.parse(contest.start).time)/1000
                     contestList.add(
                         ContestData(
-                            item.getString("event"),
-                            item.getInt("duration"),
-                            item.getJSONObject("resource").getString("name"),
-                            simpleDateFormatUtc.parse(item.getString("start")),
-                            item.getString("href")
+                            contest.title,
+                            duration.toInt(),
+                            contest.platformResource.platformName,
+                            simpleDateFormatUtc.parse(contest.start),
+                            contest.url
                         )
                     )
 
-                    val resourceItem = item.getJSONObject("resource")
-                    val key = resourceItem.getString("name")
+                    val key = contest.platformResource.platformName
                     if (!platformImages.containsKey(key) && !imageDownloadStarted.containsKey(key)) {
                         imageDownloadStarted[key] = true
                         CoroutineScope(Dispatchers.Main).launch {
                             var bitmapImage =
-                                getBitmapFromURL("https://clist.by" + resourceItem.getString("icon"))
+                                getBitmapFromURL("https://clist.by" + contest.platformResource.iconUrlSegment)
                             if (bitmapImage != null) {
                                 bitmapImage = getResizedBitmap(bitmapImage, 48, 48)
                                 platformImages[key] = bitmapImage
@@ -116,41 +102,30 @@ class MainActivity: AppCompatActivity(), CoroutineScope {
 
         job = Job()
 
+        binding.rvMainActivity.adapter = AdapterContestList(contestList)
+        binding.rvMainActivity.layoutManager = LinearLayoutManager(this)
+        binding.rvMainActivity.setHasFixedSize(true)
+
         simpleDateFormatUtc.timeZone = TimeZone.getTimeZone("UTC")
 
         val calendar = Calendar.getInstance()
         calendar.time = Date()
         calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
 
-        val urlString = getString(R.string.api_url) +
-            "contest/?username=" + getString(R.string.api_username)  + "&api_key=" + BuildConfig.CLIST_API_KEY +
-            "&end__gt=" + simpleDateFormatUtc.format(Date()) +
-            "&end__lt=" + simpleDateFormatUtc.format(Date(calendar.timeInMillis)) +
-            "&order_by=end"
-
-        Log.i(LOG_TAG, "apiUrl = $urlString")
-
         launch(Dispatchers.Main) {
-            val jsonData = getHttpConnectionData(urlString)
+            val clistServerResponse = getContestData(applicationContext,
+                                                                        mapOf("end__gt" to simpleDateFormatUtc.format(Date()),
+                                                                            "end__lt" to simpleDateFormatUtc.format(Date(calendar.timeInMillis)),
+                                                                            "order_by" to "end"
+                                                                        ))
+            Log.i(LOG_TAG, clistServerResponse.toString())
 
-            if (jsonData.isEmpty()) {
-                Toast.makeText(applicationContext,"Network failure!", Toast.LENGTH_SHORT).show()
-            } else {
-                val retList = parseJsonData(jsonData)
-                if (retList.isNullOrEmpty()) {
-                    Toast.makeText(applicationContext,"JSON parsing failed!", Toast.LENGTH_SHORT).show()
-                } else {
-                    contestList.clear()
-                    contestList.addAll(retList)
-                    Log.i(LOG_TAG, contestList.toString())
-                    binding.rvMainActivity.adapter!!.notifyDataSetChanged()
-                }
+            if (clistServerResponse != null) {
+                contestList.clear()
+                contestList.addAll(processFetchedData(clistServerResponse))
+                binding.rvMainActivity.adapter!!.notifyDataSetChanged()
             }
         }
-
-        binding.rvMainActivity.adapter = AdapterContestList(contestList)
-        binding.rvMainActivity.layoutManager = LinearLayoutManager(this)
-        binding.rvMainActivity.setHasFixedSize(true)
     }
 
     override fun onDestroy() {
