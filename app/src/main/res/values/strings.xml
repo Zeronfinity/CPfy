@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">CPfy</string>
-    <string name="api_url">https://clist.by/api/v1/json/</string>
-    <string name="api_username">Zeronfinity</string>
+    <string name="clist_api_username">Zeronfinity</string>
     <string name="launch_icon_content_desc">Launch icon to go to contest website</string>
     <string name="platform_icon_content_desc">Contest platform icon</string>
-    <string name="starts_on_tv_label">Starts on: </string>
-    <string name="duration_tv_label">Duration: </string>
-    <string name="started_on_tv_label">Started on: </string>
-    <string name="time_left_tv_label">Time left: </string>
+    <string name="starts_on_tv_label">Starts on:</string>
+    <string name="duration_tv_label">Duration:</string>
+    <string name="started_on_tv_label">Started on:</string>
+    <string name="time_left_tv_label">Time left:</string>
     <string name="time_left_to_start">%s to start</string>
     <string name="contest_already_started">Contest already started!</string>
 </resources>
