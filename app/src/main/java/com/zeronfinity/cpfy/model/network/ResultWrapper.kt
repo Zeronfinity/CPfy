@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.Model
+package com.zeronfinity.cpfy.model.network
 
 sealed class ResultWrapper<out T> {
     data class Success<out T>(val value: T): ResultWrapper<T>()

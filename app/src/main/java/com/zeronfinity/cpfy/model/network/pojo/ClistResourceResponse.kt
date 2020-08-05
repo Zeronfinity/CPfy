@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.Model
+package com.zeronfinity.cpfy.model.network.pojo
 
 import com.squareup.moshi.Json
 
