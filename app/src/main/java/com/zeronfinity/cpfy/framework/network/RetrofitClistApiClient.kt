@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.Network
+package com.zeronfinity.cpfy.framework.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
