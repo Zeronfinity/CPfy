@@ -22,6 +22,11 @@ If this is your first time contributing and you are confused with the whole work
 
 Please first discuss the change you wish to make via issue.
 
+### Code Style
+- Please try to maintain [Kotlin Style Guide](https://developer.android.com/kotlin/style-guide) standard unless there's a strong reason not to.
+- The project tries to maintain [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
+- The project follows MVVM pattern.
+
 ## Contribution Best Practices
 
 ### Commits
