@@ -6,7 +6,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zeronfinity.core.repository.ContestRepository
+import com.zeronfinity.core.repository.PlatformRepository
+import com.zeronfinity.core.usecase.*
 import com.zeronfinity.cpfy.databinding.ActivityMainBinding
+import com.zeronfinity.cpfy.framework.adapter.AdapterContestList
+import com.zeronfinity.cpfy.model.ContestArrayList
+import com.zeronfinity.cpfy.model.PlatformMap
+import com.zeronfinity.cpfy.model.UseCases
 import com.zeronfinity.cpfy.viewmodel.MainActivityViewModel
 
 const val LOG_TAG = "CpfyMainActivity"
@@ -20,7 +27,20 @@ class MainActivity: AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rvMainActivity.adapter = AdapterContestList(viewModel.useCases)
+        val contestRepository = ContestRepository(ContestArrayList())
+        val platformRepository = PlatformRepository(PlatformMap())
+
+        val useCases = UseCases(
+            AddContestList(contestRepository),
+            GetContest(contestRepository),
+            GetContestCount(contestRepository),
+            RemoveAllContests(contestRepository),
+            AddPlatform(platformRepository),
+            GetPlatformImageUrl(platformRepository),
+            RemoveAllPlatforms(platformRepository)
+        )
+
+        binding.rvMainActivity.adapter = AdapterContestList(useCases)
         binding.rvMainActivity.layoutManager = LinearLayoutManager(this)
         binding.rvMainActivity.setHasFixedSize(true)
 

@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.framework.network
+package com.zeronfinity.cpfy.framework.network.clist
 
 import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponse
 import retrofit2.Response

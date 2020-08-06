@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.framework
+package com.zeronfinity.cpfy.model
 
 import com.zeronfinity.core.usecase.*
 

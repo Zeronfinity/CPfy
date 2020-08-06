@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.framework.network
+package com.zeronfinity.cpfy.framework.network.clist
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -14,5 +14,6 @@ object RetrofitClistApiClient {
                 .build()
     }
 
-    fun getClient() = retrofit
+    fun getClient() =
+        retrofit
 }

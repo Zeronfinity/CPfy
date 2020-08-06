@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.view
+package com.zeronfinity.cpfy.framework.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import com.squareup.picasso.Picasso
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.RecyclerviewContestItemBinding
-import com.zeronfinity.cpfy.framework.UseCases
+import com.zeronfinity.cpfy.model.UseCases
 import java.text.SimpleDateFormat
 import java.util.*
 

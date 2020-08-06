@@ -1,8 +1,6 @@
 package com.zeronfinity.cpfy.framework.network
 
 import com.squareup.moshi.Moshi
-import com.zeronfinity.cpfy.model.network.ErrorResponse
-import com.zeronfinity.cpfy.model.network.ResultWrapper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

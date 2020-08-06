@@ -9,10 +9,10 @@ import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.repository.ContestRepository
 import com.zeronfinity.core.repository.PlatformRepository
 import com.zeronfinity.core.usecase.*
-import com.zeronfinity.cpfy.framework.ContestArrayList
-import com.zeronfinity.cpfy.framework.PlatformMap
-import com.zeronfinity.cpfy.framework.UseCases
-import com.zeronfinity.cpfy.model.network.ResultWrapper
+import com.zeronfinity.cpfy.model.ContestArrayList
+import com.zeronfinity.cpfy.model.PlatformMap
+import com.zeronfinity.cpfy.model.UseCases
+import com.zeronfinity.cpfy.framework.network.ResultWrapper
 import com.zeronfinity.cpfy.model.network.getContestData
 import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse.Companion.simpleDateFormatUtc
 import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponse
@@ -31,7 +31,7 @@ class MainActivityViewModel(private val globalAppState: Application) : AndroidVi
     private val contestRepository = ContestRepository(ContestArrayList())
     private val platformRepository = PlatformRepository(PlatformMap())
 
-    val useCases = UseCases(
+    private val useCases = UseCases(
         AddContestList(contestRepository),
         GetContest(contestRepository),
         GetContestCount(contestRepository),
