@@ -6,14 +6,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.entity.Platform
-import com.zeronfinity.core.repository.ContestRepository
-import com.zeronfinity.core.repository.PlatformRepository
-import com.zeronfinity.core.usecase.*
-import com.zeronfinity.cpfy.model.ContestArrayList
-import com.zeronfinity.cpfy.model.PlatformMap
+import com.zeronfinity.cpfy.framework.SubApplication
 import com.zeronfinity.cpfy.model.UseCases
 import com.zeronfinity.cpfy.framework.network.ResultWrapper
-import com.zeronfinity.cpfy.model.network.getContestData
+import com.zeronfinity.cpfy.model.network.ClistNetworkCall
 import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse.Companion.simpleDateFormatUtc
 import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponse
 import com.zeronfinity.cpfy.view.LOG_TAG
@@ -22,24 +18,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
+import javax.inject.Inject
 
-class MainActivityViewModel(private val globalAppState: Application) : AndroidViewModel(globalAppState) {
+class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-
     private val numberOfDaysBeforeContestsEnd = 7
+    @Inject
+    lateinit var useCases: UseCases
+    @Inject
+    lateinit var clistNetworkCall: ClistNetworkCall
 
-    private val contestRepository = ContestRepository(ContestArrayList())
-    private val platformRepository = PlatformRepository(PlatformMap())
-
-    private val useCases = UseCases(
-        AddContestList(contestRepository),
-        GetContest(contestRepository),
-        GetContestCount(contestRepository),
-        RemoveAllContests(contestRepository),
-        AddPlatform(platformRepository),
-        GetPlatformImageUrl(platformRepository),
-        RemoveAllPlatforms(platformRepository)
-    )
+    init {
+        (application as SubApplication).getApplicationComponent().inject(this)
+    }
 
     val contestListLiveData = MutableLiveData<Boolean>()
     val errorToastIncomingLiveData = MutableLiveData<String>()
@@ -51,8 +42,7 @@ class MainActivityViewModel(private val globalAppState: Application) : AndroidVi
 
         coroutineScope.launch {
             val wrappedResult =
-                getContestData(
-                    globalAppState,
+                clistNetworkCall.getContestData(
                     mapOf(
                         "end__gt" to simpleDateFormatUtc.format(Date()),
                         "end__lt" to simpleDateFormatUtc.format(Date(calendar.timeInMillis)),

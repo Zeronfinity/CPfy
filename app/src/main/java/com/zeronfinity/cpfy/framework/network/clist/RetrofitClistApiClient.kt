@@ -14,6 +14,6 @@ object RetrofitClistApiClient {
                 .build()
     }
 
-    fun getClient() =
-        retrofit
+    fun getClistApi(): RetrofitClistApiInterface =
+        retrofit.create(RetrofitClistApiInterface::class.java)
 }
