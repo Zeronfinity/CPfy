@@ -91,11 +91,11 @@
             android:id="@+id/ivLaunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/primaryDarkColor"
+            android:contentDescription="@string/launch_icon_content_desc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_launch_24"
-            android:contentDescription="@string/launch_icon_content_desc" />
+            app:tint="@color/primaryDarkColor" />
 
         <ImageView
             android:id="@+id/ivContestPlatform"

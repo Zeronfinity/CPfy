@@ -11,22 +11,32 @@ import com.zeronfinity.cpfy.databinding.RecyclerviewContestItemBinding
 import com.zeronfinity.cpfy.model.UseCases
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class AdapterContestList(val usecase: UseCases) : RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
+class AdapterContestList @Inject constructor(val usecase: UseCases) :
+    RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
 
     inner class ContestViewHolder(
-        private val binding: RecyclerviewContestItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val binding: RecyclerviewContestItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(contest: Contest) {
             binding.tvContestName.text = contest.name
-            binding.tvStartTime.text =  SimpleDateFormat("E dd-MMM-yy hh:mm a", Locale.getDefault()).format(contest.startTime)
+            binding.tvStartTime.text = SimpleDateFormat(
+                "E dd-MMM-yy hh:mm a",
+                Locale.getDefault()
+            ).format(contest.startTime)
 
             val diffInMillis = contest.startTime.time - Date().time
             if (diffInMillis < 0) {
-                binding.tvTimeLeft.text = binding.tvTimeLeft.context.getString(R.string.contest_already_started)
-                binding.tvTimeLeft.setTextColor(ContextCompat.getColor(binding.tvTimeLeft.context,
-                    R.color.primaryTextColor
-                ))
+                binding.tvTimeLeft.text =
+                    binding.tvTimeLeft.context.getString(R.string.contest_already_started)
+                binding.tvTimeLeft.setTextColor(
+                    ContextCompat.getColor(
+                        binding.tvTimeLeft.context,
+                        R.color.primaryTextColor
+                    )
+                )
 
                 binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
                     R.string.started_on_tv_label
@@ -45,9 +55,12 @@ class AdapterContestList(val usecase: UseCases) : RecyclerView.Adapter<AdapterCo
                         diffInMillis.toInt() / 1000
                     )
                 )
-                binding.tvTimeLeft.setTextColor(ContextCompat.getColor(binding.tvTimeLeft.context,
-                    R.color.primaryDarkColor
-                ))
+                binding.tvTimeLeft.setTextColor(
+                    ContextCompat.getColor(
+                        binding.tvTimeLeft.context,
+                        R.color.primaryDarkColor
+                    )
+                )
 
                 binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
                     R.string.starts_on_tv_label
@@ -77,15 +90,20 @@ class AdapterContestList(val usecase: UseCases) : RecyclerView.Adapter<AdapterCo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContestViewHolder {
         val binding: RecyclerviewContestItemBinding =
-            RecyclerviewContestItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            RecyclerviewContestItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return ContestViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ContestViewHolder, position: Int) = holder.bind(usecase.getContest(position))
+    override fun onBindViewHolder(holder: ContestViewHolder, position: Int) =
+        holder.bind(usecase.getContest(position))
 
     override fun getItemCount() = usecase.getContestCount()
 
-    private fun parseSecondsToString(durationInSeconds: Int) : String {
+    private fun parseSecondsToString(durationInSeconds: Int): String {
         val minutes = (durationInSeconds / 60) % 60
         val hours = (durationInSeconds / 60 / 60) % 24
         val days = durationInSeconds / 60 / 60 / 24
