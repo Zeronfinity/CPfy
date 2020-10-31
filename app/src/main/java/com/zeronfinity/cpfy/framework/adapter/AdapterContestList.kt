@@ -74,7 +74,7 @@ class AdapterContestList @Inject constructor(val usecase: UseCases) :
                     )
             }
 
-            val platformImageUrl = usecase.getPlatformImageUrl(contest.platformName)
+            val platformImageUrl = usecase.getPlatformImageUrlUseCase(contest.platformName)
 
             if (platformImageUrl != null) {
                 Picasso.get()
@@ -99,9 +99,9 @@ class AdapterContestList @Inject constructor(val usecase: UseCases) :
     }
 
     override fun onBindViewHolder(holder: ContestViewHolder, position: Int) =
-        holder.bind(usecase.getContest(position))
+        holder.bind(usecase.getContestUseCase(position))
 
-    override fun getItemCount() = usecase.getContestCount()
+    override fun getItemCount() = usecase.getContestCountUseCase()
 
     private fun parseSecondsToString(durationInSeconds: Int): String {
         val minutes = (durationInSeconds / 60) % 60

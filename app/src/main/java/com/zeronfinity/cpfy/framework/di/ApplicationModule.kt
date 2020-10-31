@@ -1,12 +1,11 @@
 package com.zeronfinity.cpfy.framework.di
 
 import android.app.Application
-import com.zeronfinity.core.repository.ContestDataSource
-import com.zeronfinity.core.repository.ContestRepository
-import com.zeronfinity.core.repository.PlatformDataSource
-import com.zeronfinity.core.repository.PlatformRepository
+import com.zeronfinity.core.repository.*
 import com.zeronfinity.core.usecase.*
+import com.zeronfinity.cpfy.model.ServerContestInfoClist
 import com.zeronfinity.cpfy.model.UseCases
+import com.zeronfinity.cpfy.model.network.ClistNetworkCall
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -20,16 +19,19 @@ class ApplicationModule(val application: Application) {
     @Provides
     fun provideUseCases(
         contestRepository: ContestRepository,
-        platformRepository: PlatformRepository
+        platformRepository: PlatformRepository,
+        serverContestInfoRepository: ServerContestInfoRepository
     ) =
         UseCases(
-            AddContestList(contestRepository),
-            GetContest(contestRepository),
-            GetContestCount(contestRepository),
-            RemoveAllContests(contestRepository),
-            AddPlatform(platformRepository),
-            GetPlatformImageUrl(platformRepository),
-            RemoveAllPlatforms(platformRepository)
+            AddContestListUseCase(contestRepository),
+            GetContestUseCase(contestRepository),
+            GetContestCountUseCase(contestRepository),
+            RemoveAllContestsUseCase(contestRepository),
+            AddPlatformUseCase(platformRepository),
+            AddPlatformListUseCase(platformRepository),
+            GetPlatformImageUrlUseCase(platformRepository),
+            RemoveAllPlatformsUseCase(platformRepository),
+            FetchServerContestInfoUseCase(serverContestInfoRepository)
         )
 
     @Provides
@@ -39,4 +41,8 @@ class ApplicationModule(val application: Application) {
     @Provides
     fun providePlatformRepository(platformDataSource: PlatformDataSource) =
         PlatformRepository(platformDataSource)
+
+    @Provides
+    fun provideServerContestInfoRepository(clistNetworkCall: ClistNetworkCall) =
+        ServerContestInfoRepository(ServerContestInfoClist(clistNetworkCall))
 }
