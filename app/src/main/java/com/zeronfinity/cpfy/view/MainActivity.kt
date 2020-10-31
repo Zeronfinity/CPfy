@@ -36,7 +36,7 @@ class MainActivity: AppCompatActivity() {
 
         observeViewModel()
 
-        viewModel.fetchContestListFromClist()
+        viewModel.fetchContestListAndPersist()
     }
 
     private fun observeViewModel() {

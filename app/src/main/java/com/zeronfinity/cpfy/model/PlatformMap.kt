@@ -12,6 +12,12 @@ class PlatformMap : PlatformDataSource {
         platformImageUrlMap[platform.name] = platform.imageUrl
     }
 
+    override fun add(platformList: List<Platform>) {
+        for (platform in platformList) {
+            add(platform)
+        }
+    }
+
     override fun getImageUrl(name: String) = platformImageUrlMap[name]
 
     override fun removeAll() = platformImageUrlMap.clear()
