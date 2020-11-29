@@ -1,5 +1,6 @@
 package com.zeronfinity.cpfy.framework.network
 
+import android.util.Log
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -11,6 +12,8 @@ suspend fun <T> safeNetworkCall(dispatcher: CoroutineDispatcher, apiFunction: su
         try {
             ResultWrapper.Success(apiFunction.invoke())
         } catch (throwable: Throwable) {
+            Log.e("safeNetworkCall", throwable.toString())
+
             when (throwable) {
                 is IOException -> ResultWrapper.NetworkError
                 is HttpException -> {

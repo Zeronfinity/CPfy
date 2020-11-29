@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.framework.adapter
+package com.zeronfinity.cpfy.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

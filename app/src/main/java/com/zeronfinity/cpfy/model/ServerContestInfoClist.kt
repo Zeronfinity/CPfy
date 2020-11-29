@@ -10,9 +10,12 @@ import com.zeronfinity.core.repository.ServerContestInfoDataSource
 import com.zeronfinity.cpfy.framework.network.ResultWrapper
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
 import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponse
-import com.zeronfinity.cpfy.view.LOG_TAG
 
-class ServerContestInfoClist(val clistNetworkCall: ClistNetworkCall) : ServerContestInfoDataSource {
+class ServerContestInfoClist(
+    private val clistNetworkCall: ClistNetworkCall
+) : ServerContestInfoDataSource {
+    private val LOG_TAG = ServerContestInfoClist::class.simpleName
+
     override suspend fun getInfo(params: Map<String, String>): ServerContestInfoResponse {
         var responseStatus = FAILURE
         var errorCode: Int? = null
@@ -22,6 +25,8 @@ class ServerContestInfoClist(val clistNetworkCall: ClistNetworkCall) : ServerCon
 
         val wrappedResult = clistNetworkCall.getContestData(params)
         var clistServerResponse: ClistServerResponse? = null
+
+        Log.d(LOG_TAG, "wrappedResult: [" + wrappedResult.toString() + "]")
 
         when (wrappedResult) {
             is ResultWrapper.Success -> {
@@ -44,7 +49,7 @@ class ServerContestInfoClist(val clistNetworkCall: ClistNetworkCall) : ServerCon
             }
         }
 
-        Log.i(LOG_TAG, clistServerResponse.toString())
+        Log.d(LOG_TAG, "clistServerResponse: [" + clistServerResponse.toString() + "]")
 
         if (clistServerResponse != null) {
             val list = clistServerResponse.contestList
