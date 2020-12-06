@@ -37,14 +37,6 @@ class ActivityModule {
 
     @ActivityScoped
     @Provides
-    fun provideContestRepository() = ContestRepository(ContestArrayList())
-
-    @ActivityScoped
-    @Provides
-    fun providePlatformRepository() = PlatformRepository(PlatformMap())
-
-    @ActivityScoped
-    @Provides
     fun provideServerContestInfoRepository(clistNetworkCall: ClistNetworkCall) =
         ServerContestInfoRepository(ServerContestInfoClist(clistNetworkCall))
 }

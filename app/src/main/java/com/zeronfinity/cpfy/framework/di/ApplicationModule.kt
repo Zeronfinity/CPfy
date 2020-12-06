@@ -1,13 +1,18 @@
 package com.zeronfinity.cpfy.framework.di
 
 import android.app.Application
+import com.zeronfinity.core.repository.ContestRepository
+import com.zeronfinity.core.repository.PlatformRepository
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiClient
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiInterface
+import com.zeronfinity.cpfy.model.ContestArrayList
+import com.zeronfinity.cpfy.model.PlatformMap
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Singleton
 
 @Module
@@ -21,4 +26,13 @@ class ApplicationModule {
     @Provides
     fun provideClistNetworkCall(application: Application, apiInterface: RetrofitClistApiInterface) =
         ClistNetworkCall(application, apiInterface)
+
+    @Singleton
+    @Provides
+    fun provideContestRepository() = ContestRepository(ContestArrayList())
+
+    @Singleton
+    @Provides
+    fun providePlatformRepository() = PlatformRepository(PlatformMap())
+
 }
