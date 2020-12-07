@@ -2,7 +2,6 @@ package com.zeronfinity.cpfy.model
 
 import com.zeronfinity.core.entity.Contest
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -16,16 +15,11 @@ internal class ContestArrayListTest {
     private val contestListExpected = arrayListOf(contest1, contest2, contest1)
     private val contestListPreInserted = arrayListOf(contest3, contest4)
 
-    private lateinit var sut: ContestArrayList
-
-    @BeforeEach
-    fun setUp() {
-        sut = ContestArrayList()
-    }
+    private val sut = ContestArrayList()
 
     @Nested
     @DisplayName("Given empty contest list")
-    inner class emptyContestList {
+    inner class EmptyContestList {
         @Test
         @DisplayName("When new contest list added, then contests are added correctly")
         fun add_correctContestsInserted() {
@@ -53,9 +47,8 @@ internal class ContestArrayListTest {
 
     @Nested
     @DisplayName("Given non-empty contest list")
-    inner class nonEmptyContestList {
-        @BeforeEach
-        fun setUp() {
+    inner class NonEmptyContestList {
+        init {
             sut.add(contestListPreInserted)
         }
 
@@ -85,7 +78,7 @@ internal class ContestArrayListTest {
 
         @Test
         @DisplayName("When get is called with out of bound index, then correct contest is returned correctly")
-        fun get_outOfBoundIndexUsed_correctContestReturned() {
+        fun get_outOfBoundIndexUsed_correctExceptionThrown() {
             // Arrange
             // Act and Assert
             assertThrows(IndexOutOfBoundsException::class.java) { sut.get(contestListPreInserted.size + 1) }
