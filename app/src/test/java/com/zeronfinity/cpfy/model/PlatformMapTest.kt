@@ -16,7 +16,6 @@ internal class PlatformMapTest {
     private val platform4 = Platform("name4", "imageUrl4")
     private val platformListPreInserted = arrayListOf(platform3, platform4)
 
-
     private val sut = PlatformMap()
 
     @Nested

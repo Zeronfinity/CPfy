@@ -30,13 +30,8 @@ class ServerContestInfoClist(
 
         when (wrappedResult) {
             is ResultWrapper.Success -> {
-                if (wrappedResult.value.code() != 200) {
-                    errorCode = wrappedResult.value.code()
-                    errorDesc = wrappedResult.value.message()
-                } else {
-                    responseStatus = SUCCESS
-                    clistServerResponse = wrappedResult.value.body()
-                }
+                responseStatus = SUCCESS
+                clistServerResponse = wrappedResult.value.body()
             }
             is ResultWrapper.GenericError -> {
                 if (wrappedResult.code != null) {
