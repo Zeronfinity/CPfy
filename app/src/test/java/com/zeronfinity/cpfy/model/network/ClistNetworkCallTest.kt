@@ -146,31 +146,29 @@ internal class ClistNetworkCallTest {
             val wrappedResultActual = runBlocking { sut.getContestData(emptyParamsMap) }
             // Assert
             when (wrappedResultActual) {
-                is Success -> {
-                    assertAll(
-                        Executable {
-                            assertEquals(
-                                HttpURLConnection.HTTP_OK,
-                                wrappedResultActual.value.code(),
-                                "Response code mismatched"
-                            )
-                        },
-                        Executable {
-                            assertEquals(
-                                emptyParamResponseExpected.message(),
-                                wrappedResultActual.value.message(),
-                                "Response message mismatched"
-                            )
-                        },
-                        Executable {
-                            assertEquals(
-                                emptyParamResponseExpected.body(),
-                                wrappedResultActual.value.body(),
-                                "Response body mismatched"
-                            )
-                        }
-                    )
-                }
+                is Success -> assertAll(
+                    Executable {
+                        assertEquals(
+                            HttpURLConnection.HTTP_OK,
+                            wrappedResultActual.value.code(),
+                            "Response code mismatched"
+                        )
+                    },
+                    Executable {
+                        assertEquals(
+                            emptyParamResponseExpected.message(),
+                            wrappedResultActual.value.message(),
+                            "Response message mismatched"
+                        )
+                    },
+                    Executable {
+                        assertEquals(
+                            emptyParamResponseExpected.body(),
+                            wrappedResultActual.value.body(),
+                            "Response body mismatched"
+                        )
+                    }
+                )
                 else -> fail("Wrapped result is not of type ResultWrapper.Success!")
             }
         }
@@ -187,31 +185,29 @@ internal class ClistNetworkCallTest {
             val wrappedResultActual = runBlocking { sut.getContestData(validParamsMap) }
             // Assert
             when (wrappedResultActual) {
-                is Success -> {
-                    assertAll(
-                        Executable {
-                            assertEquals(
-                                HttpURLConnection.HTTP_OK,
-                                wrappedResultActual.value.code(),
-                                "Response code mismatched"
-                            )
-                        },
-                        Executable {
-                            assertEquals(
-                                validParamResponseExpected.message(),
-                                wrappedResultActual.value.message(),
-                                "Response message mismatched"
-                            )
-                        },
-                        Executable {
-                            assertEquals(
-                                validParamResponseExpected.body(),
-                                wrappedResultActual.value.body(),
-                                "Response body mismatched"
-                            )
-                        }
-                    )
-                }
+                is Success -> assertAll(
+                    Executable {
+                        assertEquals(
+                            HttpURLConnection.HTTP_OK,
+                            wrappedResultActual.value.code(),
+                            "Response code mismatched"
+                        )
+                    },
+                    Executable {
+                        assertEquals(
+                            validParamResponseExpected.message(),
+                            wrappedResultActual.value.message(),
+                            "Response message mismatched"
+                        )
+                    },
+                    Executable {
+                        assertEquals(
+                            validParamResponseExpected.body(),
+                            wrappedResultActual.value.body(),
+                            "Response body mismatched"
+                        )
+                    }
+                )
                 else -> fail("Wrapped result is not of type ResultWrapper.Success!")
             }
         }
@@ -232,13 +228,11 @@ internal class ClistNetworkCallTest {
             val wrappedResultActual = runBlocking { sut.getContestData(emptyParamsMap) }
             // Assert
             when (wrappedResultActual) {
-                is GenericError -> {
-                    assertEquals(
-                        HttpURLConnection.HTTP_BAD_REQUEST,
-                        wrappedResultActual.code,
-                        "Response code mismatched"
-                    )
-                }
+                is GenericError -> assertEquals(
+                    HttpURLConnection.HTTP_BAD_REQUEST,
+                    wrappedResultActual.code,
+                    "Response code mismatched"
+                )
                 else -> fail("Wrapped result is not of type ResultWrapper.GenericError!")
             }
         }
@@ -255,13 +249,11 @@ internal class ClistNetworkCallTest {
             val wrappedResultActual = runBlocking { sut.getContestData(validParamsMap) }
             // Assert
             when (wrappedResultActual) {
-                is GenericError -> {
-                    assertEquals(
-                        HttpURLConnection.HTTP_BAD_REQUEST,
-                        wrappedResultActual.code,
-                        "Response code mismatched"
-                    )
-                }
+                is GenericError -> assertEquals(
+                    HttpURLConnection.HTTP_BAD_REQUEST,
+                    wrappedResultActual.code,
+                    "Response code mismatched"
+                )
                 else -> fail("Wrapped result is not of type ResultWrapper.GenericError!")
             }
         }

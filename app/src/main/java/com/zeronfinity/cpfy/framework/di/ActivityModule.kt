@@ -2,8 +2,6 @@ package com.zeronfinity.cpfy.framework.di
 
 import com.zeronfinity.core.repository.*
 import com.zeronfinity.core.usecase.*
-import com.zeronfinity.cpfy.model.ContestArrayList
-import com.zeronfinity.cpfy.model.PlatformMap
 import com.zeronfinity.cpfy.model.ServerContestInfoClist
 import com.zeronfinity.cpfy.model.UseCases
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
