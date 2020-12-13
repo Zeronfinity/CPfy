@@ -8,6 +8,7 @@ buildscript {
     ext.junit5_version = '5.7.0'
     ext.lifecycle_version = "2.2.0"
     ext.mocck_version = "1.10.3-jdk8"
+    ext.okhttp_version = "4.9.0"
     ext.picasso_version = "2.71828"
     ext.retrofit2_version = "2.9.0"
     ext.room_version = "2.2.5"

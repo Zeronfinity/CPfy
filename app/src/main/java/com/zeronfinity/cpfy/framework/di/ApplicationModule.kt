@@ -3,6 +3,7 @@ package com.zeronfinity.cpfy.framework.di
 import android.app.Application
 import com.zeronfinity.core.repository.ContestRepository
 import com.zeronfinity.core.repository.PlatformRepository
+import com.zeronfinity.cpfy.CustomApplication
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiClient
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiInterface
 import com.zeronfinity.cpfy.model.ContestArrayList
@@ -25,7 +26,7 @@ class ApplicationModule {
     @Singleton
     @Provides
     fun provideClistNetworkCall(application: Application, apiInterface: RetrofitClistApiInterface) =
-        ClistNetworkCall(application, apiInterface)
+        ClistNetworkCall(application as CustomApplication, apiInterface)
 
     @Singleton
     @Provides

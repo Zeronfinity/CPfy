@@ -66,12 +66,16 @@ internal class ServerContestInfoClistTest {
     @Nested
     @DisplayName("Given network success")
     inner class NetworkSuccess {
+        private val slotParamsMap = slot<Map<String, String>>()
+
+        init {
+            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns serverResponseResult
+        }
+
         @Test
         @DisplayName("When getInfo called with empty parameters, then getContestData is called with correct parameters")
         internal fun getInfo_noParam_getContestDataCalledWithCorrectParameters() {
             // Arrange
-            val slotParamsMap = slot<Map<String, String>>()
-            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns serverResponseResult
             // Act
             runBlocking { sut.getInfo(emptyParamsMap) }
             // Assert
@@ -82,8 +86,6 @@ internal class ServerContestInfoClistTest {
         @DisplayName("When getInfo called with valid parameters, then getContestData is called with correct parameters")
         internal fun getInfo_validParams_getContestDataCalledWithCorrectParameters() {
             // Arrange
-            val slotParamsMap = slot<Map<String, String>>()
-            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns serverResponseResult
             // Act
             runBlocking { sut.getInfo(validParamsMap) }
             // Assert
@@ -94,7 +96,6 @@ internal class ServerContestInfoClistTest {
         @DisplayName("When getInfo called, then correct result returned")
         internal fun getInfo_success_correctServerContestInfoResponseReturned() {
             // Arrange
-            coEvery { clistNetworkCallMock.getContestData(any()) } returns serverResponseResult
             // Act
             val serverResponseActual = runBlocking { sut.getInfo(validParamsMap) }
             // Assert
@@ -105,12 +106,16 @@ internal class ServerContestInfoClistTest {
     @Nested
     @DisplayName("Given generic error")
     inner class GenericError {
+        private val slotParamsMap = slot<Map<String, String>>()
+
+        init {
+            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns genericError
+        }
+
         @Test
         @DisplayName("When getInfo called with empty parameters, then getContestData is called with correct parameters")
         internal fun getInfo_noParam_getContestDataCalledWithCorrectParameters() {
             // Arrange
-            val slotParamsMap = slot<Map<String, String>>()
-            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns genericError
             // Act
             runBlocking { sut.getInfo(emptyParamsMap) }
             // Assert
@@ -121,8 +126,6 @@ internal class ServerContestInfoClistTest {
         @DisplayName("When getInfo called with valid parameters, then getContestData is called with correct parameters")
         internal fun getInfo_validParams_getContestDataCalledWithCorrectParameters() {
             // Arrange
-            val slotParamsMap = slot<Map<String, String>>()
-            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns genericError
             // Act
             runBlocking { sut.getInfo(validParamsMap) }
             // Assert
@@ -133,7 +136,6 @@ internal class ServerContestInfoClistTest {
         @DisplayName("When getInfo called, then correct result returned")
         internal fun getInfo_success_correctServerContestInfoResponseReturned() {
             // Arrange
-            coEvery { clistNetworkCallMock.getContestData(any()) } returns genericError
             // Act
             val serverResponseActual = runBlocking { sut.getInfo(validParamsMap) }
             // Assert
@@ -144,12 +146,16 @@ internal class ServerContestInfoClistTest {
     @Nested
     @DisplayName("Given network error")
     inner class NetworkError {
+        private val slotParamsMap = slot<Map<String, String>>()
+
+        init {
+            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns networkError
+        }
+
         @Test
         @DisplayName("When getInfo called with empty parameters, then getContestData is called with correct parameters")
         internal fun getInfo_noParam_getContestDataCalledWithCorrectParameters() {
             // Arrange
-            val slotParamsMap = slot<Map<String, String>>()
-            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns networkError
             // Act
             runBlocking { sut.getInfo(emptyParamsMap) }
             // Assert
@@ -160,8 +166,6 @@ internal class ServerContestInfoClistTest {
         @DisplayName("When getInfo called with valid parameters, then getContestData is called with correct parameters")
         internal fun getInfo_validParams_getContestDataCalledWithCorrectParameters() {
             // Arrange
-            val slotParamsMap = slot<Map<String, String>>()
-            coEvery { clistNetworkCallMock.getContestData(capture(slotParamsMap)) } returns networkError
             // Act
             runBlocking { sut.getInfo(validParamsMap) }
             // Assert
@@ -172,7 +176,6 @@ internal class ServerContestInfoClistTest {
         @DisplayName("When getInfo called, then correct result returned")
         internal fun getInfo_success_correctServerContestInfoResponseReturned() {
             // Arrange
-            coEvery { clistNetworkCallMock.getContestData(any()) } returns networkError
             // Act
             val serverResponseActual = runBlocking { sut.getInfo(validParamsMap) }
             // Assert
