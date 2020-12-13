@@ -7,6 +7,8 @@ buildscript {
     ext.hilt_lifecycle_version = '1.0.0-alpha02'
     ext.junit5_version = '5.7.0'
     ext.lifecycle_version = "2.2.0"
+    ext.mocck_version = "1.10.3-jdk8"
+    ext.okhttp_version = "4.9.0"
     ext.picasso_version = "2.71828"
     ext.retrofit2_version = "2.9.0"
     ext.room_version = "2.2.5"
@@ -16,7 +18,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.2"
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 

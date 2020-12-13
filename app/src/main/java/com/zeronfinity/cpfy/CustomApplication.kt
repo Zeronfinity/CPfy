@@ -9,4 +9,6 @@ class CustomApplication : Application() {
     override fun onCreate() {
         super.onCreate()
     }
+
+    fun getClistApiKey() = BuildConfig.CLIST_API_KEY
 }
