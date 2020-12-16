@@ -13,7 +13,7 @@ data class ClistContestObjectResponse (
     var start: String,
     @field:Json(name = "end")
     var end: String,
-    @field:Json(name = "duration")
+    @field:Json(name = "href")
     var url: String,
     @field:Json(name = "resource")
     var platformResource: ClistResourceResponse

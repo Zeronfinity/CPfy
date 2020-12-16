@@ -1,7 +1,11 @@
 package com.zeronfinity.cpfy.view.adapter
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -85,6 +89,15 @@ class AdapterContestList @Inject constructor(val usecase: UseCases) :
             }
 
             binding.tvContestPlatform.text = contest.platformName
+
+            binding.ivLaunch.setOnClickListener {
+                val launchUrlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(contest.url))
+                try {
+                    it.context.startActivity(launchUrlIntent)
+                } catch (ex: ActivityNotFoundException) {
+                    Toast.makeText(it.context, "No external app found for opening url!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
