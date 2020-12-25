@@ -3,10 +3,26 @@
     <string name="clist_api_username">Zeronfinity</string>
     <string name="launch_icon_content_desc">Launch icon to go to contest website</string>
     <string name="platform_icon_content_desc">Contest platform icon</string>
-    <string name="starts_on_tv_label">Starts on:</string>
-    <string name="duration_tv_label">Duration:</string>
-    <string name="started_on_tv_label">Started on:</string>
-    <string name="time_left_tv_label">Time left:</string>
+    <string name="starts_on_colon_tv_label">Starts on:</string>
+    <string name="duration_colon_tv_label">Duration:</string>
+    <string name="started_on_colon_tv_label">Started on:</string>
+    <string name="time_left_colon_tv_label">Time left:</string>
     <string name="time_left_to_start">%s to start</string>
     <string name="contest_already_started">Contest already started!</string>
+
+    <!-- fragment_filter string -->
+    <string name="time_filters_heading">Press a date/time to change it</string>
+    <string name="start_time_tv_label">Start Time</string>
+    <string name="end_time_tv_label">End Time</string>
+    <string name="duration_tv_label">Duration</string>
+    <string name="platform_filters_heading">Select the contest platforms</string>
+
+    <!-- menu strings -->
+    <string name="menu_filter">Filter</string>
+    <string name="menu_clipboard">Clipboard</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_about">About</string>
+
+    <!-- special symbols -->
+    <string name="less_than_or_equal_to" >\u2264</string >
 </resources>

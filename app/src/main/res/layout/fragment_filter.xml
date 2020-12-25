@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_filter_header_gap"
+        android:layout_marginBottom="@dimen/fragment_filter_header_gap"
+        android:text="@string/time_filters_heading"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="@dimen/fragment_filter_header_text_size"
+        android:textStyle="bold" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:columnCount="5"
+        app:rowCount="3">
+
+        <!-- first row, start time filters -->
+        <Button
+            android:id="@+id/btnStartTimeLowerBound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:backgroundTint="@color/secondaryColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/less_than_or_equal_to"
+            android:textColor="@color/primaryTextColor" />
+
+        <TextView
+            android:id="@+id/tvStartTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/start_time_tv_label"
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/less_than_or_equal_to"
+            android:textColor="@color/primaryTextColor" />
+
+        <Button
+            android:id="@+id/btnStartTimeUpperBound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap"
+            android:backgroundTint="@color/secondaryColor" />
+
+        <!-- second row, end time filters -->
+        <Button
+            android:id="@+id/btnEndTimeLowerBound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:backgroundTint="@color/secondaryColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/less_than_or_equal_to"
+            android:textColor="@color/primaryTextColor" />
+
+        <TextView
+            android:id="@+id/tvEndTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/end_time_tv_label"
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/less_than_or_equal_to"
+            android:textColor="@color/primaryTextColor" />
+
+        <Button
+            android:id="@+id/btnEndTimeUpperBound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap"
+            android:backgroundTint="@color/secondaryColor" />
+
+        <!-- third row, duration filters -->
+        <Button
+            android:id="@+id/btnDurationLowerBound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:backgroundTint="@color/secondaryColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/less_than_or_equal_to"
+            android:textColor="@color/primaryTextColor" />
+
+        <TextView
+            android:id="@+id/tvDurationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/duration_tv_label"
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+            android:text="@string/less_than_or_equal_to"
+            android:textColor="@color/primaryTextColor" />
+
+        <Button
+            android:id="@+id/btnDurationUpperBound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+            android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap"
+            android:backgroundTint="@color/secondaryColor" />
+    </androidx.gridlayout.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/tvPlatformsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_filter_header_gap_double"
+        android:layout_marginBottom="@dimen/fragment_filter_header_gap_half"
+        android:text="@string/platform_filters_heading"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="@dimen/fragment_filter_header_text_size"
+        android:textStyle="bold" />
+
+    <GridView
+        android:id="@+id/gvPlatforms"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>
