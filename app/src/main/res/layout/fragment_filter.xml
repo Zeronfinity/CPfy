@@ -39,7 +39,8 @@
             android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
             android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
             android:text="@string/less_than_or_equal_to"
-            android:textColor="@color/primaryTextColor" />
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center"  />
 
         <TextView
             android:id="@+id/tvStartTimeLabel"
@@ -57,7 +58,8 @@
             android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
             android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
             android:text="@string/less_than_or_equal_to"
-            android:textColor="@color/primaryTextColor" />
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center"  />
 
         <Button
             android:id="@+id/btnStartTimeUpperBound"
@@ -82,7 +84,8 @@
             android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
             android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
             android:text="@string/less_than_or_equal_to"
-            android:textColor="@color/primaryTextColor" />
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center"  />
 
         <TextView
             android:id="@+id/tvEndTimeLabel"
@@ -100,7 +103,8 @@
             android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
             android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
             android:text="@string/less_than_or_equal_to"
-            android:textColor="@color/primaryTextColor" />
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center"  />
 
         <Button
             android:id="@+id/btnEndTimeUpperBound"
@@ -125,7 +129,8 @@
             android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
             android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
             android:text="@string/less_than_or_equal_to"
-            android:textColor="@color/primaryTextColor" />
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center"  />
 
         <TextView
             android:id="@+id/tvDurationLabel"
@@ -143,7 +148,8 @@
             android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
             android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
             android:text="@string/less_than_or_equal_to"
-            android:textColor="@color/primaryTextColor" />
+            android:textColor="@color/primaryTextColor"
+            app:layout_gravity="center"  />
 
         <Button
             android:id="@+id/btnDurationUpperBound"
@@ -165,10 +171,9 @@
         android:textSize="@dimen/fragment_filter_header_text_size"
         android:textStyle="bold" />
 
-    <GridView
-        android:id="@+id/gvPlatforms"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlatforms"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>

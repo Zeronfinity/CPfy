@@ -29,6 +29,8 @@ class ActivityModule {
             AddPlatformUseCase(platformRepository),
             AddPlatformListUseCase(platformRepository),
             GetPlatformImageUrlUseCase(platformRepository),
+            GetPlatformListUseCase(platformRepository),
+            GetPlatformCountUseCase(platformRepository),
             RemoveAllPlatformsUseCase(platformRepository),
             FetchServerContestInfoUseCase(serverContestInfoRepository)
         )

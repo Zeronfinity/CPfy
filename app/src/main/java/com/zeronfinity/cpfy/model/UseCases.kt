@@ -10,6 +10,8 @@ data class UseCases(
     val addPlatformUseCase: AddPlatformUseCase,
     val addPlatformListUseCase: AddPlatformListUseCase,
     val getPlatformImageUrlUseCase: GetPlatformImageUrlUseCase,
+    val getPlatformListUseCase: GetPlatformListUseCase,
+    val getPlatformCountUseCase: GetPlatformCountUseCase,
     val removeAllPlatformsUseCase: RemoveAllPlatformsUseCase,
     val fetchServerContestInfoUseCase: FetchServerContestInfoUseCase
 )

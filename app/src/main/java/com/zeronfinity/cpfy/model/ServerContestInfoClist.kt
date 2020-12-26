@@ -6,6 +6,7 @@ import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.entity.ServerContestInfoResponse
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.FAILURE
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
+import com.zeronfinity.core.entity.createPlatformShortName
 import com.zeronfinity.core.repository.ServerContestInfoDataSource
 import com.zeronfinity.cpfy.framework.network.ResultWrapper
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
@@ -54,7 +55,9 @@ class ServerContestInfoClist(
             for (i in list.indices) {
                 contestList.add(list[i].toContest())
                 platformList.add(Platform(list[i].platformResource.platformName,
-                    "https://clist.by" + list[i].platformResource.iconUrlSegment))
+                    "https://clist.by" + list[i].platformResource.iconUrlSegment,
+                    createPlatformShortName(list[i].platformResource.platformName)
+                ))
             }
         }
 

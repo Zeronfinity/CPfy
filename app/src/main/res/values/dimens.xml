@@ -3,8 +3,8 @@
     <dimen name="fragment_filter_header_gap_half">4dp</dimen>
     <dimen name="fragment_filter_header_gap">8dp</dimen>
     <dimen name="fragment_filter_header_gap_double">16dp</dimen>
-    <dimen name="fragment_filter_horizontal_gap_half">4dp</dimen>
-    <dimen name="fragment_filter_horizontal_gap">8dp</dimen>
+    <dimen name="fragment_filter_horizontal_gap_half">2dp</dimen>
+    <dimen name="fragment_filter_horizontal_gap">4dp</dimen>
     <dimen name="fragment_filter_vertical_gap_half">2dp</dimen>
     <dimen name="fragment_filter_vertical_gap">4dp</dimen>
     <dimen name="fragment_filter_header_text_size">18sp</dimen>
