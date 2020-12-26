@@ -10,15 +10,20 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.zeronfinity.core.entity.Contest
+import com.zeronfinity.core.usecase.GetContestCountUseCase
+import com.zeronfinity.core.usecase.GetContestUseCase
+import com.zeronfinity.core.usecase.GetPlatformImageUrlUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ItemContestBinding
-import com.zeronfinity.cpfy.model.UseCases
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class AdapterContestList @Inject constructor(val usecase: UseCases) :
-    RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
+class AdapterContestList @Inject constructor(
+    private val getContestUseCase: GetContestUseCase,
+    private val getContestCountUseCase: GetContestCountUseCase,
+    private val getPlatformImageUrlUseCase: GetPlatformImageUrlUseCase
+) : RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
 
     inner class ContestViewHolder(
         private val binding: ItemContestBinding
@@ -78,7 +83,7 @@ class AdapterContestList @Inject constructor(val usecase: UseCases) :
                     )
             }
 
-            val platformImageUrl = usecase.getPlatformImageUrlUseCase(contest.platformName)
+            val platformImageUrl = getPlatformImageUrlUseCase(contest.platformName)
 
             if (platformImageUrl != null) {
                 Picasso.get()
@@ -112,9 +117,9 @@ class AdapterContestList @Inject constructor(val usecase: UseCases) :
     }
 
     override fun onBindViewHolder(holder: ContestViewHolder, position: Int) =
-        holder.bind(usecase.getContestUseCase(position))
+        holder.bind(getContestUseCase(position))
 
-    override fun getItemCount() = usecase.getContestCountUseCase()
+    override fun getItemCount() = getContestCountUseCase()
 
     private fun parseSecondsToString(durationInSeconds: Int): String {
         val minutes = (durationInSeconds / 60) % 60

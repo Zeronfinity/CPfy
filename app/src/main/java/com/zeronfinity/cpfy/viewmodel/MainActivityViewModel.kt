@@ -4,8 +4,9 @@ import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
-import com.zeronfinity.cpfy.model.UseCases
+import com.zeronfinity.core.usecase.FetchServerContestInfoUseCase
+import com.zeronfinity.core.usecase.FetchServerContestInfoUseCase.Result.Error
+import com.zeronfinity.core.usecase.FetchServerContestInfoUseCase.Result.Success
 import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse.Companion.simpleDateFormatUtc
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,7 @@ import java.util.Calendar
 import java.util.Date
 
 class MainActivityViewModel @ViewModelInject constructor(
-    private val useCases: UseCases
+    private val fetchServerContestInfoUseCase: FetchServerContestInfoUseCase
 ) : ViewModel() {
     private val LOG_TAG = MainActivityViewModel::class.simpleName
 
@@ -32,7 +33,7 @@ class MainActivityViewModel @ViewModelInject constructor(
         calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
 
         coroutineScope.launch {
-            val serverContestInfoResponse = useCases.fetchServerContestInfoUseCase(
+            val fetchResult = fetchServerContestInfoUseCase(
                 mapOf(
                     "end__gt" to simpleDateFormatUtc.format(Date()),
                     "end__lt" to simpleDateFormatUtc.format(Date(calendar.timeInMillis)),
@@ -40,19 +41,9 @@ class MainActivityViewModel @ViewModelInject constructor(
                 )
             )
 
-            if (serverContestInfoResponse.responseStatus == SUCCESS) {
-                useCases.removeAllContestsUseCase()
-                serverContestInfoResponse.contestList?.let { useCases.addContestListUseCase(it) }
-                serverContestInfoResponse.platformList?.let { useCases.addPlatformListUseCase(it) }
-                contestListLiveData.postValue(true)
-            } else {
-                if (serverContestInfoResponse.errorCode != null) {
-                    errorToastIncomingLiveData.postValue("Error ${serverContestInfoResponse.errorCode}: ${serverContestInfoResponse.errorDesc}")
-                } else if (serverContestInfoResponse.errorDesc != null) {
-                    errorToastIncomingLiveData.postValue(serverContestInfoResponse.errorDesc);
-                } else {
-                    errorToastIncomingLiveData.postValue("Unknown Network Error!")
-                }
+            when (fetchResult) {
+                is Success -> contestListLiveData.postValue(fetchResult.value)
+                is Error -> errorToastIncomingLiveData.postValue(fetchResult.errorMsg)
             }
         }
     }

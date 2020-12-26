@@ -1,32 +1,24 @@
 package com.zeronfinity.cpfy.view.adapter
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.entity.Platform
+import com.zeronfinity.core.usecase.GetPlatformListUseCase
 import com.zeronfinity.cpfy.R
-import com.zeronfinity.cpfy.databinding.ItemContestBinding
 import com.zeronfinity.cpfy.databinding.ItemPlatformFilterBinding
-import com.zeronfinity.cpfy.model.UseCases
 import com.zeronfinity.cpfy.view.MainActivity
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
-class AdapterPlatformFilters @Inject constructor(val usecase: UseCases) :
+class AdapterPlatformFilters @Inject constructor(
+    private val getPlatformListUseCase: GetPlatformListUseCase
+) :
     RecyclerView.Adapter<AdapterPlatformFilters.PlatformViewHolder>() {
     private val LOG_TAG = MainActivity::class.simpleName
 
-    private val platformList = usecase.getPlatformListUseCase()
+    private val platformList = getPlatformListUseCase()
 
     inner class PlatformViewHolder(
         private val binding: ItemPlatformFilterBinding

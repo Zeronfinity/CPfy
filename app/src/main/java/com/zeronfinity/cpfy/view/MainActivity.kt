@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ActivityMainBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterContestList
-import com.zeronfinity.cpfy.model.UseCases
 import com.zeronfinity.cpfy.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,7 +22,6 @@ class MainActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainActivityViewModel
-    @Inject lateinit var useCases: UseCases
     @Inject lateinit var adapterContestList: AdapterContestList
 
     override fun onCreate(savedInstanceState: Bundle?) {
