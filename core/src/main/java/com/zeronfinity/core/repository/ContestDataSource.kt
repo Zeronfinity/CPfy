@@ -7,6 +7,8 @@ interface ContestDataSource {
 
     fun get(index: Int): Contest
 
+    fun getList(): List<Contest>
+
     fun size(): Int
 
     fun clear()

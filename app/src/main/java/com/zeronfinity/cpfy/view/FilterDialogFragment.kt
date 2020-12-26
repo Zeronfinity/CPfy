@@ -58,6 +58,11 @@ class FilterDialogFragment: DialogFragment() {
         )
     }
 
+    override fun onStop() {
+        (activity as MainActivity).refreshContestListAdapter()
+        super.onStop()
+    }
+
     fun setTimeFilterButtonTexts() {
         binding.btnStartTimeLowerBound.text = SimpleDateFormat(
             "dd-MM-yy\nHH:mm",

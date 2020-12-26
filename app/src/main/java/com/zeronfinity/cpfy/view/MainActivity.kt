@@ -9,8 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zeronfinity.core.repository.ContestRepository
+import com.zeronfinity.core.usecase.GetFilteredContestListUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ActivityMainBinding
+import com.zeronfinity.cpfy.model.ContestArrayList
 import com.zeronfinity.cpfy.view.adapter.AdapterContestList
 import com.zeronfinity.cpfy.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,7 +79,11 @@ class MainActivity: AppCompatActivity() {
         })
 
         viewModel.contestListLiveData.observe(this, Observer {
-            binding.rvMainActivity.adapter!!.notifyDataSetChanged()
+            refreshContestListAdapter()
         })
+    }
+
+    fun refreshContestListAdapter() {
+        adapterContestList.refreshContestList()
     }
 }

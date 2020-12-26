@@ -3,6 +3,7 @@ package com.zeronfinity.cpfy.view.adapter
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -10,8 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.zeronfinity.core.entity.Contest
-import com.zeronfinity.core.usecase.GetContestCountUseCase
-import com.zeronfinity.core.usecase.GetContestUseCase
+import com.zeronfinity.core.usecase.GetFilteredContestListUseCase
 import com.zeronfinity.core.usecase.GetPlatformImageUrlUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ItemContestBinding
@@ -20,10 +20,10 @@ import java.util.*
 import javax.inject.Inject
 
 class AdapterContestList @Inject constructor(
-    private val getContestUseCase: GetContestUseCase,
-    private val getContestCountUseCase: GetContestCountUseCase,
+    private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
     private val getPlatformImageUrlUseCase: GetPlatformImageUrlUseCase
 ) : RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
+    private var filteredContestList = getFilteredContestListUseCase()
 
     inner class ContestViewHolder(
         private val binding: ItemContestBinding
@@ -117,9 +117,14 @@ class AdapterContestList @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: ContestViewHolder, position: Int) =
-        holder.bind(getContestUseCase(position))
+        holder.bind(filteredContestList[position])
 
-    override fun getItemCount() = getContestCountUseCase()
+    override fun getItemCount() = filteredContestList.size
+
+    fun refreshContestList() {
+        filteredContestList = getFilteredContestListUseCase()
+        notifyDataSetChanged()
+    }
 
     private fun parseSecondsToString(durationInSeconds: Int): String {
         val minutes = (durationInSeconds / 60) % 60

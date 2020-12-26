@@ -35,6 +35,16 @@ internal class ContestArrayListTest {
         }
 
         @Test
+        @DisplayName("When getList called, empty list returned")
+        fun getList_emptyListReturned() {
+            // Arrange
+            // Act
+            val list = sut.getList()
+            // Assert
+            assertEquals(0, list.size)
+        }
+
+        @Test
         @DisplayName("When new contest list added, then size is returned correctly")
         fun size_correctSizeReturned() {
             // Arrange
@@ -82,6 +92,16 @@ internal class ContestArrayListTest {
             // Arrange
             // Act and Assert
             assertThrows(IndexOutOfBoundsException::class.java) { sut.get(contestListPreInserted.size + 1) }
+        }
+
+        @Test
+        @DisplayName("When getList called, empty list returned")
+        fun getList_correctListReturned() {
+            // Arrange
+            // Act
+            val list = sut.getList()
+            // Assert
+            assertEquals(contestListPreInserted, list)
         }
 
         @Test

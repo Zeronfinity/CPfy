@@ -13,18 +13,36 @@ import dagger.hilt.android.scopes.ActivityScoped
 class ActivityModule {
     @ActivityScoped
     @Provides
-    fun provideGetContestCountUseCase(
-        contestRepository: ContestRepository
-    ) = GetContestCountUseCase(
-        contestRepository
+    fun provideDisablePlatformUseCase(
+        platformRepository: PlatformRepository
+    ) = DisablePlatformUseCase(
+        platformRepository
     )
 
     @ActivityScoped
     @Provides
-    fun provideGetContestUseCase(
-        contestRepository: ContestRepository
-    ) = GetContestUseCase(
-        contestRepository
+    fun provideEnablePlatformUseCase(
+        platformRepository: PlatformRepository
+    ) = EnablePlatformUseCase(
+        platformRepository
+    )
+
+    @ActivityScoped
+    @Provides
+    fun provideIsPlatformEnabledUseCase(
+        platformRepository: PlatformRepository
+    ) = IsPlatformEnabledUseCase(
+        platformRepository
+    )
+
+    @ActivityScoped
+    @Provides
+    fun provideGetFilteredContestListUseCase(
+        contestRepository: ContestRepository,
+        platformRepository: PlatformRepository
+    ) = GetFilteredContestListUseCase(
+        contestRepository,
+        platformRepository
     )
 
     @ActivityScoped
