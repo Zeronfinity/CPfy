@@ -5,6 +5,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,17 +21,17 @@ class MainActivity: AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.main_content, ContestListFragment.newInstance())
-                .commit()
-        }
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -33,25 +40,10 @@ class MainActivity: AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.miFilter -> {
-                FilterDialogFragment.newInstance().show(supportFragmentManager, FilterDialogFragment.LOG_TAG)
-                true
-            }
-            R.id.miClipboard -> {
-                Toast.makeText(applicationContext, "Clipboard clicked!", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.miSettings -> {
-                Toast.makeText(applicationContext, "Settings clicked!", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.miAbout -> {
-                Toast.makeText(applicationContext, "About clicked!", Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        val navController = findNavController(R.id.navHostFragment)
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
 
+    override fun onSupportNavigateUp() =
+        findNavController(R.id.navHostFragment).navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 }

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/miFilter"
+    <item android:id="@+id/filtersFragment"
         android:icon="@drawable/ic_baseline_filter_list_24"
         android:title="@string/menu_filter"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/miClipboard"
+    <item android:id="@+id/clipboardFragment"
         android:icon="@drawable/ic_baseline_content_paste_24"
         android:title="@string/menu_clipboard"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/miSettings"
+    <item android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/menu_settings"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/miAbout"
+    <item android:id="@+id/aboutFragment"
         android:icon="@drawable/ic_baseline_info_24"
         android:title="@string/menu_about"
         app:showAsAction="ifRoom" />
