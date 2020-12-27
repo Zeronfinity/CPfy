@@ -24,7 +24,17 @@ class AdapterPlatformFilters @Inject constructor(
 ) : RecyclerView.Adapter<AdapterPlatformFilters.PlatformViewHolder>() {
     private val LOG_TAG = MainActivity::class.simpleName
 
-    private val platformList = getPlatformListUseCase()
+    interface PlatformFilterClickListener {
+        fun onPlatformFilterClick()
+    }
+
+    private var platformFilterClickListener: PlatformFilterClickListener? = null
+
+    fun setPlatformFilterClickListener(clickListener: PlatformFilterClickListener) {
+        platformFilterClickListener = clickListener
+    }
+
+    private var platformList = getPlatformListUseCase()
 
     inner class PlatformViewHolder(
         private val binding: ItemPlatformFilterBinding
@@ -54,6 +64,7 @@ class AdapterPlatformFilters @Inject constructor(
                         Log.e(LOG_TAG, "Invalid platform filter button tag: " + it.tag.toString())
                     }
                 }
+                platformFilterClickListener?.onPlatformFilterClick()
             }
         }
 
@@ -82,4 +93,9 @@ class AdapterPlatformFilters @Inject constructor(
         holder.bind(platformList[position])
 
     override fun getItemCount() = platformList.size
+
+    fun refreshPlatformList() {
+        platformList = getPlatformListUseCase()
+        notifyDataSetChanged()
+    }
 }

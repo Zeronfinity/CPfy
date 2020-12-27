@@ -68,6 +68,9 @@ dependencies {
     // hilt for dependency injection
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"

@@ -24,5 +24,14 @@
     <string name="menu_about">About</string>
 
     <!-- special symbols -->
-    <string name="less_than_or_equal_to" >\u2264</string >
+    <string name="less_than_or_equal_to">\u2264</string>
+
+    <!-- shared preference file names and keys -->
+    <string name="shared_preference_filters">com.zeronfinity.cpfy.filters</string>
+    <string name="s_pref_filters_key_start_time_lower_bound">start_time_lower_bound</string>
+    <string name="s_pref_filters_key_start_time_upper_bound">start_time_upper_bound</string>
+    <string name="s_pref_filters_key_end_time_lower_bound">end_time_lower_bound</string>
+    <string name="s_pref_filters_key_end_time_upper_bound">end_time_upper_bound</string>
+    <string name="s_pref_filters_key_duration_lower_bound">duration_lower_bound</string>
+    <string name="s_pref_filters_key_duration_upper_bound">duration_upper_bound</string>
 </resources>

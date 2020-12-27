@@ -35,8 +35,8 @@ internal class ServerContestInfoClistTest {
         null,
         listOf(contestObject1.toContest(), contestObject2.toContest()),
         listOf(
-            Platform("platform_name", "https://clist.by" + "/icon_url_segment", "short_name"),
-            Platform("platform_name", "https://clist.by" + "/icon_url_segment", "short_name")
+            Platform("platform_name", "https://clist.by" + "/icon_url_segment", "platform_name"),
+            Platform("platform_name", "https://clist.by" + "/icon_url_segment", "platform_name")
         )
     )
 

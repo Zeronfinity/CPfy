@@ -1,49 +1,30 @@
 package com.zeronfinity.cpfy.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.zeronfinity.core.repository.ContestRepository
-import com.zeronfinity.core.usecase.GetFilteredContestListUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ActivityMainBinding
-import com.zeronfinity.cpfy.model.ContestArrayList
-import com.zeronfinity.cpfy.view.adapter.AdapterContestList
-import com.zeronfinity.cpfy.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity: AppCompatActivity() {
-    private val LOG_TAG = MainActivity::class.simpleName
-
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: MainActivityViewModel
-    @Inject lateinit var adapterContestList: AdapterContestList
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.d(LOG_TAG, "onCreate started")
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rvMainActivity.adapter = adapterContestList
-        binding.rvMainActivity.layoutManager = LinearLayoutManager(this)
-        binding.rvMainActivity.setHasFixedSize(true)
-
-        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
-
-        observeViewModel()
-
-        viewModel.fetchContestListAndPersist()
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.main_content, ContestListFragment.newInstance())
+                .commit()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -73,17 +54,4 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    private fun observeViewModel() {
-        viewModel.errorToastIncomingLiveData.observe(this, Observer {
-            Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
-        })
-
-        viewModel.contestListLiveData.observe(this, Observer {
-            refreshContestListAdapter()
-        })
-    }
-
-    fun refreshContestListAdapter() {
-        adapterContestList.refreshContestList()
-    }
 }

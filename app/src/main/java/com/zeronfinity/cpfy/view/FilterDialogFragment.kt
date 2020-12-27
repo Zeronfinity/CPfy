@@ -1,26 +1,26 @@
 package com.zeronfinity.cpfy.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.zeronfinity.cpfy.R
-import com.zeronfinity.cpfy.databinding.ActivityMainBinding
 import com.zeronfinity.cpfy.databinding.FragmentFilterBinding
-import com.zeronfinity.cpfy.view.adapter.AdapterContestList
 import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters
+import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters.PlatformFilterClickListener
+import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
+import com.zeronfinity.cpfy.viewmodel.FilterDialogFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FilterDialogFragment: DialogFragment() {
+class FilterDialogFragment
+    : DialogFragment(), PlatformFilterClickListener {
     companion object {
         const val LOG_TAG = "FilterDialogFragment"
         fun newInstance() = FilterDialogFragment()
@@ -29,13 +29,17 @@ class FilterDialogFragment: DialogFragment() {
     private var _binding: FragmentFilterBinding? = null
     private val binding get() = _binding!!
 
-    @Inject lateinit var adapterPlatformFilters: AdapterPlatformFilters
+    private lateinit var filterDialogViewModel: FilterDialogFragmentViewModel
+    private lateinit var contentListViewModel: ContestListViewModel
+
+    @Inject
+    lateinit var adapterPlatformFilters: AdapterPlatformFilters
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFilterBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,7 +51,14 @@ class FilterDialogFragment: DialogFragment() {
         binding.rvPlatforms.layoutManager = GridLayoutManager(activity, 3)
         binding.rvPlatforms.setHasFixedSize(true)
 
-        setTimeFilterButtonTexts()
+        adapterPlatformFilters.setPlatformFilterClickListener(this)
+
+        contentListViewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
+        observeContestListViewModel()
+
+        filterDialogViewModel = ViewModelProvider(this).get(FilterDialogFragmentViewModel::class.java)
+        observeFilterDialogViewModel()
+        filterDialogViewModel.loadTimeFilterButtonTexts()
     }
 
     override fun onStart() {
@@ -58,40 +69,39 @@ class FilterDialogFragment: DialogFragment() {
         )
     }
 
-    override fun onStop() {
-        (activity as MainActivity).refreshContestListAdapter()
-        super.onStop()
+    private fun observeContestListViewModel() {
+        contentListViewModel.contestListUpdatedLiveData.observe(viewLifecycleOwner, Observer {
+            adapterPlatformFilters.refreshPlatformList()
+        })
     }
 
-    fun setTimeFilterButtonTexts() {
-        binding.btnStartTimeLowerBound.text = SimpleDateFormat(
-            "dd-MM-yy\nHH:mm",
-            Locale.getDefault()
-        ).format(Date())
+    private fun observeFilterDialogViewModel() {
+        filterDialogViewModel.startTimeLowerBoundLiveData.observe(viewLifecycleOwner, Observer {
+            binding.btnStartTimeLowerBound.text = it
+        })
 
-        binding.btnStartTimeUpperBound.text = SimpleDateFormat(
-            "dd-MM-yy\nHH:mm",
-            Locale.getDefault()
-        ).format(Date())
+        filterDialogViewModel.startTimeUpperBoundLiveData.observe(viewLifecycleOwner, Observer {
+            binding.btnStartTimeUpperBound.text = it
+        })
 
-        binding.btnEndTimeLowerBound.text = SimpleDateFormat(
-            "dd-MM-yy\nHH:mm",
-            Locale.getDefault()
-        ).format(Date())
+        filterDialogViewModel.endTimeLowerBoundLiveData.observe(viewLifecycleOwner, Observer {
+            binding.btnEndTimeLowerBound.text = it
+        })
 
-        binding.btnEndTimeUpperBound.text = SimpleDateFormat(
-            "dd-MM-yy\nHH:mm",
-            Locale.getDefault()
-        ).format(Date())
+        filterDialogViewModel.endTimeUpperBoundLiveData.observe(viewLifecycleOwner, Observer {
+            binding.btnEndTimeUpperBound.text = it
+        })
 
-        binding.btnDurationLowerBound.text = SimpleDateFormat(
-            "dd-MM-yy\nHH:mm",
-            Locale.getDefault()
-        ).format(Date())
+        filterDialogViewModel.durationLowerBoundLiveData.observe(viewLifecycleOwner, Observer {
+            binding.btnDurationLowerBound.text = it
+        })
 
-        binding.btnDurationUpperBound.text = SimpleDateFormat(
-            "dd-MM-yy\nHH:mm",
-            Locale.getDefault()
-        ).format(Date())
+        filterDialogViewModel.durationUpperBoundLiveData.observe(viewLifecycleOwner, Observer {
+            binding.btnDurationUpperBound.text = it
+        })
+    }
+
+    override fun onPlatformFilterClick() {
+        contentListViewModel.updateContestList()
     }
 }

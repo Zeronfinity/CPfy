@@ -72,4 +72,20 @@ class ActivityModule {
         platformRepository,
         serverContestInfoRepository
     )
+
+    @ActivityScoped
+    @Provides
+    fun provideGetFilterTimeUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = GetFilterTimeUseCase(
+        filterTimeRangeRepository
+    )
+
+    @ActivityScoped
+    @Provides
+    fun provideSetFilterTimeUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = SetFilterTimeUseCase(
+        filterTimeRangeRepository
+    )
 }
