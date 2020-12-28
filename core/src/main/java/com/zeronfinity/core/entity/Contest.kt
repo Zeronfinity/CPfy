@@ -7,5 +7,6 @@ data class Contest(
     val duration: Int,
     val platformName: String,
     val startTime: Date,
+    val endTime: Date,
     val url: String
 )

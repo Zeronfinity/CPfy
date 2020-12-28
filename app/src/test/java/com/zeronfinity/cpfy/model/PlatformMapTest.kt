@@ -95,6 +95,79 @@ internal class PlatformMapTest {
         }
 
         @Test
+        @DisplayName("When platforms added one at a time, then getPlatform works correctly")
+        fun addAndGetPlatform_platformsInsertedOneByOne_fetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(platform1)
+            sut.add(platform2)
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) }
+            )
+        }
+
+        @Test
+        @DisplayName("When platforms with same name added one at a time, then last platform of a name is fetched correctly")
+        fun addAndGetPlatform_duplicatePlatformsInsertedOneByOne_fetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(platform1)
+            sut.add(platform1Dup)
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.name)) }
+            )
+        }
+
+        @Test
+        @DisplayName("When multiple duplicate platforms added one at a time, then platforms are fetched correctly")
+        fun addAndGetPlatform_multipleDuplicatePlatformsInsertedOneByOne_platformsFetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(platform1)
+            sut.add(platform2Dup)
+            sut.add(platform1Dup)
+            sut.add(platform2)
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.name)) }
+            )
+        }
+
+        @Test
+        @DisplayName("When platforms added together as a list, then platforms are fetched correctly")
+        fun addAndGetPlatform_platformsInsertedTogether_platformsFetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(arrayListOf(platform1, platform2))
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) }
+            )
+        }
+
+        @Test
+        @DisplayName("When platforms with same name are added together as a list, then they are fetched correctly")
+        fun addAndGetPlatform_duplicatePlatformsInsertedTogether_platformsFetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(arrayListOf(platform1, platform2Dup, platform2))
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.name)) }
+            )
+        }
+
+        @Test
         @DisplayName("When no platform added, size returns zero")
         fun getPlatformList_noPlatformInserted_emptyListReturned() {
             // Arrange
@@ -210,6 +283,79 @@ internal class PlatformMapTest {
         }
 
         @Test
+        @DisplayName("When platforms added one at a time, then getPlatform works correctly")
+        fun addAndGetPlatform_platformsInsertedOneByOne_fetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(platform1)
+            sut.add(platform2)
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) }
+            )
+        }
+
+        @Test
+        @DisplayName("When platforms with same name added one at a time, then last platform of a name is fetched correctly")
+        fun addAndGetPlatform_duplicatePlatformsInsertedOneByOne_fetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(platform1)
+            sut.add(platform1Dup)
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.name)) }
+            )
+        }
+
+        @Test
+        @DisplayName("When multiple duplicate platforms added one at a time, then platforms are fetched correctly")
+        fun addAndGetPlatform_multipleDuplicatePlatformsInsertedOneByOne_platformsFetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(platform1)
+            sut.add(platform2Dup)
+            sut.add(platform1Dup)
+            sut.add(platform2)
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.name)) }
+            )
+        }
+
+        @Test
+        @DisplayName("When platforms added together as a list, then platforms are fetched correctly")
+        fun addAndGetPlatform_platformsInsertedTogether_platformsFetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(arrayListOf(platform1, platform2))
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) }
+            )
+        }
+
+        @Test
+        @DisplayName("When platforms with same name are added together as a list, then they are fetched correctly")
+        fun addAndGetPlatform_duplicatePlatformsInsertedTogether_platformsFetchedCorrectly() {
+            // Arrange
+            // Act
+            sut.add(arrayListOf(platform1, platform2Dup, platform2))
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.name)) }
+            )
+        }
+
+        @Test
         @DisplayName("When getImageUrl called with existing name, then correct image url is fetched correctly")
         fun getImageUrl_existingNameUsed_correctUrlReturned() {
             // Arrange
@@ -231,6 +377,30 @@ internal class PlatformMapTest {
             val imageUrl1 = sut.getImageUrl(platform1.name)
             // Assert
             assertEquals(null, imageUrl1)
+        }
+
+        @Test
+        @DisplayName("When getPlatform called with existing name, then correct platform is fetched correctly")
+        fun getPlatform_existingNameUsed_correctUrlReturned() {
+            // Arrange
+            // Act
+            val platform3Actual = sut.getPlatform(platform3.name)
+            val platform4Actual = sut.getPlatform(platform4.name)
+            // Assert
+            assertAll(
+                Executable { assertEquals(platform3, platform3Actual) },
+                Executable { assertEquals(platform4, platform4Actual) }
+            )
+        }
+
+        @Test
+        @DisplayName("When getPlatform called with non-existing name, then null is returned")
+        fun getPlatform_nonExistingNameUsed_emptyUrlReturned() {
+            // Arrange
+            // Act
+            val platform = sut.getPlatform(platform1.name)
+            // Assert
+            assertEquals(null, platform)
         }
 
         @Test

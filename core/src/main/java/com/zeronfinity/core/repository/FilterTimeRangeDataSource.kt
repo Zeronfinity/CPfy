@@ -11,9 +11,9 @@ interface FilterTimeRangeDataSource {
 
     fun getEndTimeUpperBound(): Date
 
-    fun getDurationLowerBound(): Date
+    fun getDurationLowerBound(): Int
 
-    fun getDurationUpperBound(): Date
+    fun getDurationUpperBound(): Int
 
     fun setStartTimeLowerBound(date: Date)
 
@@ -23,7 +23,7 @@ interface FilterTimeRangeDataSource {
 
     fun setEndTimeUpperBound(date: Date)
 
-    fun setDurationLowerBound(date: Date)
+    fun setDurationLowerBound(duration: Int)
 
-    fun setDurationUpperBound(date: Date)
+    fun setDurationUpperBound(duration: Int)
 }

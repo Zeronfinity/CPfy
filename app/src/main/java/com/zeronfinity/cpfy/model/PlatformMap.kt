@@ -22,6 +22,8 @@ class PlatformMap : PlatformDataSource {
 
     override fun getImageUrl(name: String) = platformMap[name]?.imageUrl
 
+    override fun getPlatform(name: String): Platform? = platformMap[name]
+
     override fun isPlatformEnabled(name: String): Boolean =
         platformMap[name]?.isEnabled ?: true
 

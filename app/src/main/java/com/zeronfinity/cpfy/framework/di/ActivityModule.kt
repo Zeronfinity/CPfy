@@ -39,17 +39,19 @@ class ActivityModule {
     @Provides
     fun provideGetFilteredContestListUseCase(
         contestRepository: ContestRepository,
-        platformRepository: PlatformRepository
+        platformRepository: PlatformRepository,
+        filterTimeRangeRepository: FilterTimeRangeRepository
     ) = GetFilteredContestListUseCase(
         contestRepository,
-        platformRepository
+        platformRepository,
+        filterTimeRangeRepository
     )
 
     @ActivityScoped
     @Provides
-    fun provideGetPlatformImageUrlUseCase(
+    fun provideGetPlatformUseCase(
         platformRepository: PlatformRepository
-    ) = GetPlatformImageUrlUseCase(
+    ) = GetPlatformUseCase(
         platformRepository
     )
 
@@ -86,6 +88,22 @@ class ActivityModule {
     fun provideSetFilterTimeUseCase(
         filterTimeRangeRepository: FilterTimeRangeRepository
     ) = SetFilterTimeUseCase(
+        filterTimeRangeRepository
+    )
+
+    @ActivityScoped
+    @Provides
+    fun provideGetFilterDurationUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = GetFilterDurationUseCase(
+        filterTimeRangeRepository
+    )
+
+    @ActivityScoped
+    @Provides
+    fun provideSetFilterDurationUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = SetFilterDurationUseCase(
         filterTimeRangeRepository
     )
 }

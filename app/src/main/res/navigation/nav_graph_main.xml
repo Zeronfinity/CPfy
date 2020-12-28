@@ -17,6 +17,18 @@
     <fragment
         android:id="@+id/filtersFragment"
         android:name="com.zeronfinity.cpfy.view.FiltersFragment"
-        android:label="Filters" />
+        android:label="Filters" >
+        <action
+            android:id="@+id/action_filtersFragment_to_durationPickerDiaFrag"
+            app:destination="@id/durationPickerDiaFrag" />
+    </fragment>
+    <dialog
+        android:id="@+id/durationPickerDiaFrag"
+        android:name="com.zeronfinity.cpfy.view.DurationPickerDiaFrag"
+        android:label="DurationPickerDiaFrag" >
+        <argument
+            android:name="filterDurationEnumArg"
+            app:argType="com.zeronfinity.core.repository.FilterTimeRangeRepository$FilterDurationEnum" />
+    </dialog>
 
 </navigation>

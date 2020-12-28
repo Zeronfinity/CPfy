@@ -7,17 +7,19 @@ interface PlatformDataSource {
 
     fun add(platformList: List<Platform>)
 
-    fun getImageUrl(name: String): String?
-
-    fun isPlatformEnabled(name: String): Boolean
-
     fun enablePlatform(name: String)
 
     fun disablePlatform(name: String)
 
+    fun getImageUrl(name: String): String?
+
+    fun getPlatform(name: String): Platform?
+
     fun getPlatformList(): List<Platform>
 
-    fun size(): Int
+    fun isPlatformEnabled(name: String): Boolean
 
     fun removeAll()
+
+    fun size(): Int
 }

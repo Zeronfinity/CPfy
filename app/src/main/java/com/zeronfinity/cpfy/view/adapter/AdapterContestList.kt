@@ -3,7 +3,6 @@ package com.zeronfinity.cpfy.view.adapter
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.usecase.GetFilteredContestListUseCase
-import com.zeronfinity.core.usecase.GetPlatformImageUrlUseCase
+import com.zeronfinity.core.usecase.GetPlatformUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ItemContestBinding
 import java.text.SimpleDateFormat
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 class AdapterContestList @Inject constructor(
     private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
-    private val getPlatformImageUrlUseCase: GetPlatformImageUrlUseCase
+    private val getPlatformUseCase: GetPlatformUseCase
 ) : RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
     private var filteredContestList = getFilteredContestListUseCase()
 
@@ -55,13 +54,13 @@ class AdapterContestList @Inject constructor(
                 )
                 binding.tvDuration.text =
                     parseSecondsToString(
-                        contest.duration + diffInMillis.toInt() / 1000
+                        contest.duration.toLong() + diffInMillis / 1000
                     )
             } else {
                 binding.tvTimeLeft.text = binding.tvTimeLeft.context.getString(
                     R.string.time_left_to_start,
                     parseSecondsToString(
-                        diffInMillis.toInt() / 1000
+                        diffInMillis / 1000
                     )
                 )
                 binding.tvTimeLeft.setTextColor(
@@ -79,21 +78,21 @@ class AdapterContestList @Inject constructor(
                 )
                 binding.tvDuration.text =
                     parseSecondsToString(
-                        contest.duration
+                        contest.duration.toLong()
                     )
             }
 
-            val platformImageUrl = getPlatformImageUrlUseCase(contest.platformName)
+            val platform = getPlatformUseCase(contest.platformName)
 
-            if (platformImageUrl != null) {
+            platform?.imageUrl?.let {
                 Picasso.get()
-                    .load(platformImageUrl)
+                    .load(it)
                     .resize(50, 50)
                     .centerCrop()
                     .into(binding.ivContestPlatform)
             }
 
-            binding.tvContestPlatform.text = contest.platformName
+            binding.tvContestPlatform.text = platform?.shortName
 
             binding.ivLaunch.setOnClickListener {
                 val launchUrlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(contest.url))
@@ -126,21 +125,21 @@ class AdapterContestList @Inject constructor(
         notifyDataSetChanged()
     }
 
-    private fun parseSecondsToString(durationInSeconds: Int): String {
+    private fun parseSecondsToString(durationInSeconds: Long): String {
         val minutes = (durationInSeconds / 60) % 60
         val hours = (durationInSeconds / 60 / 60) % 24
         val days = durationInSeconds / 60 / 60 / 24
         var ret = ""
-        if (days != 0) {
+        if (days != 0L) {
             ret += "$days day"
             if (days > 1) ret += "s"
         }
-        if (hours != 0) {
+        if (hours != 0L) {
             if (ret.isNotEmpty()) ret += " "
             ret += "$hours hour"
             if (hours > 1) ret += "s"
         }
-        if (minutes != 0) {
+        if (minutes != 0L) {
             if (ret.isNotEmpty()) ret += " "
             ret += "$minutes minute"
             if (minutes > 1) ret += "s"

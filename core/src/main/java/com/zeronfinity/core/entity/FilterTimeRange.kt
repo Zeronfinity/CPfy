@@ -7,6 +7,6 @@ data class FilterTimeRange(
     val startTimeUpperBound: Date,
     val endTimeLowerBound: Date,
     val endTimeUpperBound: Date,
-    val durationLowerBound: Date,
-    val durationUpperBound: Date
+    val durationLowerBound: Int,
+    val durationUpperBound: Int
 )
