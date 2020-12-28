@@ -2,12 +2,16 @@ package com.zeronfinity.cpfy.framework.di
 
 import android.app.Application
 import com.zeronfinity.core.repository.ContestRepository
+import com.zeronfinity.core.repository.FilterTimeRangeRepository
 import com.zeronfinity.core.repository.PlatformRepository
+import com.zeronfinity.core.repository.ServerContestInfoRepository
 import com.zeronfinity.cpfy.CustomApplication
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiClient
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiInterface
 import com.zeronfinity.cpfy.model.ContestArrayList
+import com.zeronfinity.cpfy.model.FilterTimeRangeSharedPreference
 import com.zeronfinity.cpfy.model.PlatformMap
+import com.zeronfinity.cpfy.model.ServerContestInfoClist
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
 import dagger.Module
 import dagger.Provides
@@ -35,4 +39,13 @@ class ApplicationModule {
     @Provides
     fun providePlatformRepository() = PlatformRepository(PlatformMap())
 
+    @Singleton
+    @Provides
+    fun provideServerContestInfoRepository(clistNetworkCall: ClistNetworkCall) =
+        ServerContestInfoRepository(ServerContestInfoClist(clistNetworkCall))
+
+    @Singleton
+    @Provides
+    fun provideFilterTimeRangeRepository(application: Application) =
+        FilterTimeRangeRepository(FilterTimeRangeSharedPreference(application as CustomApplication))
 }

@@ -7,6 +7,8 @@ class ContestRepository(private val contestDataSource: ContestDataSource) {
 
     fun getContest(index: Int) = contestDataSource.get(index)
 
+    fun getContestList() = contestDataSource.getList()
+
     fun getContestCount() = contestDataSource.size()
 
     fun removeAllContests() = contestDataSource.clear()

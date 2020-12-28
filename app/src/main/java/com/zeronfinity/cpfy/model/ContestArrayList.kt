@@ -12,6 +12,8 @@ class ContestArrayList : ContestDataSource {
 
     override fun get(index: Int): Contest = contestArrayList[index]
 
+    override fun getList() = contestArrayList
+
     override fun size() = contestArrayList.size
 
     override fun clear() = contestArrayList.clear()

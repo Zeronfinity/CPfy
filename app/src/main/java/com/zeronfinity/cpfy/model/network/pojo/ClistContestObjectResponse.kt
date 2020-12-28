@@ -32,6 +32,7 @@ data class ClistContestObjectResponse (
             simpleDateFormatUtc.parse(start).time)/1000).toInt(),
         platformResource.platformName,
         simpleDateFormatUtc.parse(start),
+        simpleDateFormatUtc.parse(end),
         url
     )
 }

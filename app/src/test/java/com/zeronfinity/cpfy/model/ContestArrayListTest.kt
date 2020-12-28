@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 import java.util.Date
 
 internal class ContestArrayListTest {
-    private val contest1 = Contest("title1", 1, "platform1", Date(1), "url1")
-    private val contest2 = Contest("title2", 2, "platform2", Date(2), "url2")
-    private val contest3 = Contest("title3", 3, "platform3", Date(3), "url3")
-    private val contest4 = Contest("title4", 4, "platform4", Date(4), "url4")
+    private val contest1 = Contest("title1", 1, "platform1", Date(1), Date(2),"url1")
+    private val contest2 = Contest("title2", 2, "platform2", Date(2), Date(4),"url2")
+    private val contest3 = Contest("title3", 3, "platform3", Date(3), Date(6),"url3")
+    private val contest4 = Contest("title4", 4, "platform4", Date(4), Date(8),"url4")
     private val contestListExpected = arrayListOf(contest1, contest2, contest1)
     private val contestListPreInserted = arrayListOf(contest3, contest4)
 
@@ -32,6 +32,16 @@ internal class ContestArrayListTest {
                 contestListActual.add(sut.get(i))
             }
             assertEquals(contestListExpected, contestListActual)
+        }
+
+        @Test
+        @DisplayName("When getList called, empty list returned")
+        fun getList_emptyListReturned() {
+            // Arrange
+            // Act
+            val list = sut.getList()
+            // Assert
+            assertEquals(0, list.size)
         }
 
         @Test
@@ -82,6 +92,16 @@ internal class ContestArrayListTest {
             // Arrange
             // Act and Assert
             assertThrows(IndexOutOfBoundsException::class.java) { sut.get(contestListPreInserted.size + 1) }
+        }
+
+        @Test
+        @DisplayName("When getList called, empty list returned")
+        fun getList_correctListReturned() {
+            // Arrange
+            // Act
+            val list = sut.getList()
+            // Assert
+            assertEquals(contestListPreInserted, list)
         }
 
         @Test
