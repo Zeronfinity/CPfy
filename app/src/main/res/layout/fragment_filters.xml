@@ -1,235 +1,267 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fragment_filter_header_gap"
-        android:layout_marginBottom="@dimen/fragment_filter_header_gap"
-        android:text="@string/time_filters_heading"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="@dimen/fragment_filter_header_text_size"
-        android:textStyle="bold" />
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_filter_header_gap"
+            android:layout_marginBottom="@dimen/fragment_filter_header_gap"
+            android:text="@string/time_filters_heading"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="@dimen/fragment_filter_header_text_size"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btnStartTimeLowerBound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:backgroundTint="@color/secondaryColor" />
-
-            <Button
-                android:id="@+id/btnEndTimeLowerBound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:backgroundTint="@color/secondaryColor" />
-
-            <Button
-                android:id="@+id/btnDurationLowerBound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:backgroundTint="@color/secondaryColor" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnStartTimeLowerBound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:backgroundTint="@color/secondaryColor" />
+
+                <Button
+                    android:id="@+id/btnEndTimeLowerBound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:backgroundTint="@color/secondaryColor" />
+
+                <Button
+                    android:id="@+id/btnDurationLowerBound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:backgroundTint="@color/secondaryColor" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                     android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/less_than_or_equal_to"
                     android:textColor="@color/primaryTextColor"
                     app:layout_gravity="center" />
 
                 <TextView
-                    android:id="@+id/tvStartTimeLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                     android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/less_than_or_equal_to"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/less_than_or_equal_to"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvStartTimeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/start_time_tv_label"
                     android:textColor="@color/primaryTextColor"
                     app:layout_gravity="center" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center"  />
-
-                <TextView
                     android:id="@+id/tvEndTimeLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                     android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/end_time_tv_label"
                     android:textColor="@color/primaryTextColor"
                     app:layout_gravity="center" />
 
                 <TextView
+                    android:id="@+id/tvDurationLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                     android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:text="@string/less_than_or_equal_to"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/duration_tv_label"
                     android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center"  />
+                    app:layout_gravity="center" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                     android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center"  />
-
-                <TextView
-                    android:id="@+id/tvDurationLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:text="@string/duration_tv_label"
                     android:textColor="@color/primaryTextColor"
                     app:layout_gravity="center" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                     android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/less_than_or_equal_to"
                     android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center"  />
+                    app:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/less_than_or_equal_to"
+                    android:textColor="@color/primaryTextColor"
+                    app:layout_gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnStartTimeUpperBound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:backgroundTint="@color/secondaryColor" />
+
+                <Button
+                    android:id="@+id/btnEndTimeUpperBound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:backgroundTint="@color/secondaryColor" />
+
+                <Button
+                    android:id="@+id/btnDurationUpperBound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
+                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                    android:backgroundTint="@color/secondaryColor" />
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvPlatformsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/fragment_filter_header_gap_double"
+            android:layout_marginBottom="@dimen/fragment_filter_header_gap_half"
+            android:text="@string/platform_filters_heading"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="@dimen/fragment_filter_header_text_size"
+            android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnStartTimeUpperBound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:backgroundTint="@color/secondaryColor" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPlatforms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:scrollbars="none" />
 
-            <Button
-                android:id="@+id/btnEndTimeUpperBound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:backgroundTint="@color/secondaryColor" />
+        <Button
+            android:id="@+id/btnAllPlatforms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/secondaryColor"
+            android:text="@string/enable_all_platforms" />
 
-            <Button
-                android:id="@+id/btnDurationUpperBound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:backgroundTint="@color/secondaryColor" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_filter_header_gap_double"
+            android:backgroundTint="@color/secondaryColor"
+            android:text="@string/reset" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvPlatformsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fragment_filter_header_gap_double"
-        android:layout_marginBottom="@dimen/fragment_filter_header_gap_half"
-        android:text="@string/platform_filters_heading"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="@dimen/fragment_filter_header_text_size"
-        android:textStyle="bold" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPlatforms"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:scrollbars="none" />
-
-    <Button
-        android:id="@+id/btnAllPlatforms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondaryColor"
-        android:text="@string/enable_all_platforms" />
-
-    <Button
-        android:id="@+id/btnReset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fragment_filter_header_gap_double"
-        android:backgroundTint="@color/secondaryColor"
-        android:text="@string/reset" />
-</LinearLayout>
+</ScrollView>
