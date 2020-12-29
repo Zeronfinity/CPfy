@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeronfinity.cpfy.R
@@ -29,10 +28,6 @@ class ContestListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: ContestListViewModel
-
-    private var errorToastIncomingLiveDataObserver: Observer<String>? = null
-    private var contestListUpdatedLiveDataObserver: Observer<Boolean>? = null
-    private var clistWebViewLiveDataObserver: Observer<Boolean>? = null
 
     @Inject
     lateinit var adapterContestList: AdapterContestList

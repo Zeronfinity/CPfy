@@ -106,7 +106,7 @@ class FiltersViewModel @ViewModelInject constructor(
         setTimeFilters(END_TIME_LOWER_BOUND, Date())
         setTimeFilters(END_TIME_UPPER_BOUND, calendar.time)
 
-        setDurationFilters(DURATION_LOWER_BOUND, 7*24*60*60)
+        setDurationFilters(DURATION_LOWER_BOUND, 0)
         setDurationFilters(DURATION_UPPER_BOUND, 7*24*60*60)
 
         platformListUpdatedLiveData.postValue(true)
