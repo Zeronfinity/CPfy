@@ -25,16 +25,16 @@ class GetFilteredContestListUseCase(
         val durationUpperBound = filterTimeRangeRepository.getFilterDuration(DURATION_UPPER_BOUND)
 
         for (contest in allContestList) {
-//            if (platformRepository.isPlatformEnabled(contest.platformName) &&
-//                contest.startTime >= startTimeLowerBound &&
-//                contest.startTime <= startTimeUpperBound &&
-//                contest.endTime >= endTimeLowerBound &&
-//                contest.endTime <= endTimeUpperBound &&
-//                contest.duration >= durationLowerBound &&
-//                contest.duration <= durationUpperBound
-//            ) {
+            if (platformRepository.isPlatformEnabled(contest.platformName) &&
+                contest.startTime >= startTimeLowerBound &&
+                contest.startTime <= startTimeUpperBound &&
+                contest.endTime >= endTimeLowerBound &&
+                contest.endTime <= endTimeUpperBound &&
+                contest.duration >= durationLowerBound &&
+                contest.duration <= durationUpperBound
+            ) {
                 filteredContestList.add(contest)
-//            }
+            }
         }
 
         return filteredContestList
