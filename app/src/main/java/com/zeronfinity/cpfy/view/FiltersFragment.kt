@@ -3,6 +3,7 @@ package com.zeronfinity.cpfy.view
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,12 +58,21 @@ class FiltersFragment
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d(LOG_TAG, "onCreateView started")
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    override fun onStop() {
+        // TODO: Add condition to fetchContestList only if some parameter changed
+        contentListViewModel.fetchContestListAndPersist()
+        Log.d(LOG_TAG, "onStop ended")
+        super.onStop()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(LOG_TAG, "onViewCreated started")
 
         binding.rvPlatforms.adapter = adapterPlatformFilters
         binding.rvPlatforms.layoutManager = GridLayoutManager(activity, 3)
@@ -82,8 +92,11 @@ class FiltersFragment
     }
 
     private fun observeContestListViewModel() {
-        contentListViewModel.contestListUpdatedLiveData.observe(viewLifecycleOwner, Observer {
-            refreshPlatformList()
+        contentListViewModel.contestListUpdatedLiveDataEv.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                Log.d(LOG_TAG, "contestListUpdatedLiveData: refreshing platform list")
+                refreshPlatformList()
+            }
         })
     }
 

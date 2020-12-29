@@ -31,6 +31,7 @@
 
     <!-- shared preference file names and keys -->
     <string name="shared_preferences_filters">com.zeronfinity.cpfy.filters</string>
+    <string name="shared_preferences_cookies">com.zeronfinity.cpfy.cookies</string>
     <string name="s_pref_filters_key_start_time_lower_bound">start_time_lower_bound</string>
     <string name="s_pref_filters_key_start_time_upper_bound">start_time_upper_bound</string>
     <string name="s_pref_filters_key_end_time_lower_bound">end_time_lower_bound</string>
@@ -44,4 +45,9 @@
     <string name="minutes">Minutes</string>
     <string name="cancel">Cancel</string>
     <string name="okay">Okay</string>
+
+    <!-- clist strings -->
+    <string name="clist_base_url">https://clist.by</string>
+    <string name="clist_login_url">https://clist.by/login/</string>
+    <string name="clist_session_cookie">clist_session_cookie</string>
 </resources>

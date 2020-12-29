@@ -13,6 +13,7 @@ class FetchServerContestInfoUseCase(
     sealed class Result {
         data class Success(val value: Boolean) : Result()
         data class Error(val errorMsg: String) : Result()
+        data class UnauthorizedError(val errorCode: Int) : Result()
     }
 
     suspend operator fun invoke(params: Map<String, String>): Result {
@@ -25,7 +26,10 @@ class FetchServerContestInfoUseCase(
             Result.Success(true)
         } else {
             if (serverContestInfoResponse.errorCode != null) {
-                Result.Error("Error ${serverContestInfoResponse.errorCode}: ${serverContestInfoResponse.errorDesc}")
+                when (serverContestInfoResponse.errorCode) {
+                    401 -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
+                    else -> Result.Error("Error ${serverContestInfoResponse.errorCode}: ${serverContestInfoResponse.errorDesc}")
+                }
             } else if (serverContestInfoResponse.errorDesc != null) {
                 Result.Error(serverContestInfoResponse.errorDesc)
             } else {
