@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-internal class FilterTimeRangeSharedPreferenceTest {
+internal class FilterTimeRangeSharedPreferencesTest {
     private val simpleDateFormat = SimpleDateFormat(
         "dd-MM-yy HH:mm",
         Locale.getDefault()
@@ -38,7 +38,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
     private val applicationMock = mockk<Application>()
     private val sharedPreferencesMock = mockk<SharedPreferences>()
-    private lateinit var sut: FilterTimeRangeSharedPreference
+    private lateinit var sut: FilterTimeRangeSharedPreferences
 
     @BeforeEach
     internal fun setUp() {
@@ -47,7 +47,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         every { sharedPreferencesMock.edit().apply() } answers { nothing }
 
-        sut = FilterTimeRangeSharedPreference(applicationMock)
+        sut = FilterTimeRangeSharedPreferences(applicationMock)
     }
 
     @Nested
@@ -316,7 +316,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getStartTimeLowerBound called, then last set date returned")
-        fun getStartTimeLowerBound_currentDateReturned() {
+        fun getStartTimeLowerBound_setDateReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns startTimeLowerBoundLabel
             every { sharedPreferencesMock.edit().putLong(startTimeLowerBoundLabel, capture(slotParamsLong)) } answers { nothing }
@@ -330,7 +330,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getStartTimeUpperBound called, then last set date returned")
-        fun getStartTimeUpperBound_currentDateReturned() {
+        fun getStartTimeUpperBound_setDateReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns startTimeUpperBoundLabel
             every { sharedPreferencesMock.edit().putLong(startTimeUpperBoundLabel, capture(slotParamsLong)) } answers { nothing }
@@ -344,7 +344,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getEndTimeLowerBound called, then last set date returned")
-        fun getEndTimeLowerBound_currentDateReturned() {
+        fun getEndTimeLowerBound_setDateReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns endTimeLowerBoundLabel
             every { sharedPreferencesMock.edit().putLong(endTimeLowerBoundLabel, capture(slotParamsLong)) } answers { nothing }
@@ -358,7 +358,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getEndTimeUpperBound called, then last set date returned")
-        fun getEndTimeUpperBound_currentDateReturned() {
+        fun getEndTimeUpperBound_setDateReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns endTimeUpperBoundLabel
             every { sharedPreferencesMock.edit().putLong(endTimeUpperBoundLabel, capture(slotParamsLong)) } answers { nothing }
@@ -372,7 +372,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getDurationLowerBound called, then last set duration returned")
-        fun getDurationLowerBound_defaultDurationReturned() {
+        fun getDurationLowerBound_setDurationReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns durationLowerBoundLabel
             every { sharedPreferencesMock.edit().putInt(durationLowerBoundLabel, capture(slotParamsInt)) } answers { nothing }
@@ -386,7 +386,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getDurationUpperBound called, then last set duration returned")
-        fun getDurationUpperBound_defaultDurationReturned() {
+        fun getDurationUpperBound_setDurationReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns durationUpperBoundLabel
             every { sharedPreferencesMock.edit().putInt(durationUpperBoundLabel, capture(slotParamsInt)) } answers { nothing }
@@ -411,7 +411,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getStartTimeLowerBound called, then last set date returned")
-        fun getStartTimeLowerBound_currentDateReturned() {
+        fun getStartTimeLowerBound_setDateReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns startTimeLowerBoundLabel
             every { sharedPreferencesMock.edit().putLong(startTimeLowerBoundLabel, capture(slotParamsLong)) } answers { nothing }
@@ -426,7 +426,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getStartTimeUpperBound called, then last set date returned")
-        fun getStartTimeUpperBound_currentDateReturned() {
+        fun getStartTimeUpperBound_setDateReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns startTimeUpperBoundLabel
             every { sharedPreferencesMock.edit().putLong(startTimeUpperBoundLabel, capture(slotParamsLong)) } answers { nothing }
@@ -441,7 +441,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getEndTimeLowerBound called, then last set date returned")
-        fun getEndTimeLowerBound_currentDateReturned() {
+        fun getEndTimeLowerBound_setDateReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns endTimeLowerBoundLabel
             every { sharedPreferencesMock.edit().putLong(endTimeLowerBoundLabel, capture(slotParamsLong)) } answers { nothing }
@@ -456,7 +456,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getEndTimeUpperBound called, then last set date returned")
-        fun getEndTimeUpperBound_currentDateReturned() {
+        fun getEndTimeUpperBound_setDateReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns endTimeUpperBoundLabel
             every { sharedPreferencesMock.edit().putLong(endTimeUpperBoundLabel, capture(slotParamsLong)) } answers { nothing }
@@ -471,7 +471,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getDurationLowerBound called, then last set duration returned")
-        fun getDurationLowerBound_defaultDurationReturned() {
+        fun getDurationLowerBound_setDurationReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns durationLowerBoundLabel
             every { sharedPreferencesMock.edit().putInt(durationLowerBoundLabel, capture(slotParamsInt)) } answers { nothing }
@@ -486,7 +486,7 @@ internal class FilterTimeRangeSharedPreferenceTest {
 
         @Test
         @DisplayName("When getDurationUpperBound called, then last set duration returned")
-        fun getDurationUpperBound_defaultDurationReturned() {
+        fun getDurationUpperBound_setDurationReturned() {
             // Arrange
             every { applicationMock.getString(any()) } returns durationUpperBoundLabel
             every { sharedPreferencesMock.edit().putInt(durationUpperBoundLabel, capture(slotParamsInt)) } answers { nothing }

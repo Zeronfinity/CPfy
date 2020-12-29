@@ -7,7 +7,7 @@ import com.zeronfinity.cpfy.R
 import java.util.Calendar
 import java.util.Date
 
-class FilterTimeRangeSharedPreference(
+class FilterTimeRangeSharedPreferences(
     private val application: Application
 ) : FilterTimeRangeDataSource {
     private val sharedPref = application.getSharedPreferences(
