@@ -9,6 +9,5 @@ import retrofit2.http.QueryMap
 interface RetrofitClistApiInterface {
 
     @GET("/api/v1/json/contest/")
-    suspend fun getContestData(@Query("username") userName: String, @Query("api_key") apiKey: String,
-                               @QueryMap params: Map<String,String>): Response<ClistServerResponse>
+    suspend fun getContestData(@Query("username") userName: String, @Query("api_key") apiKey: String, @QueryMap params: Map<String,String>): Response<ClistServerResponse>
 }

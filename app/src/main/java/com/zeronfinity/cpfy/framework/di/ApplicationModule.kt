@@ -1,18 +1,17 @@
 package com.zeronfinity.cpfy.framework.di
 
 import android.app.Application
-import com.zeronfinity.core.repository.ContestRepository
-import com.zeronfinity.core.repository.FilterTimeRangeRepository
-import com.zeronfinity.core.repository.PlatformRepository
-import com.zeronfinity.core.repository.ServerContestInfoRepository
+import com.zeronfinity.core.repository.*
+import com.zeronfinity.core.usecase.GetCookieUseCase
 import com.zeronfinity.cpfy.CustomApplication
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiClient
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiInterface
 import com.zeronfinity.cpfy.model.ContestArrayList
-import com.zeronfinity.cpfy.model.FilterTimeRangeSharedPreference
+import com.zeronfinity.cpfy.model.FilterTimeRangeSharedPreferences
 import com.zeronfinity.cpfy.model.PlatformMap
 import com.zeronfinity.cpfy.model.ServerContestInfoClist
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
+import com.zeronfinity.cpfy.model.CookieSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +23,15 @@ import javax.inject.Singleton
 class ApplicationModule {
     @Singleton
     @Provides
-    fun provideClistApi(): RetrofitClistApiInterface = RetrofitClistApiClient.getClistApi()
+    fun provideClistClient(
+        application: Application,
+        getCookieUseCase: GetCookieUseCase
+    ): RetrofitClistApiClient =
+        RetrofitClistApiClient(application as CustomApplication, getCookieUseCase)
+
+    @Singleton
+    @Provides
+    fun provideClistApi(retrofitClistApiClient: RetrofitClistApiClient): RetrofitClistApiInterface = retrofitClistApiClient.getClistApi()
 
     @Singleton
     @Provides
@@ -47,5 +54,18 @@ class ApplicationModule {
     @Singleton
     @Provides
     fun provideFilterTimeRangeRepository(application: Application) =
-        FilterTimeRangeRepository(FilterTimeRangeSharedPreference(application as CustomApplication))
+        FilterTimeRangeRepository(FilterTimeRangeSharedPreferences(application as CustomApplication))
+
+    @Singleton
+    @Provides
+    fun provideCookieRepository(application: Application) =
+        CookieRepository(CookieSharedPreferences(application as CustomApplication))
+
+    @Singleton
+    @Provides
+    fun provideGetCookieUseCase(
+        cookieRepository: CookieRepository
+    ) = GetCookieUseCase(
+        cookieRepository
+    )
 }

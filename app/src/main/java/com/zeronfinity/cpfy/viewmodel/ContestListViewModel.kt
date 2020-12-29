@@ -2,9 +2,9 @@ package com.zeronfinity.cpfy.viewmodel
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zeronfinity.core.repository.FilterTimeRangeRepository
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
@@ -12,6 +12,7 @@ import com.zeronfinity.core.usecase.FetchServerContestInfoUseCase
 import com.zeronfinity.core.usecase.GetFilterDurationUseCase
 import com.zeronfinity.core.usecase.GetFilterTimeUseCase
 import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse.Companion.simpleDateFormatUtc
+import com.zeronfinity.cpfy.viewmodel.helpers.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,8 +29,16 @@ class ContestListViewModel @ViewModelInject constructor(
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val numberOfDaysBeforeContestsEnd = 7
 
-    val contestListUpdatedLiveData = MutableLiveData<Boolean>()
-    val errorToastIncomingLiveData = MutableLiveData<String>()
+    private val _contestListUpdatedLiveDataEv = MutableLiveData<Event<Boolean>>()
+    private val _clistWebViewLiveDataEv = MutableLiveData<Event<Boolean>>()
+    private val _errorToastIncomingLiveDataEv = MutableLiveData<Event<String>>()
+
+    val contestListUpdatedLiveDataEv: LiveData<Event<Boolean>>
+            get() = _contestListUpdatedLiveDataEv
+    val clistWebViewLiveDataEv: LiveData<Event<Boolean>>
+            get() = _clistWebViewLiveDataEv
+    val errorToastIncomingLiveDataEv: LiveData<Event<String>>
+            get() = _errorToastIncomingLiveDataEv
 
     fun fetchContestListAndPersist() {
         Log.d(LOG_TAG, "fetchContestListAndPersist started")
@@ -51,14 +60,17 @@ class ContestListViewModel @ViewModelInject constructor(
                 )
             )
 
+            Log.d(LOG_TAG, "fetchResult: [$fetchResult]")
+
             when (fetchResult) {
-                is FetchServerContestInfoUseCase.Result.Success -> contestListUpdatedLiveData.postValue(fetchResult.value)
-                is FetchServerContestInfoUseCase.Result.Error -> errorToastIncomingLiveData.postValue(fetchResult.errorMsg)
+                is FetchServerContestInfoUseCase.Result.Success -> updateContestList()
+                is FetchServerContestInfoUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(Event(fetchResult.errorMsg))
+                is FetchServerContestInfoUseCase.Result.UnauthorizedError -> _clistWebViewLiveDataEv.postValue(Event(true))
             }
         }
     }
 
     fun updateContestList() {
-        contestListUpdatedLiveData.postValue(true)
+        _contestListUpdatedLiveDataEv.postValue(Event(true))
     }
 }
