@@ -43,6 +43,8 @@ class ContestListViewModel @ViewModelInject constructor(
     fun fetchContestListAndPersist() {
         Log.d(LOG_TAG, "fetchContestListAndPersist started")
 
+        updateContestList()
+
         val calendar = Calendar.getInstance()
         calendar.time = Date()
         calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)

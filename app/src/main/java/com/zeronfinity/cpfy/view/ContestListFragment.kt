@@ -88,6 +88,5 @@ class ContestListFragment : Fragment() {
                 findNavController().navigate(action)
             }
         })
-
     }
 }
