@@ -63,21 +63,17 @@ class FilterTimeRangeSharedPreferences(
     }
 
     override fun getDurationLowerBound(): Int {
-        val duration = sharedPref.getInt(
+        return sharedPref.getInt(
             application.getString(R.string.s_pref_filters_key_duration_lower_bound),
             minDefaultDuration
         )
-
-        return duration
     }
 
     override fun getDurationUpperBound(): Int {
-        val duration = sharedPref.getInt(
+        return sharedPref.getInt(
             application.getString(R.string.s_pref_filters_key_duration_upper_bound),
             maxDefaultDuration
         )
-
-        return duration
     }
 
     override fun setStartTimeLowerBound(date: Date) {

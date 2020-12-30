@@ -2,7 +2,6 @@ package com.zeronfinity.cpfy.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.FragmentContestListBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterContestList
@@ -19,11 +19,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContestListFragment : Fragment() {
-    companion object {
-        const val LOG_TAG = "ContestListFragment"
-        fun newInstance() = ContestListFragment()
-    }
-
     private var _binding: FragmentContestListBinding? = null
     private val binding get() = _binding!!
 
@@ -36,7 +31,7 @@ class ContestListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(LOG_TAG, "onCreateView started")
+        logD("onCreateView started")
 
         _binding = FragmentContestListBinding.inflate(inflater, container, false)
 
@@ -51,7 +46,7 @@ class ContestListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(LOG_TAG, "onViewCreated started")
+        logD("onViewCreated started")
 
         viewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
         observeViewModel()
@@ -63,7 +58,7 @@ class ContestListFragment : Fragment() {
 
         viewModel.errorToastIncomingLiveDataEv.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
-                Log.d(LOG_TAG, "errorToastIncomingLiveDataEv: creating error toast")
+                logD("errorToastIncomingLiveDataEv: creating error toast")
                 activity?.let { fragmentActivity ->
                     Toast.makeText(fragmentActivity.applicationContext, it, Toast.LENGTH_SHORT)
                         .show()
@@ -73,14 +68,14 @@ class ContestListFragment : Fragment() {
 
         viewModel.contestListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
-                Log.d(LOG_TAG, "contestListUpdatedLiveDataEv: refreshing adapterContestList")
+                logD("contestListUpdatedLiveDataEv: refreshing adapterContestList")
                 adapterContestList.refreshContestList()
             }
         })
 
         viewModel.clistWebViewLiveDataEv.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
-                Log.d(LOG_TAG, "clistWebViewLiveDataObserver: navigating to web view fragment")
+                logD("clistWebViewLiveDataObserver: navigating to web view fragment")
                 val action =
                     ContestListFragmentDirections.actionContestListFragmentToWebViewFragment(
                         getString(R.string.clist_login_url)

@@ -1,31 +1,32 @@
 package com.zeronfinity.cpfy.viewmodel
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.core.usecase.FetchServerContestInfoUseCase
 import com.zeronfinity.core.usecase.GetFilterDurationUseCase
 import com.zeronfinity.core.usecase.GetFilterTimeUseCase
-import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse.Companion.simpleDateFormatUtc
+import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse
 import com.zeronfinity.cpfy.viewmodel.helpers.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class ContestListViewModel @ViewModelInject constructor(
     private val getFilterDurationUseCase: GetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
     private val fetchServerContestInfoUseCase: FetchServerContestInfoUseCase
 ) : ViewModel() {
-    private val LOG_TAG = ContestListViewModel::class.simpleName
-
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val numberOfDaysBeforeContestsEnd = 7
 
@@ -41,13 +42,16 @@ class ContestListViewModel @ViewModelInject constructor(
             get() = _errorToastIncomingLiveDataEv
 
     fun fetchContestListAndPersist() {
-        Log.d(LOG_TAG, "fetchContestListAndPersist started")
+        logD("fetchContestListAndPersist started")
 
         updateContestList()
 
         val calendar = Calendar.getInstance()
         calendar.time = Date()
         calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
+
+        val simpleDateFormatUtc = SimpleDateFormat(ClistContestObjectResponse.apiDateFormat, Locale.US)
+        simpleDateFormatUtc.timeZone = TimeZone.getTimeZone("UTC")
 
         coroutineScope.launch {
             val fetchResult = fetchServerContestInfoUseCase(
@@ -62,7 +66,7 @@ class ContestListViewModel @ViewModelInject constructor(
                 )
             )
 
-            Log.d(LOG_TAG, "fetchResult: [$fetchResult]")
+            logD("fetchResult: [$fetchResult]")
 
             when (fetchResult) {
                 is FetchServerContestInfoUseCase.Result.Success -> updateContestList()
@@ -72,7 +76,7 @@ class ContestListViewModel @ViewModelInject constructor(
         }
     }
 
-    fun updateContestList() {
+    private fun updateContestList() {
         _contestListUpdatedLiveDataEv.postValue(Event(true))
     }
 }

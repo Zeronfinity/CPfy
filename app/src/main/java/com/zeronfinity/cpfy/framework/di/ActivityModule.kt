@@ -6,13 +6,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.scopes.ActivityScoped
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ActivityComponent::class)
 class ActivityModule {
-    @ActivityScoped
     @Provides
     fun provideDisablePlatformUseCase(
         platformRepository: PlatformRepository
@@ -20,7 +17,6 @@ class ActivityModule {
         platformRepository
     )
 
-    @ActivityScoped
     @Provides
     fun provideEnablePlatformUseCase(
         platformRepository: PlatformRepository
@@ -28,7 +24,6 @@ class ActivityModule {
         platformRepository
     )
 
-    @ActivityScoped
     @Provides
     fun provideIsPlatformEnabledUseCase(
         platformRepository: PlatformRepository
@@ -36,7 +31,6 @@ class ActivityModule {
         platformRepository
     )
 
-    @ActivityScoped
     @Provides
     fun provideGetFilteredContestListUseCase(
         contestRepository: ContestRepository,
@@ -47,24 +41,21 @@ class ActivityModule {
         platformRepository,
         filterTimeRangeRepository
     )
-
-    @ActivityScoped
+    
     @Provides
     fun provideGetPlatformUseCase(
         platformRepository: PlatformRepository
     ) = GetPlatformUseCase(
         platformRepository
     )
-
-    @ActivityScoped
+    
     @Provides
     fun provideGetPlatformListUseCase(
         platformRepository: PlatformRepository
     ) = GetPlatformListUseCase(
         platformRepository
     )
-
-    @ActivityScoped
+    
     @Provides
     fun provideFetchServerContestInfoUseCase(
         contestRepository: ContestRepository,
@@ -75,8 +66,7 @@ class ActivityModule {
         platformRepository,
         serverContestInfoRepository
     )
-
-    @ActivityScoped
+    
     @Provides
     fun provideGetFilterTimeUseCase(
         filterTimeRangeRepository: FilterTimeRangeRepository
@@ -84,23 +74,20 @@ class ActivityModule {
         filterTimeRangeRepository
     )
 
-    @ActivityScoped
     @Provides
     fun provideSetFilterTimeUseCase(
         filterTimeRangeRepository: FilterTimeRangeRepository
     ) = SetFilterTimeUseCase(
         filterTimeRangeRepository
     )
-
-    @ActivityScoped
+    
     @Provides
     fun provideGetFilterDurationUseCase(
         filterTimeRangeRepository: FilterTimeRangeRepository
     ) = GetFilterDurationUseCase(
         filterTimeRangeRepository
     )
-
-    @ActivityScoped
+    
     @Provides
     fun provideSetFilterDurationUseCase(
         filterTimeRangeRepository: FilterTimeRangeRepository
@@ -108,7 +95,6 @@ class ActivityModule {
         filterTimeRangeRepository
     )
 
-    @ActivityScoped
     @Provides
     fun provideSetCookieUseCase(
         cookieRepository: CookieRepository

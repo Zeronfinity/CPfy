@@ -15,12 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DurationPickerDiaFrag : DialogFragment() {
-    private val LOG_TAG = FiltersFragment::class.simpleName
-
     private var _binding: FragmentDurationPickerBinding? = null
     private val binding get() = _binding!!
 
-    val args: DurationPickerDiaFragArgs by navArgs()
+    private val args: DurationPickerDiaFragArgs by navArgs()
 
     private lateinit var filtersViewModel: FiltersViewModel
 

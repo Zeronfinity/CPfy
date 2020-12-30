@@ -61,7 +61,6 @@ class ApplicationModule {
     fun provideCookieRepository(application: Application) =
         CookieRepository(CookieSharedPreferences(application as CustomApplication))
 
-    @Singleton
     @Provides
     fun provideGetCookieUseCase(
         cookieRepository: CookieRepository

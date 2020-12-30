@@ -2,7 +2,6 @@ package com.zeronfinity.cpfy.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.zeronfinity.core.logger.logD
+import com.zeronfinity.core.logger.logE
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.FragmentWebViewBinding
 import com.zeronfinity.cpfy.viewmodel.CookieViewModel
@@ -21,12 +22,10 @@ import java.net.URL
 
 @AndroidEntryPoint
 class WebViewFragment : Fragment() {
-    private val LOG_TAG = WebViewFragment::class.simpleName
-
     private var _binding: FragmentWebViewBinding? = null
     private val binding get() = _binding!!
 
-    val args: WebViewFragmentArgs by navArgs()
+    private val args: WebViewFragmentArgs by navArgs()
 
     private lateinit var cookieViewModel: CookieViewModel
 
@@ -35,7 +34,7 @@ class WebViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(LOG_TAG, "onCreateView started")
+        logD("onCreateView started")
 
         _binding = FragmentWebViewBinding.inflate(inflater, container, false)
         return binding.root
@@ -44,7 +43,7 @@ class WebViewFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(LOG_TAG, "onViewCreated started")
+        logD("onViewCreated started")
 
         cookieViewModel = ViewModelProvider(this).get(CookieViewModel::class.java)
 
@@ -65,13 +64,13 @@ class WebViewFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            else -> Log.e(LOG_TAG, "No url argument found!")
+            else -> logE("No url argument found!")
         }
 
         findNavController().addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.contestListFragment -> {
-                    Log.d(LOG_TAG, "addOnDestinationChangedListener called, destination: contestListFragment")
+                    logD("addOnDestinationChangedListener called, destination: contestListFragment")
                     getSessionCookieFromAppCookieManager(getString(R.string.clist_base_url))?.let {
                         cookieViewModel.setCookie(
                             getString(R.string.clist_session_cookie),
@@ -80,7 +79,7 @@ class WebViewFragment : Fragment() {
                     }
                 }
                 else -> {
-                    Log.d(LOG_TAG, "addOnDestinationChangedListener: destination is not contestListFragment")
+                    logD("addOnDestinationChangedListener: destination is not contestListFragment")
                 }
             }
         }
@@ -89,7 +88,7 @@ class WebViewFragment : Fragment() {
     private fun getSessionCookieFromAppCookieManager(url: String): String? {
         val cookieManager: CookieManager = CookieManager.getInstance()
         val rawCookieHeader = cookieManager.getCookie(URL(url).host)
-        Log.d(LOG_TAG, "Raw Cookie Header: [$rawCookieHeader]")
+        logD("Raw Cookie Header: [$rawCookieHeader]")
 
         rawCookieHeader?.let {
             val cookieStrings = rawCookieHeader.split(";", " ").toTypedArray()
@@ -97,7 +96,7 @@ class WebViewFragment : Fragment() {
             for (cookie in cookieStrings) {
                 val parts = cookie.split("=").toTypedArray()
                 if (parts[0] == "sessionid") {
-                    Log.d(LOG_TAG, "Session cookie: [$cookie]")
+                    logD("Session cookie: [$cookie]")
                     return cookie
                 }
             }

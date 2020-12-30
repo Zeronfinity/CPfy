@@ -6,7 +6,7 @@ import com.zeronfinity.core.repository.CookieDataSource
 import com.zeronfinity.cpfy.R
 
 class CookieSharedPreferences(
-    private val application: Application
+    application: Application
 ) : CookieDataSource {
     private val sharedPref = application.getSharedPreferences(
         application.getString(R.string.shared_preferences_cookies),

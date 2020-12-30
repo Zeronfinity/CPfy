@@ -1,19 +1,19 @@
 package com.zeronfinity.cpfy.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.zeronfinity.core.entity.Platform
+import com.zeronfinity.core.logger.logD
+import com.zeronfinity.core.logger.logE
 import com.zeronfinity.core.usecase.DisablePlatformUseCase
 import com.zeronfinity.core.usecase.EnablePlatformUseCase
 import com.zeronfinity.core.usecase.GetPlatformListUseCase
 import com.zeronfinity.core.usecase.IsPlatformEnabledUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ItemPlatformFilterBinding
-import com.zeronfinity.cpfy.view.MainActivity
 import javax.inject.Inject
 
 class AdapterPlatformFilters @Inject constructor(
@@ -22,7 +22,6 @@ class AdapterPlatformFilters @Inject constructor(
     private val isPlatformEnabledUseCase: IsPlatformEnabledUseCase,
     private val getPlatformListUseCase: GetPlatformListUseCase
 ) : RecyclerView.Adapter<AdapterPlatformFilters.PlatformViewHolder>() {
-    private val LOG_TAG = MainActivity::class.simpleName
 
     interface PlatformFilterClickListener {
         fun onPlatformFilterClick()
@@ -51,6 +50,7 @@ class AdapterPlatformFilters @Inject constructor(
             }
 
             binding.btnPlatformFilter.setOnClickListener {
+                logD("platform button clicked -> tag: [${it.tag}], platform: [${platform.name}]")
                 when (it.tag) {
                     "enabled" -> {
                         disableButton(it as Button)
@@ -61,7 +61,7 @@ class AdapterPlatformFilters @Inject constructor(
                         enablePlatformUseCase(platform.name)
                     }
                     else -> {
-                        Log.e(LOG_TAG, "Invalid platform filter button tag: " + it.tag.toString())
+                        logE("Invalid platform filter button tag: " + it.tag.toString())
                     }
                 }
                 platformFilterClickListener?.onPlatformFilterClick()
@@ -89,12 +89,17 @@ class AdapterPlatformFilters @Inject constructor(
         return PlatformViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: PlatformViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: PlatformViewHolder, position: Int) {
         holder.bind(platformList[position])
+    }
 
-    override fun getItemCount() = platformList.size
+    override fun getItemCount(): Int {
+        return platformList.size
+    }
 
     fun refreshPlatformList() {
+        logD("refreshPlatformList() started")
+
         platformList = getPlatformListUseCase()
         notifyDataSetChanged()
     }
