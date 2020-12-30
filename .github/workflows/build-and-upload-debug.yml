@@ -1,10 +1,8 @@
 name: Build & Upload Debug APK Artifact
 
 on:
-  pull_request:
-    branches: 'master'
   push:
-    branches: 'master'
+    branches: '*'
     
 jobs:
   build:
