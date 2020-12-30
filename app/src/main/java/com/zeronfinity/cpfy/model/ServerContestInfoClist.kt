@@ -1,12 +1,12 @@
 package com.zeronfinity.cpfy.model
 
-import android.util.Log
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.entity.ServerContestInfoResponse
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.FAILURE
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
 import com.zeronfinity.core.entity.createPlatformShortName
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.ServerContestInfoDataSource
 import com.zeronfinity.cpfy.framework.network.ResultWrapper
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
@@ -15,8 +15,6 @@ import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponse
 class ServerContestInfoClist(
     private val clistNetworkCall: ClistNetworkCall
 ) : ServerContestInfoDataSource {
-    private val LOG_TAG = ServerContestInfoClist::class.simpleName
-
     override suspend fun getInfo(params: Map<String, String>): ServerContestInfoResponse {
         var responseStatus = FAILURE
         var errorCode: Int? = null
@@ -27,7 +25,7 @@ class ServerContestInfoClist(
         val wrappedResult = clistNetworkCall.getContestData(params)
         var clistServerResponse: ClistServerResponse? = null
 
-        Log.d(LOG_TAG, "wrappedResult: [" + wrappedResult.toString() + "]")
+        logD("getInfo() -> wrappedResult: [$wrappedResult]")
 
         when (wrappedResult) {
             is ResultWrapper.Success -> {
@@ -45,7 +43,7 @@ class ServerContestInfoClist(
             }
         }
 
-        Log.d(LOG_TAG, "clistServerResponse: [" + clistServerResponse.toString() + "]")
+        logD("clistServerResponse: [" + clistServerResponse.toString() + "]")
 
         if (clistServerResponse != null) {
             val list = clistServerResponse.contestList
@@ -60,6 +58,9 @@ class ServerContestInfoClist(
                 ))
             }
         }
+
+        logD("getInfo() -> contestList: [$contestList]")
+        logD("getInfo() -> platformList: [$contestList]")
 
         return ServerContestInfoResponse(responseStatus, errorCode, errorDesc, contestList, platformList)
     }

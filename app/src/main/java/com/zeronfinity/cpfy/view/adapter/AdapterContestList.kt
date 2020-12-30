@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.zeronfinity.core.entity.Contest
+import com.zeronfinity.core.logger.logD
+import com.zeronfinity.core.logger.logI
 import com.zeronfinity.core.usecase.GetFilteredContestListUseCase
 import com.zeronfinity.core.usecase.GetPlatformUseCase
 import com.zeronfinity.cpfy.R
@@ -83,6 +85,7 @@ class AdapterContestList @Inject constructor(
             }
 
             val platform = getPlatformUseCase(contest.platformName)
+            logD("bind() -> platform: [${contest}]")
 
             platform?.imageUrl?.let {
                 Picasso.get()
@@ -102,6 +105,8 @@ class AdapterContestList @Inject constructor(
                     Toast.makeText(it.context, "No external app found for opening url!", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            logD("bind() ended -> contest: [${contest}]")
         }
     }
 
@@ -115,13 +120,17 @@ class AdapterContestList @Inject constructor(
         return ContestViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ContestViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: ContestViewHolder, position: Int) {
         holder.bind(filteredContestList[position])
+    }
 
-    override fun getItemCount() = filteredContestList.size
+    override fun getItemCount(): Int {
+        return filteredContestList.size
+    }
 
     fun refreshContestList() {
         filteredContestList = getFilteredContestListUseCase()
+        logI("refreshContestList() -> filteredContestList: [${filteredContestList}]")
         notifyDataSetChanged()
     }
 

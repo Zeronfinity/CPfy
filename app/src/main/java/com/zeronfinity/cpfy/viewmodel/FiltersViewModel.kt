@@ -1,9 +1,9 @@
 package com.zeronfinity.cpfy.viewmodel
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
@@ -24,8 +24,6 @@ class FiltersViewModel @ViewModelInject constructor(
     private val setFilterTimeUseCase: SetFilterTimeUseCase,
     private val getPlatformListUseCase: GetPlatformListUseCase
 ) : ViewModel() {
-    private val LOG_TAG = FiltersViewModel::class.simpleName
-
     private val numberOfDaysBeforeContestsEnd = 7
 
     val startTimeLowerBoundLiveData = MutableLiveData<String>()
@@ -43,7 +41,7 @@ class FiltersViewModel @ViewModelInject constructor(
     )
 
     fun setTimeFilters(filterTimeEnum: FilterTimeEnum, date: Date) {
-        Log.d(LOG_TAG, "setTimeFilters called: filterTimeEnum = [${filterTimeEnum.name}], date = [$date]")
+        logD("setTimeFilters called: filterTimeEnum = [${filterTimeEnum.name}], date = [$date]")
 
         setFilterTimeUseCase(filterTimeEnum, date)
 
@@ -56,7 +54,7 @@ class FiltersViewModel @ViewModelInject constructor(
     }
 
     fun setDurationFilters(filterDurationEnum: FilterDurationEnum, duration: Int) {
-        Log.d(LOG_TAG, "setDurationFilters called: filterDurationEnum = [${filterDurationEnum.name}], duration = [$duration]")
+        logD("setDurationFilters called: filterDurationEnum = [${filterDurationEnum.name}], duration = [$duration]")
 
         setFilterDurationUseCase(filterDurationEnum, duration)
 

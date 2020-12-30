@@ -1,6 +1,7 @@
 package com.zeronfinity.core.usecase
 
 import com.zeronfinity.core.entity.Contest
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.ContestRepository
 import com.zeronfinity.core.repository.FilterTimeRangeRepository
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
@@ -24,6 +25,11 @@ class GetFilteredContestListUseCase(
         val durationLowerBound = filterTimeRangeRepository.getFilterDuration(DURATION_LOWER_BOUND)
         val durationUpperBound = filterTimeRangeRepository.getFilterDuration(DURATION_UPPER_BOUND)
 
+        logD("allContestList: [$allContestList]")
+        logD("startTimeLowerBound: [$startTimeLowerBound], startTimeUpperBound: [$startTimeUpperBound]" +
+            ", endTimeLowerBound: [$endTimeLowerBound], endTimeUpperBound: [$endTimeUpperBound]" +
+            ", durationLowerBound: [$durationLowerBound], durationUpperBound: [$durationUpperBound]")
+
         for (contest in allContestList) {
             if (platformRepository.isPlatformEnabled(contest.platformName) &&
                 contest.startTime >= startTimeLowerBound &&
@@ -36,6 +42,8 @@ class GetFilteredContestListUseCase(
                 filteredContestList.add(contest)
             }
         }
+
+        logD("filteredContestList: [$filteredContestList]")
 
         return filteredContestList
     }

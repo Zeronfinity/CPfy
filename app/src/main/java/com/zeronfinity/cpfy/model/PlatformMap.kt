@@ -1,6 +1,7 @@
 package com.zeronfinity.cpfy.model
 
 import com.zeronfinity.core.entity.Platform
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.PlatformDataSource
 
 class PlatformMap : PlatformDataSource {
@@ -20,26 +21,29 @@ class PlatformMap : PlatformDataSource {
         }
     }
 
-    override fun getImageUrl(name: String) = platformMap[name]?.imageUrl
-
-    override fun getPlatform(name: String): Platform? = platformMap[name]
-
-    override fun isPlatformEnabled(name: String): Boolean =
-        platformMap[name]?.isEnabled ?: true
-
     override fun enablePlatform(name: String) {
         if (platformMap.containsKey(name)) {
+            logD("enablePlatform() -> name: [$name]")
             platformMap[name]?.isEnabled = true
         }
     }
 
     override fun disablePlatform(name: String) {
         if (platformMap.containsKey(name)) {
+            logD("disablePlatform() -> name: [$name]")
             platformMap[name]?.isEnabled = false
         }
     }
 
+    override fun getImageUrl(name: String) = platformMap[name]?.imageUrl
+
+    override fun getPlatform(name: String): Platform? = platformMap[name]
+
     override fun getPlatformList() = ArrayList(platformMap.values)
+
+    override fun isPlatformEnabled(name: String): Boolean {
+        return platformMap[name]?.isEnabled ?: true
+    }
 
     override fun size() = platformMap.size
 

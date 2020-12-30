@@ -1,7 +1,7 @@
 package com.zeronfinity.cpfy.framework.network.clist
 
 import android.app.Application
-import android.util.Log
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.usecase.GetCookieUseCase
 import com.zeronfinity.cpfy.R
 import okhttp3.Cookie
@@ -17,8 +17,6 @@ class RetrofitClistApiClient(
     application: Application,
     getCookieUseCase: GetCookieUseCase
 ) {
-    private val LOG_TAG = RetrofitClistApiClient::class.simpleName
-
     private val apiBaseUrl = application.getString(R.string.clist_base_url)
     private var retrofit: Retrofit
 
@@ -32,7 +30,7 @@ class RetrofitClistApiClient(
                 override fun loadForRequest(url: HttpUrl): List<Cookie> {
                     val rawCookieString =
                         getCookieUseCase(application.getString(R.string.clist_session_cookie))
-                    Log.d(LOG_TAG, "Raw cookie string: [$rawCookieString]")
+                    logD("Raw cookie string: [$rawCookieString]")
                     val cookieList = ArrayList<Cookie>()
                     rawCookieString?.let {
                         Cookie.parse(
