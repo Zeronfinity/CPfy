@@ -30,6 +30,7 @@ fun makeDurationText(duration: Int): String {
     if (text.isNotEmpty()) {
         text += " "
     }
+    text += "${minutes}m"
 
     return text
 }
