@@ -14,7 +14,7 @@ class FilterTimeRangeSharedPreferences(
         application.getString(R.string.shared_preferences_filters),
         Context.MODE_PRIVATE
     )
-    private val minDefaultDuration = 15 * 60
+    private val minDefaultDuration = 0
     private val maxDefaultDuration = 7 * 24 * 60 * 60
     private val numberOfDaysBeforeContestsEnd = 7
 

@@ -47,7 +47,7 @@ class DurationPickerDiaFrag : DialogFragment() {
         binding.numPickerDays.value = days
 
         binding.numPickerHours.minValue = 0
-        binding.numPickerHours.maxValue = 59
+        binding.numPickerHours.maxValue = 23
         binding.numPickerHours.value = hours
 
         binding.numPickerMinutes.minValue = 0
