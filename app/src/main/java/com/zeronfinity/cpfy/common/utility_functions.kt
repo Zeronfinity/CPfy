@@ -11,7 +11,7 @@ fun makeDurationText(duration: Int): String {
 
     val days = remainingDuration
 
-    var text: String = ""
+    var text = ""
 
     if (days != 0) {
         if (text.isNotEmpty()) {
@@ -20,7 +20,7 @@ fun makeDurationText(duration: Int): String {
         text += "${days}d"
     }
 
-    if (hours != 0) {
+    if (hours != 0 || text.isNotEmpty()) {
         if (text.isNotEmpty()) {
             text += " "
         }
@@ -30,6 +30,7 @@ fun makeDurationText(duration: Int): String {
     if (text.isNotEmpty()) {
         text += " "
     }
+    text += "${minutes}m"
 
     return text
 }
