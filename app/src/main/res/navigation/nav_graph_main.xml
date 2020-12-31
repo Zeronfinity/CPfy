@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_contestListFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
+        <action
+            android:id="@+id/action_contestListFragment_to_clipboardFragment"
+            app:destination="@id/clipboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/filtersFragment"
@@ -39,7 +42,12 @@
         android:label="Web View" >
         <argument
             android:name="urlStringArg"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="https://clist.by" />
     </fragment>
-
+    <fragment
+        android:id="@+id/clipboardFragment"
+        android:name="com.zeronfinity.cpfy.view.ClipboardFragment"
+        android:label="Clipboard"
+        tools:layout="@layout/fragment_clipboard" />
 </navigation>

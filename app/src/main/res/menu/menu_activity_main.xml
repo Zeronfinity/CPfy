@@ -13,6 +13,10 @@
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/menu_settings"
         app:showAsAction="ifRoom" />
+    <item android:id="@+id/webViewFragment"
+        android:icon="@drawable/ic_baseline_web_24"
+        android:title="@string/menu_web_view"
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/aboutFragment"
         android:icon="@drawable/ic_baseline_info_24"
         android:title="@string/menu_about"
