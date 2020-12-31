@@ -59,12 +59,19 @@ class ActivityModule {
     @Provides
     fun provideFetchServerContestInfoUseCase(
         contestRepository: ContestRepository,
-        platformRepository: PlatformRepository,
         serverContestInfoRepository: ServerContestInfoRepository
     ) = FetchServerContestInfoUseCase(
         contestRepository,
-        platformRepository,
         serverContestInfoRepository
+    )
+
+    @Provides
+    fun provideFetchServerPlatformInfoUseCase(
+        platformRepository: PlatformRepository,
+        serverPlatformInfoRepository: ServerPlatformInfoRepository
+    ) = FetchServerPlatformInfoUseCase(
+        platformRepository,
+        serverPlatformInfoRepository
     )
     
     @Provides

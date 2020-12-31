@@ -10,7 +10,7 @@ import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.ServerContestInfoDataSource
 import com.zeronfinity.cpfy.framework.network.ResultWrapper
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponse
+import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponseContests
 
 class ServerContestInfoClist(
     private val clistNetworkCall: ClistNetworkCall
@@ -23,14 +23,14 @@ class ServerContestInfoClist(
         var platformList: MutableList<Platform>? = null
 
         val wrappedResult = clistNetworkCall.getContestData(params)
-        var clistServerResponse: ClistServerResponse? = null
+        var clistServerResponseContests: ClistServerResponseContests? = null
 
         logD("getInfo() -> wrappedResult: [$wrappedResult]")
 
         when (wrappedResult) {
             is ResultWrapper.Success -> {
                 responseStatus = SUCCESS
-                clistServerResponse = wrappedResult.value.body()
+                clistServerResponseContests = wrappedResult.value.body()
             }
             is ResultWrapper.GenericError -> {
                 if (wrappedResult.code != null) {
@@ -43,24 +43,24 @@ class ServerContestInfoClist(
             }
         }
 
-        logD("clistServerResponse: [" + clistServerResponse.toString() + "]")
+        logD("clistServerResponse: [" + clistServerResponseContests.toString() + "]")
 
-        if (clistServerResponse != null) {
-            val list = clistServerResponse.contestList
+        if (clistServerResponseContests != null) {
+            val list = clistServerResponseContests.contestList
             contestList = ArrayList()
             platformList = ArrayList()
 
             for (i in list.indices) {
                 contestList.add(list[i].toContest())
-                platformList.add(Platform(list[i].platformResource.platformName,
-                    "https://clist.by" + list[i].platformResource.iconUrlSegment,
-                    createPlatformShortName(list[i].platformResource.platformName)
+                platformList.add(Platform(list[i].platformResourceObject.platformName,
+                    "https://clist.by" + list[i].platformResourceObject.iconUrlSegment,
+                    createPlatformShortName(list[i].platformResourceObject.platformName)
                 ))
             }
         }
 
         logD("getInfo() -> contestList: [$contestList]")
-        logD("getInfo() -> platformList: [$contestList]")
+        logD("getInfo() -> platformList: [$platformList]")
 
         return ServerContestInfoResponse(responseStatus, errorCode, errorDesc, contestList, platformList)
     }

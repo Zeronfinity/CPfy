@@ -15,7 +15,7 @@ data class ClistContestObjectResponse (
     @field:Json(name = "href")
     var url: String,
     @field:Json(name = "resource")
-    var platformResource: ClistResourceResponse
+    var platformResourceObject: ClistResourceObjectResponse
 ) {
     companion object {
         const val apiDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -27,7 +27,7 @@ data class ClistContestObjectResponse (
         return Contest(
             title,
             duration,
-            platformResource.platformName,
+            platformResourceObject.platformName,
             simpleDateFormatUtc.parse(start),
             simpleDateFormatUtc.parse(end),
             url

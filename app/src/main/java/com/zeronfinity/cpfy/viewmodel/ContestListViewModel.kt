@@ -9,6 +9,7 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.core.usecase.FetchServerContestInfoUseCase
+import com.zeronfinity.core.usecase.FetchServerPlatformInfoUseCase
 import com.zeronfinity.core.usecase.GetFilterDurationUseCase
 import com.zeronfinity.core.usecase.GetFilterTimeUseCase
 import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse
@@ -25,24 +26,28 @@ import java.util.TimeZone
 class ContestListViewModel @ViewModelInject constructor(
     private val getFilterDurationUseCase: GetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
-    private val fetchServerContestInfoUseCase: FetchServerContestInfoUseCase
+    private val fetchServerContestInfoUseCase: FetchServerContestInfoUseCase,
+    private val fetchServerPlatformInfoUseCase: FetchServerPlatformInfoUseCase
 ) : ViewModel() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val numberOfDaysBeforeContestsEnd = 7
 
     private val _contestListUpdatedLiveDataEv = MutableLiveData<Event<Boolean>>()
+    private val _platformListUpdatedLiveDataEv = MutableLiveData<Event<Boolean>>()
     private val _clistWebViewLiveDataEv = MutableLiveData<Event<Boolean>>()
     private val _errorToastIncomingLiveDataEv = MutableLiveData<Event<String>>()
 
     val contestListUpdatedLiveDataEv: LiveData<Event<Boolean>>
             get() = _contestListUpdatedLiveDataEv
+    val platformListUpdatedLiveDataEv: LiveData<Event<Boolean>>
+        get() = _platformListUpdatedLiveDataEv
     val clistWebViewLiveDataEv: LiveData<Event<Boolean>>
             get() = _clistWebViewLiveDataEv
     val errorToastIncomingLiveDataEv: LiveData<Event<String>>
             get() = _errorToastIncomingLiveDataEv
 
-    fun fetchContestListAndPersist() {
-        logD("fetchContestListAndPersist started")
+    fun fetchContestList() {
+        logD("fetchContestListAndPersist() started")
 
         updateContestList()
 
@@ -76,7 +81,31 @@ class ContestListViewModel @ViewModelInject constructor(
         }
     }
 
+    fun fetchPlatformList() {
+        logD("fetchPlatformListAndPersist() started")
+
+        coroutineScope.launch {
+            val fetchResult = fetchServerPlatformInfoUseCase()
+
+            logD("fetchResult: [$fetchResult]")
+
+            when (fetchResult) {
+                is FetchServerPlatformInfoUseCase.Result.Success -> {
+                    if (fetchResult.isUpdateRequired) {
+                        updatePlatformList()
+                    }
+                }
+                is FetchServerPlatformInfoUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(Event(fetchResult.errorMsg))
+                is FetchServerPlatformInfoUseCase.Result.UnauthorizedError -> _clistWebViewLiveDataEv.postValue(Event(true))
+            }
+        }
+    }
+
     private fun updateContestList() {
         _contestListUpdatedLiveDataEv.postValue(Event(true))
+    }
+
+    private fun updatePlatformList() {
+        _platformListUpdatedLiveDataEv.postValue(Event(true))
     }
 }

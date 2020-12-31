@@ -6,12 +6,8 @@ import com.zeronfinity.core.usecase.GetCookieUseCase
 import com.zeronfinity.cpfy.CustomApplication
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiClient
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiInterface
-import com.zeronfinity.cpfy.model.ContestArrayList
-import com.zeronfinity.cpfy.model.FilterTimeRangeSharedPreferences
-import com.zeronfinity.cpfy.model.PlatformMap
-import com.zeronfinity.cpfy.model.ServerContestInfoClist
+import com.zeronfinity.cpfy.model.*
 import com.zeronfinity.cpfy.model.network.ClistNetworkCall
-import com.zeronfinity.cpfy.model.CookieSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,6 +46,11 @@ class ApplicationModule {
     @Provides
     fun provideServerContestInfoRepository(clistNetworkCall: ClistNetworkCall) =
         ServerContestInfoRepository(ServerContestInfoClist(clistNetworkCall))
+
+    @Singleton
+    @Provides
+    fun provideServerPlatformInfoRepository(application: Application, clistNetworkCall: ClistNetworkCall) =
+        ServerPlatformInfoRepository(ServerPlatformInfoClist(application as CustomApplication, clistNetworkCall))
 
     @Singleton
     @Provides

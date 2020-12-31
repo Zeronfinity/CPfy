@@ -7,7 +7,8 @@ import com.zeronfinity.cpfy.framework.network.ErrorResponse
 import com.zeronfinity.cpfy.framework.network.ResultWrapper
 import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiInterface
 import com.zeronfinity.cpfy.framework.network.safeNetworkCall
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponse
+import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponseContests
+import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponsePlatforms
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
 import java.net.HttpURLConnection
@@ -16,14 +17,33 @@ class ClistNetworkCall(
     private val application: CustomApplication,
     private val apiInterface: RetrofitClistApiInterface
 ) {
-    suspend fun getContestData(params: Map<String, String>): ResultWrapper<Response<ClistServerResponse>> {
-        logD("params: [" + params.toString() + "]")
+    suspend fun getContestData(params: Map<String, String>): ResultWrapper<Response<ClistServerResponseContests>> {
+        logD("getContestData() started -> params: [$params]")
 
         val wrappedResult = safeNetworkCall(Dispatchers.Default) {
             apiInterface.getContestData(
                 application.getString(R.string.clist_api_username),
                 application.getClistApiKey(),
                 params
+            )
+        }
+
+        if (wrappedResult is ResultWrapper.Success) {
+            if (wrappedResult.value.code() != HttpURLConnection.HTTP_OK) {
+                return ResultWrapper.GenericError(wrappedResult.value.code(), ErrorResponse(wrappedResult.value.message(), emptyMap()))
+            }
+        }
+
+        return wrappedResult
+    }
+
+    suspend fun getPlatformData(): ResultWrapper<Response<ClistServerResponsePlatforms>> {
+        logD("getPlatformData() started")
+
+        val wrappedResult = safeNetworkCall(Dispatchers.Default) {
+            apiInterface.getPlatformData(
+                application.getString(R.string.clist_api_username),
+                application.getClistApiKey()
             )
         }
 
