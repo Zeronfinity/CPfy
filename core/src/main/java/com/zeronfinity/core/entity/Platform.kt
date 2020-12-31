@@ -14,6 +14,7 @@ fun createPlatformShortName(name: String): String = when {
     name.contains("codility.com", ignoreCase = true) -> "Codility"
     name.contains("codechef.com", ignoreCase = true) -> "CodeChef"
     name.contains("codeforces.com", ignoreCase = true) -> "Codeforces"
+    name.contains("codeforces.com/gyms", ignoreCase = true) -> "Codeforces Gym"
     name.contains("ctftime.org", ignoreCase = true) -> "CTFtime"
     name.contains("dl.gsu.by", ignoreCase = true) -> "Distance Learning"
     name.contains("e-olymp.com", ignoreCase = true) -> "E-Olymp"
