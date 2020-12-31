@@ -27,11 +27,8 @@ fun makeDurationText(duration: Int): String {
         text += "${hours}h"
     }
 
-    if (minutes != 0) {
-        if (text.isNotEmpty()) {
-            text += " "
-        }
-        text += "${minutes}m"
+    if (text.isNotEmpty()) {
+        text += " "
     }
 
     return text
