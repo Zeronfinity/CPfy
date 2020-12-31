@@ -49,7 +49,7 @@ class AdapterContestList @Inject constructor(
                 )
 
                 binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
-                    R.string.started_on_colon_tv_label
+                    R.string.started_at_colon_tv_label
                 )
                 binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(
                     R.string.time_left_colon_tv_label
@@ -73,7 +73,7 @@ class AdapterContestList @Inject constructor(
                 )
 
                 binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
-                    R.string.starts_on_colon_tv_label
+                    R.string.starts_at_colon_tv_label
                 )
                 binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(
                     R.string.duration_colon_tv_label

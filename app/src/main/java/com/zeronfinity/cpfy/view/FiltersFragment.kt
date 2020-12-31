@@ -21,6 +21,7 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.cpfy.R
+import com.zeronfinity.cpfy.common.makeDurationText
 import com.zeronfinity.cpfy.databinding.FragmentFiltersBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters
 import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters.PlatformFilterClickListener
@@ -252,19 +253,5 @@ class FiltersFragment
 
         // TODO: make this true only if duration is actually changed
         isContestListRefreshRequired = true
-    }
-
-    private fun makeDurationText(duration: Int): String {
-        var remainingDuration = duration / 60
-
-        val minutes = remainingDuration % 60
-        remainingDuration /= 60
-
-        val hours = remainingDuration % 24
-        remainingDuration /= 24
-
-        val days = remainingDuration
-
-        return "${days}d ${hours}h ${minutes}m"
     }
 }

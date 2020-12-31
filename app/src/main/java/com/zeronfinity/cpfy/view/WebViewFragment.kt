@@ -56,20 +56,18 @@ class WebViewFragment : Fragment() {
         binding.webView.webViewClient = WebViewClient()
 
         when (args.urlStringArg) {
+            getString(R.string.clist_base_url),
             getString(R.string.clist_login_url) -> {
                 binding.webView.loadUrl(args.urlStringArg)
-                Toast.makeText(
-                    activity?.applicationContext,
-                    "API limit reached!\nSign up or log into your own clist.by account to continue",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            else -> logE("No url argument found!")
-        }
+                if (args.urlStringArg == getString(R.string.clist_login_url)) {
+                    Toast.makeText(
+                        activity?.applicationContext,
+                        "API limit reached!\nSign up or log into your own clist.by account to continue",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
 
-        findNavController().addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.contestListFragment -> {
+                findNavController().addOnDestinationChangedListener { _, _, _ ->
                     logD("addOnDestinationChangedListener called, destination: contestListFragment")
                     getSessionCookieFromAppCookieManager(getString(R.string.clist_base_url))?.let {
                         cookieViewModel.setCookie(
@@ -78,10 +76,8 @@ class WebViewFragment : Fragment() {
                         )
                     }
                 }
-                else -> {
-                    logD("addOnDestinationChangedListener: destination is not contestListFragment")
-                }
             }
+            else -> logE("No url argument found!")
         }
     }
 
