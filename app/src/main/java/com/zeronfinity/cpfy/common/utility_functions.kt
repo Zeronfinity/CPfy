@@ -20,7 +20,7 @@ fun makeDurationText(duration: Int): String {
         text += "${days}d"
     }
 
-    if (hours != 0) {
+    if (hours != 0 || text.isNotEmpty()) {
         if (text.isNotEmpty()) {
             text += " "
         }
