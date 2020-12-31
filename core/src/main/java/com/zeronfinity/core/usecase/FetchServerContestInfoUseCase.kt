@@ -1,13 +1,13 @@
 package com.zeronfinity.core.usecase
 
 import com.zeronfinity.core.entity.ServerContestInfoResponse
+import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
 import com.zeronfinity.core.repository.ContestRepository
 import com.zeronfinity.core.repository.PlatformRepository
 import com.zeronfinity.core.repository.ServerContestInfoRepository
 
 class FetchServerContestInfoUseCase(
     private val contestRepository: ContestRepository,
-    private val platformRepository: PlatformRepository,
     private val serverContestInfoRepository: ServerContestInfoRepository
 ) {
     sealed class Result {
@@ -19,10 +19,9 @@ class FetchServerContestInfoUseCase(
     suspend operator fun invoke(params: Map<String, String>): Result {
         val serverContestInfoResponse = serverContestInfoRepository.getContestInfo(params)
 
-        return if (serverContestInfoResponse.responseStatus == ServerContestInfoResponse.ResponseStatus.SUCCESS) {
+        return if (serverContestInfoResponse.responseStatus == SUCCESS) {
             contestRepository.removeAllContests()
             serverContestInfoResponse.contestList?.let { contestRepository.addContestList(it) }
-            serverContestInfoResponse.platformList?.let { platformRepository.addPlatformList(it) }
             Result.Success(true)
         } else {
             if (serverContestInfoResponse.errorCode != null) {

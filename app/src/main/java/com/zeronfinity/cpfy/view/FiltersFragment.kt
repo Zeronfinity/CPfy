@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -67,7 +66,7 @@ class FiltersFragment
     override fun onStop() {
         logD("onStop() started -> isContestListRefreshRequired: [$isContestListRefreshRequired]")
         if (isContestListRefreshRequired) {
-            contentListViewModel.fetchContestListAndPersist()
+            contentListViewModel.fetchContestList()
         }
         super.onStop()
     }
@@ -94,7 +93,7 @@ class FiltersFragment
     }
 
     private fun observeContestListViewModel() {
-        contentListViewModel.contestListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
+        contentListViewModel.platformListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
                 logD("contestListUpdatedLiveData: refreshing platform list")
                 refreshPlatformList()

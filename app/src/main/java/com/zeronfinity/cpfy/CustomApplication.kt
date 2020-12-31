@@ -6,6 +6,7 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class CustomApplication : Application() {
+    val isPlatformListFetched = false
 
     override fun onCreate() {
         super.onCreate()

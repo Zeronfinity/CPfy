@@ -51,7 +51,8 @@ class ContestListFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
         observeViewModel()
 
-        viewModel.fetchContestListAndPersist()
+        viewModel.fetchContestList()
+        viewModel.fetchPlatformList()
     }
 
     private fun observeViewModel() {
@@ -67,6 +68,13 @@ class ContestListFragment : Fragment() {
         })
 
         viewModel.contestListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
+            it.getContentIfNotHandled()?.let {
+                logD("contestListUpdatedLiveDataEv: refreshing adapterContestList")
+                adapterContestList.refreshContestList()
+            }
+        })
+
+        viewModel.platformListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
                 logD("contestListUpdatedLiveDataEv: refreshing adapterContestList")
                 adapterContestList.refreshContestList()

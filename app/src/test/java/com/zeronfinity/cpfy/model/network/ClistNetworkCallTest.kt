@@ -5,8 +5,8 @@ import com.zeronfinity.cpfy.CustomApplication
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.framework.network.ResultWrapper.*
 import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse
-import com.zeronfinity.cpfy.model.network.pojo.ClistResourceResponse
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponse
+import com.zeronfinity.cpfy.model.network.pojo.ClistResourceObjectResponse
+import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponseContests
 import com.zeronfinity.cpfy.network.ClistApiClientMock
 import io.mockk.every
 import io.mockk.mockk
@@ -29,7 +29,7 @@ internal class ClistNetworkCallTest {
     private val emptyParamsMap: Map<String, String> = mapOf()
     private val validParamsMap: Map<String, String> = mapOf("key1" to "val1", "key2" to "val2")
 
-    private val platformResource = ClistResourceResponse("/icon_url_segment", "platform_name")
+    private val platformResource = ClistResourceObjectResponse("/icon_url_segment", "platform_name")
     private val contestObject1 = ClistContestObjectResponse(
         "title1",
         "2020-12-30T07:00:00",
@@ -46,7 +46,7 @@ internal class ClistNetworkCallTest {
     )
 
     private val emptyParamServerResponseJson = convertToJson(
-        ClistServerResponse(
+        ClistServerResponseContests(
             listOf(
                 contestObject1,
                 contestObject2
@@ -54,7 +54,7 @@ internal class ClistNetworkCallTest {
         )
     )
     private val validParamServerResponseJson = convertToJson(
-        ClistServerResponse(
+        ClistServerResponseContests(
             listOf(
                 contestObject1
             )
@@ -62,7 +62,7 @@ internal class ClistNetworkCallTest {
     )
 
     private val emptyParamResponseExpected = Response.success(
-        ClistServerResponse(
+        ClistServerResponseContests(
             listOf(
                 contestObject1,
                 contestObject2
@@ -70,7 +70,7 @@ internal class ClistNetworkCallTest {
         )
     )
     private val validParamResponseExpected = Response.success(
-        ClistServerResponse(
+        ClistServerResponseContests(
             listOf(
                 contestObject1
             )
@@ -347,6 +347,6 @@ internal class ClistNetworkCallTest {
 
     /* Helper functions */
 
-    private fun convertToJson(clistServerResponse: ClistServerResponse) =
-        Moshi.Builder().build().adapter(ClistServerResponse::class.java).toJson(clistServerResponse)
+    private fun convertToJson(clistServerResponseContests: ClistServerResponseContests) =
+        Moshi.Builder().build().adapter(ClistServerResponseContests::class.java).toJson(clistServerResponseContests)
 }
