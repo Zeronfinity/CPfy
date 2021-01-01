@@ -43,7 +43,7 @@ class AdapterPlatformFilters @Inject constructor(
             binding.btnPlatformFilter.isSelected = true
             binding.btnPlatformFilter.text = platform.shortName
 
-            if (isPlatformEnabledUseCase(platform.name)) {
+            if (isPlatformEnabledUseCase(platform.id)) {
                 enableButton(binding.btnPlatformFilter)
             } else {
                 disableButton(binding.btnPlatformFilter)
@@ -54,11 +54,11 @@ class AdapterPlatformFilters @Inject constructor(
                 when (it.tag) {
                     "enabled" -> {
                         disableButton(it as Button)
-                        disablePlatformUseCase(platform.name)
+                        disablePlatformUseCase(platform.id)
                     }
                     "disabled" -> {
                         enableButton(it as Button)
-                        enablePlatformUseCase(platform.name)
+                        enablePlatformUseCase(platform.id)
                     }
                     else -> {
                         logE("Invalid platform filter button tag: " + it.tag.toString())

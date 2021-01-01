@@ -78,7 +78,7 @@ class FiltersViewModel @ViewModelInject constructor(
     fun enableAllPlatforms() {
         val platformList = getPlatformListUseCase()
         for (platform in platformList) {
-            enablePlatformUseCase(platform.name)
+            enablePlatformUseCase(platform.id)
         }
         platformListUpdatedLiveData.postValue(true)
     }
@@ -86,7 +86,7 @@ class FiltersViewModel @ViewModelInject constructor(
     fun disableAllPlatforms() {
         val platformList = getPlatformListUseCase()
         for (platform in platformList) {
-            disablePlatformUseCase(platform.name)
+            disablePlatformUseCase(platform.id)
         }
         platformListUpdatedLiveData.postValue(true)
     }
