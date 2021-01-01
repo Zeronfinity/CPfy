@@ -52,7 +52,9 @@ class ServerContestInfoClist(
 
             for (i in list.indices) {
                 contestList.add(list[i].toContest())
-                platformList.add(Platform(list[i].platformResourceObject.platformName,
+                platformList.add(Platform(
+                    list[i].platformResourceObject.platformId,
+                    list[i].platformResourceObject.platformName,
                     "https://clist.by" + list[i].platformResourceObject.iconUrlSegment,
                     createPlatformShortName(list[i].platformResourceObject.platformName)
                 ))

@@ -84,7 +84,7 @@ class AdapterContestList @Inject constructor(
                     )
             }
 
-            val platform = getPlatformUseCase(contest.platformName)
+            val platform = getPlatformUseCase(contest.platformId)
             logD("bind() -> platform: [${contest}]")
 
             platform?.imageUrl?.let {

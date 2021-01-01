@@ -31,7 +31,7 @@ class GetFilteredContestListUseCase(
             ", durationLowerBound: [$durationLowerBound], durationUpperBound: [$durationUpperBound]")
 
         for (contest in allContestList) {
-            if (platformRepository.isPlatformEnabled(contest.platformName) &&
+            if (platformRepository.isPlatformEnabled(contest.platformId) &&
                 contest.startTime >= startTimeLowerBound &&
                 contest.startTime <= startTimeUpperBound &&
                 contest.endTime >= endTimeLowerBound &&

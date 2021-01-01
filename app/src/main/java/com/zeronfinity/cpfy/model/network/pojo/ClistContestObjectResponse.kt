@@ -27,7 +27,7 @@ data class ClistContestObjectResponse (
         return Contest(
             title,
             duration,
-            platformResourceObject.platformName,
+            platformResourceObject.platformId,
             simpleDateFormatUtc.parse(start),
             simpleDateFormatUtc.parse(end),
             url

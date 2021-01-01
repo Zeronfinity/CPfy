@@ -52,10 +52,14 @@ class ServerPlatformInfoClist(
             platformList = ArrayList()
 
             for (i in list.indices) {
-                platformList.add(Platform(list[i].platformName,
-                    "https://clist.by" + list[i].iconUrlSegment,
-                    createPlatformShortName(list[i].platformName)
-                ))
+                platformList.add(
+                    Platform(
+                        list[i].platformId,
+                        list[i].platformName,
+                        "https://clist.by" + list[i].iconUrlSegment,
+                        createPlatformShortName(list[i].platformName)
+                    )
+                )
             }
         }
 

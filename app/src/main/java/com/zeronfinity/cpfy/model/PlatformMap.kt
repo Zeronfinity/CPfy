@@ -5,14 +5,14 @@ import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.PlatformDataSource
 
 class PlatformMap : PlatformDataSource {
-    private val platformMap = mutableMapOf<String, Platform>()
+    private val platformMap = mutableMapOf<Int, Platform>()
 
     override fun add(platform: Platform) {
-        if (platformMap.containsKey(platform.name)) {
-            platform.isEnabled = platformMap[platform.name]?.isEnabled ?: true
+        if (platformMap.containsKey(platform.id)) {
+            platform.isEnabled = platformMap[platform.id]?.isEnabled ?: true
         }
 
-        platformMap[platform.name] = platform
+        platformMap[platform.id] = platform
     }
 
     override fun add(platformList: List<Platform>) {
@@ -21,28 +21,28 @@ class PlatformMap : PlatformDataSource {
         }
     }
 
-    override fun enablePlatform(name: String) {
-        if (platformMap.containsKey(name)) {
-            logD("enablePlatform() -> name: [$name]")
-            platformMap[name]?.isEnabled = true
+    override fun enablePlatform(id: Int) {
+        if (platformMap.containsKey(id)) {
+            logD("enablePlatform() -> id: [$id]")
+            platformMap[id]?.isEnabled = true
         }
     }
 
-    override fun disablePlatform(name: String) {
-        if (platformMap.containsKey(name)) {
-            logD("disablePlatform() -> name: [$name]")
-            platformMap[name]?.isEnabled = false
+    override fun disablePlatform(id: Int) {
+        if (platformMap.containsKey(id)) {
+            logD("disablePlatform() -> id: [$id]")
+            platformMap[id]?.isEnabled = false
         }
     }
 
-    override fun getImageUrl(name: String) = platformMap[name]?.imageUrl
+    override fun getImageUrl(id: Int) = platformMap[id]?.imageUrl
 
-    override fun getPlatform(name: String): Platform? = platformMap[name]
+    override fun getPlatform(id: Int): Platform? = platformMap[id]
 
     override fun getPlatformList() = ArrayList(platformMap.values)
 
-    override fun isPlatformEnabled(name: String): Boolean {
-        return platformMap[name]?.isEnabled ?: true
+    override fun isPlatformEnabled(id: Int): Boolean {
+        return platformMap[id]?.isEnabled ?: true
     }
 
     override fun size() = platformMap.size

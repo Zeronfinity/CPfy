@@ -33,14 +33,14 @@ class ClipboardViewModel @ViewModelInject constructor(
 
     private val _clipboardTextLiveData = MutableLiveData<CharSequence>()
     val clipboardTextLiveData: LiveData<CharSequence>
-            get() = _clipboardTextLiveData
+        get() = _clipboardTextLiveData
 
     fun fetchClipboardText() {
         logD("fetchClipboardText() started")
 
         val contestList = getFilteredContestListUseCase()
 
-        var clipboardText:CharSequence = ""
+        var clipboardText: CharSequence = ""
 
         for (contest in contestList) {
             if (clipboardText.isNotEmpty()) {
@@ -48,7 +48,9 @@ class ClipboardViewModel @ViewModelInject constructor(
             }
 
             val spannableString = SpannableStringBuilder()
-                .bold { append(">>> ${getPlatformUseCase(contest.platformName)?.shortName ?: contest.platformName}:") }
+                .bold {
+                    append(getPlatformUseCase(contest.platformId)?.let { ">>> ${it.shortName}:" })
+                }
                 .append(" ${contest.name}\n")
                 .italic { append(application.getString(R.string.starts_at_colon_tv_label)) }
                 .append(

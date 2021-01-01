@@ -1,6 +1,7 @@
 package com.zeronfinity.core.entity
 
 data class Platform(
+    val id: Int,
     val name: String,
     val imageUrl: String,
     val shortName: String,

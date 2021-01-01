@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.function.Executable
 
 internal class PlatformMapTest {
-    private val platform1 = Platform("name1", "imageUrl1", "shortName1")
-    private val platform2 = Platform("name2", "imageUrl2", "shortName2")
-    private val platform1Dup = Platform("name1", "imageUrl3", "shortName1")
-    private val platform2Dup = Platform("name2", "imageUrl4", "shortName2")
-    private val platform3 = Platform("name3", "imageUrl3", "shortName3")
-    private val platform4 = Platform("name4", "imageUrl4", "shortName4")
+    private val platform1 = Platform(1, "name1", "imageUrl1", "shortName1")
+    private val platform2 = Platform(2, "name2", "imageUrl2", "shortName2")
+    private val platform1Dup = Platform(1, "name1", "imageUrl3", "shortName1")
+    private val platform2Dup = Platform(2, "name2", "imageUrl4", "shortName2")
+    private val platform3 = Platform(3, "name3", "imageUrl3", "shortName3")
+    private val platform4 = Platform(4, "name4", "imageUrl4", "shortName4")
     private val platformListPreInserted = arrayListOf(platform4, platform3)
 
     private val sut = PlatformMap()
