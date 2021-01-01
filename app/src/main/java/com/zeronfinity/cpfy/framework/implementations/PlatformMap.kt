@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.model
+package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.logger.logD

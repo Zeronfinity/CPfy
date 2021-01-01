@@ -1,6 +1,7 @@
-package com.zeronfinity.cpfy.model
+package com.zeronfinity.cpfy.implementations
 
 import com.zeronfinity.core.entity.Platform
+import com.zeronfinity.cpfy.framework.implementations.PlatformMap
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

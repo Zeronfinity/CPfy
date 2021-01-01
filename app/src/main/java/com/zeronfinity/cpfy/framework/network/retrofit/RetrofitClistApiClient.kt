@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.framework.network.clist
+package com.zeronfinity.cpfy.framework.network.retrofit
 
 import android.app.Application
 import com.zeronfinity.core.logger.logD

@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.model
+package com.zeronfinity.cpfy.framework.implementations
 
 import android.app.Application
 import android.content.Context

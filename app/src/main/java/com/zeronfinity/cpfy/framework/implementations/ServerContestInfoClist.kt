@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.model
+package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.entity.Platform
@@ -9,8 +9,8 @@ import com.zeronfinity.core.entity.createPlatformShortName
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.ServerContestInfoDataSource
 import com.zeronfinity.cpfy.framework.network.ResultWrapper
-import com.zeronfinity.cpfy.model.network.ClistNetworkCall
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponseContests
+import com.zeronfinity.cpfy.framework.network.ClistNetworkCall
+import com.zeronfinity.cpfy.framework.network.pojo.ClistServerResponseContests
 
 class ServerContestInfoClist(
     private val clistNetworkCall: ClistNetworkCall

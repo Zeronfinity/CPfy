@@ -1,12 +1,13 @@
-package com.zeronfinity.cpfy.model.network
+package com.zeronfinity.cpfy.implementations.network
 
 import com.squareup.moshi.Moshi
 import com.zeronfinity.cpfy.CustomApplication
 import com.zeronfinity.cpfy.R
+import com.zeronfinity.cpfy.framework.network.ClistNetworkCall
 import com.zeronfinity.cpfy.framework.network.ResultWrapper.*
-import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse
-import com.zeronfinity.cpfy.model.network.pojo.ClistResourceObjectResponse
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponseContests
+import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
+import com.zeronfinity.cpfy.framework.network.pojo.ClistResourceObjectResponse
+import com.zeronfinity.cpfy.framework.network.pojo.ClistServerResponseContests
 import com.zeronfinity.cpfy.network.ClistApiClientMock
 import io.mockk.every
 import io.mockk.mockk

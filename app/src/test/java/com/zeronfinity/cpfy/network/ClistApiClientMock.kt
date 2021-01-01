@@ -1,6 +1,6 @@
 package com.zeronfinity.cpfy.network
 
-import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiInterface
+import com.zeronfinity.cpfy.framework.network.retrofit.RetrofitClistApiInterface
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import retrofit2.Retrofit

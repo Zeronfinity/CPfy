@@ -1,14 +1,13 @@
-package com.zeronfinity.cpfy.model
+package com.zeronfinity.cpfy.framework.implementations
 
-import android.app.Application
 import com.zeronfinity.core.entity.*
 import com.zeronfinity.core.entity.ServerPlatformInfoResponse.ResponseStatus.*
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.ServerPlatformInfoDataSource
 import com.zeronfinity.cpfy.CustomApplication
 import com.zeronfinity.cpfy.framework.network.ResultWrapper
-import com.zeronfinity.cpfy.model.network.ClistNetworkCall
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponsePlatforms
+import com.zeronfinity.cpfy.framework.network.ClistNetworkCall
+import com.zeronfinity.cpfy.framework.network.pojo.ClistServerResponsePlatforms
 
 class ServerPlatformInfoClist(
     private val application: CustomApplication,

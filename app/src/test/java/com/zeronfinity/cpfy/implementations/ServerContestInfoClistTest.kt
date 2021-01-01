@@ -1,15 +1,16 @@
-package com.zeronfinity.cpfy.model
+package com.zeronfinity.cpfy.implementations
 
 import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.entity.ServerContestInfoResponse
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.FAILURE
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
+import com.zeronfinity.cpfy.framework.implementations.ServerContestInfoClist
 import com.zeronfinity.cpfy.framework.network.ErrorResponse
 import com.zeronfinity.cpfy.framework.network.ResultWrapper.*
-import com.zeronfinity.cpfy.model.network.ClistNetworkCall
-import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse
-import com.zeronfinity.cpfy.model.network.pojo.ClistResourceObjectResponse
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponseContests
+import com.zeronfinity.cpfy.framework.network.ClistNetworkCall
+import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
+import com.zeronfinity.cpfy.framework.network.pojo.ClistResourceObjectResponse
+import com.zeronfinity.cpfy.framework.network.pojo.ClistServerResponseContests
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.slot

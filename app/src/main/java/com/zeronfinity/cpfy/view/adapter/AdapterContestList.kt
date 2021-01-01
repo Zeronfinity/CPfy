@@ -85,7 +85,7 @@ class AdapterContestList @Inject constructor(
             }
 
             val platform = getPlatformUseCase(contest.platformId)
-            logD("bind() -> platform: [${contest}]")
+//            logD("bind() -> platform: [${contest}]")
 
             platform?.imageUrl?.let {
                 Picasso.get()
@@ -106,7 +106,7 @@ class AdapterContestList @Inject constructor(
                 }
             }
 
-            logD("bind() ended -> contest: [${contest}]")
+//            logD("bind() ended -> contest: [${contest}]")
         }
     }
 
