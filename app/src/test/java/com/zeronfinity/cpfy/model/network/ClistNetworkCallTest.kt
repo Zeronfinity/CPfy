@@ -29,7 +29,7 @@ internal class ClistNetworkCallTest {
     private val emptyParamsMap: Map<String, String> = mapOf()
     private val validParamsMap: Map<String, String> = mapOf("key1" to "val1", "key2" to "val2")
 
-    private val platformResource = ClistResourceObjectResponse("/icon_url_segment", "platform_name")
+    private val platformResource = ClistResourceObjectResponse(1, "/icon_url_segment", "platform_name")
     private val contestObject1 = ClistContestObjectResponse(
         "title1",
         "2020-12-30T07:00:00",

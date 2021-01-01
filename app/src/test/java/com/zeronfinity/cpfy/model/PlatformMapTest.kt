@@ -30,8 +30,8 @@ internal class PlatformMapTest {
             sut.add(platform2)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.name)) }
+                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.id)) }
             )
         }
 
@@ -44,8 +44,8 @@ internal class PlatformMapTest {
             sut.add(platform1Dup)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1Dup.name)) }
+                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1Dup.id)) }
             )
         }
 
@@ -60,10 +60,10 @@ internal class PlatformMapTest {
             sut.add(platform2)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1Dup.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2Dup.name)) }
+                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1Dup.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2Dup.id)) }
             )
         }
 
@@ -75,8 +75,8 @@ internal class PlatformMapTest {
             sut.add(arrayListOf(platform1, platform2))
             // Assert
             assertAll(
-                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.name)) }
+                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.id)) }
             )
         }
 
@@ -88,9 +88,9 @@ internal class PlatformMapTest {
             sut.add(arrayListOf(platform1, platform2Dup, platform2))
             // Assert
             assertAll(
-                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2Dup.name)) }
+                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2Dup.id)) }
             )
         }
 
@@ -103,8 +103,8 @@ internal class PlatformMapTest {
             sut.add(platform2)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) }
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.id)) }
             )
         }
 
@@ -117,8 +117,8 @@ internal class PlatformMapTest {
             sut.add(platform1Dup)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.name)) }
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.id)) }
             )
         }
 
@@ -133,10 +133,10 @@ internal class PlatformMapTest {
             sut.add(platform2)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.name)) }
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.id)) }
             )
         }
 
@@ -148,8 +148,8 @@ internal class PlatformMapTest {
             sut.add(arrayListOf(platform1, platform2))
             // Assert
             assertAll(
-                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) }
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.id)) }
             )
         }
 
@@ -161,9 +161,9 @@ internal class PlatformMapTest {
             sut.add(arrayListOf(platform1, platform2Dup, platform2))
             // Assert
             assertAll(
-                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.name)) }
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.id)) }
             )
         }
 
@@ -218,8 +218,8 @@ internal class PlatformMapTest {
             sut.add(platform2)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.name)) }
+                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.id)) }
             )
         }
 
@@ -232,8 +232,8 @@ internal class PlatformMapTest {
             sut.add(platform1Dup)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1Dup.name)) }
+                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1Dup.id)) }
             )
         }
 
@@ -248,10 +248,10 @@ internal class PlatformMapTest {
             sut.add(platform2)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1Dup.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2Dup.name)) }
+                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform1Dup.imageUrl, sut.getImageUrl(platform1Dup.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2Dup.id)) }
             )
         }
 
@@ -263,8 +263,8 @@ internal class PlatformMapTest {
             sut.add(arrayListOf(platform1, platform2))
             // Assert
             assertAll(
-                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.name)) }
+                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.id)) }
             )
         }
 
@@ -276,9 +276,9 @@ internal class PlatformMapTest {
             sut.add(arrayListOf(platform1, platform2Dup, platform2))
             // Assert
             assertAll(
-                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.name)) },
-                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2Dup.name)) }
+                Executable { assertEquals(platform1.imageUrl, sut.getImageUrl(platform1.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2.id)) },
+                Executable { assertEquals(platform2.imageUrl, sut.getImageUrl(platform2Dup.id)) }
             )
         }
 
@@ -291,8 +291,8 @@ internal class PlatformMapTest {
             sut.add(platform2)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) }
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.id)) }
             )
         }
 
@@ -305,8 +305,8 @@ internal class PlatformMapTest {
             sut.add(platform1Dup)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.name)) }
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.id)) }
             )
         }
 
@@ -321,10 +321,10 @@ internal class PlatformMapTest {
             sut.add(platform2)
             // Assert
             assertAll(
-                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.name)) }
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform1Dup, sut.getPlatform(platform1Dup.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.id)) }
             )
         }
 
@@ -336,8 +336,8 @@ internal class PlatformMapTest {
             sut.add(arrayListOf(platform1, platform2))
             // Assert
             assertAll(
-                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) }
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.id)) }
             )
         }
 
@@ -349,9 +349,9 @@ internal class PlatformMapTest {
             sut.add(arrayListOf(platform1, platform2Dup, platform2))
             // Assert
             assertAll(
-                Executable { assertEquals(platform1, sut.getPlatform(platform1.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2.name)) },
-                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.name)) }
+                Executable { assertEquals(platform1, sut.getPlatform(platform1.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2.id)) },
+                Executable { assertEquals(platform2, sut.getPlatform(platform2Dup.id)) }
             )
         }
 
@@ -360,8 +360,8 @@ internal class PlatformMapTest {
         fun getImageUrl_existingNameUsed_correctUrlReturned() {
             // Arrange
             // Act
-            val imageUrl3 = sut.getImageUrl(platform3.name)
-            val imageUrl4 = sut.getImageUrl(platform4.name)
+            val imageUrl3 = sut.getImageUrl(platform3.id)
+            val imageUrl4 = sut.getImageUrl(platform4.id)
             // Assert
             assertAll(
                 Executable { assertEquals(platform3.imageUrl, imageUrl3) },
@@ -374,7 +374,7 @@ internal class PlatformMapTest {
         fun getImageUrl_nonExistingNameUsed_emptyUrlReturned() {
             // Arrange
             // Act
-            val imageUrl1 = sut.getImageUrl(platform1.name)
+            val imageUrl1 = sut.getImageUrl(platform1.id)
             // Assert
             assertEquals(null, imageUrl1)
         }
@@ -384,8 +384,8 @@ internal class PlatformMapTest {
         fun getPlatform_existingNameUsed_correctUrlReturned() {
             // Arrange
             // Act
-            val platform3Actual = sut.getPlatform(platform3.name)
-            val platform4Actual = sut.getPlatform(platform4.name)
+            val platform3Actual = sut.getPlatform(platform3.id)
+            val platform4Actual = sut.getPlatform(platform4.id)
             // Assert
             assertAll(
                 Executable { assertEquals(platform3, platform3Actual) },
@@ -398,7 +398,7 @@ internal class PlatformMapTest {
         fun getPlatform_nonExistingNameUsed_emptyUrlReturned() {
             // Arrange
             // Act
-            val platform = sut.getPlatform(platform1.name)
+            val platform = sut.getPlatform(platform1.id)
             // Assert
             assertEquals(null, platform)
         }
@@ -411,8 +411,8 @@ internal class PlatformMapTest {
             sut.removeAll()
             // Assert
             assertAll(
-                Executable { assertEquals(null, sut.getImageUrl(platform3.name)) },
-                Executable { assertEquals(null, sut.getImageUrl(platform4.name)) }
+                Executable { assertEquals(null, sut.getImageUrl(platform3.id)) },
+                Executable { assertEquals(null, sut.getImageUrl(platform4.id)) }
             )
         }
 
@@ -463,8 +463,8 @@ internal class PlatformMapTest {
             // Act
             // Assert
             assertAll(
-                Executable { assertEquals(true, sut.isPlatformEnabled(platform4.name)) },
-                Executable { assertEquals(true, sut.isPlatformEnabled(platform3.name)) }
+                Executable { assertEquals(true, sut.isPlatformEnabled(platform4.id)) },
+                Executable { assertEquals(true, sut.isPlatformEnabled(platform3.id)) }
             )
         }
 
@@ -473,11 +473,11 @@ internal class PlatformMapTest {
         fun isPlatformEnabled_Platform_disabledThenAddWithDefaultArgument_isEnabledFalse() {
             // Arrange
             sut.add(platform1)
-            sut.disablePlatform(platform1.name)
+            sut.disablePlatform(platform1.id)
             sut.add(platform1Dup)
             // Act
             // Assert
-            assertEquals(false, sut.isPlatformEnabled(platform1.name))
+            assertEquals(false, sut.isPlatformEnabled(platform1.id))
         }
 
         @Test
@@ -485,31 +485,31 @@ internal class PlatformMapTest {
         fun enablePlatform_addAndThenEnabled_isEnabledTrue() {
             // Arrange
             // Act
-            sut.enablePlatform(platform4.name)
+            sut.enablePlatform(platform4.id)
             // Assert
-            assertEquals(true, sut.isPlatformEnabled(platform4.name))
+            assertEquals(true, sut.isPlatformEnabled(platform4.id))
         }
 
         @Test
         @DisplayName("When enablePlatform used explicitly after explicit enable, isPlatformEnabled returns true")
         fun enablePlatform_enabledThenEnabled_isEnabledTrue() {
             // Arrange
-            sut.enablePlatform(platform4.name)
+            sut.enablePlatform(platform4.id)
             // Act
-            sut.enablePlatform(platform4.name)
+            sut.enablePlatform(platform4.id)
             // Assert
-            assertEquals(true, sut.isPlatformEnabled(platform4.name))
+            assertEquals(true, sut.isPlatformEnabled(platform4.id))
         }
 
         @Test
         @DisplayName("When enablePlatform used explicitly after explicit disable, isPlatformEnabled returns true")
         fun enablePlatform_disabledThenEnabled_isEnabledTrue() {
             // Arrange
-            sut.disablePlatform(platform4.name)
+            sut.disablePlatform(platform4.id)
             // Act
-            sut.enablePlatform(platform4.name)
+            sut.enablePlatform(platform4.id)
             // Assert
-            assertEquals(true, sut.isPlatformEnabled(platform4.name))
+            assertEquals(true, sut.isPlatformEnabled(platform4.id))
         }
 
         @Test
@@ -517,31 +517,31 @@ internal class PlatformMapTest {
         fun disablePlatform_addAndThenDisabled_isEnabledFalse() {
             // Arrange
             // Act
-            sut.disablePlatform(platform4.name)
+            sut.disablePlatform(platform4.id)
             // Assert
-            assertEquals(false, sut.isPlatformEnabled(platform4.name))
+            assertEquals(false, sut.isPlatformEnabled(platform4.id))
         }
 
         @Test
         @DisplayName("When disablePlatform used explicitly after explicit enable, isPlatformEnabled returns false")
         fun disablePlatform_enabledThenDisabled_isEnabledFalse() {
             // Arrange
-            sut.enablePlatform(platform4.name)
+            sut.enablePlatform(platform4.id)
             // Act
-            sut.disablePlatform(platform4.name)
+            sut.disablePlatform(platform4.id)
             // Assert
-            assertEquals(false, sut.isPlatformEnabled(platform4.name))
+            assertEquals(false, sut.isPlatformEnabled(platform4.id))
         }
 
         @Test
         @DisplayName("When disablePlatform used explicitly after explicit disable, isPlatformEnabled returns false")
         fun disablePlatform_disabledThenDisabled_isEnabledFalse() {
             // Arrange
-            sut.disablePlatform(platform4.name)
+            sut.disablePlatform(platform4.id)
             // Act
-            sut.disablePlatform(platform4.name)
+            sut.disablePlatform(platform4.id)
             // Assert
-            assertEquals(false, sut.isPlatformEnabled(platform4.name))
+            assertEquals(false, sut.isPlatformEnabled(platform4.id))
         }
     }
 }
