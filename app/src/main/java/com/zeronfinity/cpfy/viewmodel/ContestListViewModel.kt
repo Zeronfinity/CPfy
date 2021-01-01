@@ -12,7 +12,7 @@ import com.zeronfinity.core.usecase.FetchServerContestInfoUseCase
 import com.zeronfinity.core.usecase.FetchServerPlatformInfoUseCase
 import com.zeronfinity.core.usecase.GetFilterDurationUseCase
 import com.zeronfinity.core.usecase.GetFilterTimeUseCase
-import com.zeronfinity.cpfy.model.network.pojo.ClistContestObjectResponse
+import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
 import com.zeronfinity.cpfy.viewmodel.helpers.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

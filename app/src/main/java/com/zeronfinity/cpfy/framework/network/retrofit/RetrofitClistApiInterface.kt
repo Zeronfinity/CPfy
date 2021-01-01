@@ -1,7 +1,7 @@
-package com.zeronfinity.cpfy.framework.network.clist
+package com.zeronfinity.cpfy.framework.network.retrofit
 
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponseContests
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponsePlatforms
+import com.zeronfinity.cpfy.framework.network.pojo.ClistServerResponseContests
+import com.zeronfinity.cpfy.framework.network.pojo.ClistServerResponsePlatforms
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

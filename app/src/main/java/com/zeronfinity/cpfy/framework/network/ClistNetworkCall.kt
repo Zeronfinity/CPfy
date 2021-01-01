@@ -1,14 +1,11 @@
-package com.zeronfinity.cpfy.model.network
+package com.zeronfinity.cpfy.framework.network
 
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.CustomApplication
 import com.zeronfinity.cpfy.R
-import com.zeronfinity.cpfy.framework.network.ErrorResponse
-import com.zeronfinity.cpfy.framework.network.ResultWrapper
-import com.zeronfinity.cpfy.framework.network.clist.RetrofitClistApiInterface
-import com.zeronfinity.cpfy.framework.network.safeNetworkCall
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponseContests
-import com.zeronfinity.cpfy.model.network.pojo.ClistServerResponsePlatforms
+import com.zeronfinity.cpfy.framework.network.retrofit.RetrofitClistApiInterface
+import com.zeronfinity.cpfy.framework.network.pojo.ClistServerResponseContests
+import com.zeronfinity.cpfy.framework.network.pojo.ClistServerResponsePlatforms
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
 import java.net.HttpURLConnection
