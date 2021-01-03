@@ -16,8 +16,6 @@ class PlatformDb(
     private val coroutineScope = CoroutineScope(dispatcher)
 
     override fun add(platform: Platform) {
-        logD("add() -> platform: [$platform]")
-
         coroutineScope.launch {
             getPlatform(platform.id)?.let {
                 platform.isEnabled = it.isEnabled
@@ -28,14 +26,12 @@ class PlatformDb(
     }
 
     override fun add(platformList: List<Platform>) {
-        logD("add() -> platformList: [$platformList]")
         for (platform in platformList) {
             add(platform)
         }
     }
 
     override fun disablePlatform(id: Int) {
-        logD("disablePlatform() -> id: [$id]")
         coroutineScope.launch {
             platformDao.setIsEnabled(id, false)
         }

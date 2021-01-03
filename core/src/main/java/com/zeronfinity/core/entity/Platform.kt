@@ -9,6 +9,7 @@ data class Platform(
 ) {
     companion object {
         fun createPlatformShortName(name: String): String = when {
+            name.contains("algoge.com", ignoreCase = true) -> "Algoge"
             name.contains("atcoder.jp", ignoreCase = true) -> "AtCoder"
             name.contains("binarysearch.com", ignoreCase = true) -> "Binary Search"
             name.contains("hsin.hr/coci", ignoreCase = true) -> "COCI"
@@ -29,8 +30,10 @@ data class Platform(
             name.contains("russianaicup.ru", ignoreCase = true) -> "AI Cup"
             name.contains("spoj.com", ignoreCase = true) -> "Spoj"
             name.contains("topcoder.com", ignoreCase = true) -> "Topcoder"
+            name.contains("timus.ru", ignoreCase = true) -> "Timus"
             name.contains("toph.co", ignoreCase = true) -> "Toph"
             name.contains("usaco.org", ignoreCase = true) -> "USACO"
+            name.contains("uva.onlinejudge.org", ignoreCase = true) -> "UVA"
             name.contains("yandex.ru", ignoreCase = true) -> "Yandex"
             name.contains("yukicoder.me", ignoreCase = true) -> "Yukicoder"
             else -> name

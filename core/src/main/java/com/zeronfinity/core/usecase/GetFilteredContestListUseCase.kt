@@ -33,9 +33,7 @@ class GetFilteredContestListUseCase(
         )
 
         for (contest in allContestList) {
-            logD("contest: [$contest]")
             val isEnabled = platformRepository.isPlatformEnabled(contest.platformId)
-            logD("isEnabled: [$isEnabled]")
             if (isEnabled != false &&
                 contest.startTime in startTimeLowerBound..startTimeUpperBound &&
                 contest.endTime in endTimeLowerBound..endTimeUpperBound &&

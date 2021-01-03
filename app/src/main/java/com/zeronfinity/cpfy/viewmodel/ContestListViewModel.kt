@@ -28,7 +28,7 @@ class ContestListViewModel @ViewModelInject constructor(
     private val getFilterDurationUseCase: GetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
     private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
-    private val getPlatformListUseCase: GetPlatformListUseCase
+    private val getOrderedPlatformListUseCase: GetOrderedPlatformListUseCase
 ) : ViewModel() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val numberOfDaysBeforeContestsEnd = 7
@@ -115,7 +115,7 @@ class ContestListViewModel @ViewModelInject constructor(
     private fun updatePlatformList() {
         coroutineScope.launch {
             _contestListLiveData.postValue(getFilteredContestListUseCase())
-            _platformListLiveData.postValue(getPlatformListUseCase())
+            _platformListLiveData.postValue(getOrderedPlatformListUseCase())
         }
     }
 }

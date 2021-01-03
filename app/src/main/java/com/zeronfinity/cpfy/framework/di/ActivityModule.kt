@@ -69,7 +69,16 @@ class ActivityModule {
     ) = GetPlatformListUseCase(
         platformRepository
     )
-    
+
+    @Provides
+    fun provideGetOrderedPlatformListUseCase(
+        getFilteredContestListUseCase: GetFilteredContestListUseCase,
+        platformRepository: PlatformRepository
+    ) = GetOrderedPlatformListUseCase(
+        getFilteredContestListUseCase,
+        platformRepository
+    )
+
     @Provides
     fun provideFetchServerContestInfoUseCase(
         contestRepository: ContestRepository,
