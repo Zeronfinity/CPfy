@@ -5,7 +5,9 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.URLSpan
+import androidx.core.content.ContextCompat.getColor
 import androidx.core.text.bold
+import androidx.core.text.color
 import androidx.core.text.italic
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
@@ -75,7 +77,9 @@ class ClipboardViewModel @ViewModelInject constructor(
                     )
                     .italic { append(application.getString(R.string.link_colon)) }
                     .append(" ")
-                    .append(contest.url, URLSpan(contest.url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    .color(getColor(application, R.color.secondaryTextColor)) {
+                        append(contest.url, URLSpan(contest.url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
                     .append("\n")
 
                 clipboardText = TextUtils.concat(clipboardText, spannableString)
