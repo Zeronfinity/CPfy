@@ -12,6 +12,7 @@ import com.zeronfinity.core.usecase.DisablePlatformUseCase
 import com.zeronfinity.core.usecase.EnablePlatformUseCase
 import com.zeronfinity.core.usecase.IsPlatformEnabledUseCase
 import com.zeronfinity.cpfy.R
+import com.zeronfinity.cpfy.common.PLATFORM_FILTER_MAX_COUNT
 import com.zeronfinity.cpfy.databinding.ItemPlatformFilterBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,7 @@ class AdapterPlatformFilters @Inject constructor(
     }
 
     private var platformFilterClickListener: PlatformFilterClickListener? = null
+    private var maxItemCount = PLATFORM_FILTER_MAX_COUNT
 
     fun setPlatformFilterClickListener(clickListener: PlatformFilterClickListener) {
         platformFilterClickListener = clickListener
@@ -98,13 +100,23 @@ class AdapterPlatformFilters @Inject constructor(
     }
 
     override fun getItemCount(): Int {
-        return platformList.size
+        return maxItemCount
     }
 
     fun refreshPlatformList(list: List<Platform>) {
         logD("refreshPlatformList() started")
         platformList.clear()
         platformList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun setMaxItemCount() {
+        maxItemCount = PLATFORM_FILTER_MAX_COUNT
+        notifyDataSetChanged()
+    }
+
+    fun resetMaxItemCount() {
+        maxItemCount = platformList.size
         notifyDataSetChanged()
     }
 }
