@@ -4,14 +4,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zeronfinity.core.entity.Contest
+import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
-import com.zeronfinity.core.usecase.FetchServerContestInfoUseCase
-import com.zeronfinity.core.usecase.FetchServerPlatformInfoUseCase
-import com.zeronfinity.core.usecase.GetFilterDurationUseCase
-import com.zeronfinity.core.usecase.GetFilterTimeUseCase
+import com.zeronfinity.core.usecase.*
 import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
 import com.zeronfinity.cpfy.viewmodel.helpers.Event
 import kotlinx.coroutines.CoroutineScope
@@ -24,32 +23,38 @@ import java.util.Locale
 import java.util.TimeZone
 
 class ContestListViewModel @ViewModelInject constructor(
+    private val fetchServerContestInfoUseCase: FetchServerContestInfoUseCase,
+    private val fetchServerPlatformInfoUseCase: FetchServerPlatformInfoUseCase,
     private val getFilterDurationUseCase: GetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
-    private val fetchServerContestInfoUseCase: FetchServerContestInfoUseCase,
-    private val fetchServerPlatformInfoUseCase: FetchServerPlatformInfoUseCase
+    private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
+    private val getPlatformListUseCase: GetPlatformListUseCase
 ) : ViewModel() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val numberOfDaysBeforeContestsEnd = 7
 
-    private val _contestListUpdatedLiveDataEv = MutableLiveData<Event<Boolean>>()
-    private val _platformListUpdatedLiveDataEv = MutableLiveData<Event<Boolean>>()
     private val _clistWebViewLiveDataEv = MutableLiveData<Event<Boolean>>()
     private val _errorToastIncomingLiveDataEv = MutableLiveData<Event<String>>()
 
-    val contestListUpdatedLiveDataEv: LiveData<Event<Boolean>>
-            get() = _contestListUpdatedLiveDataEv
-    val platformListUpdatedLiveDataEv: LiveData<Event<Boolean>>
-        get() = _platformListUpdatedLiveDataEv
+    private val _contestListLiveData = MutableLiveData<List<Contest>>()
+    private val _platformListLiveData = MutableLiveData<List<Platform>>()
+
     val clistWebViewLiveDataEv: LiveData<Event<Boolean>>
             get() = _clistWebViewLiveDataEv
     val errorToastIncomingLiveDataEv: LiveData<Event<String>>
             get() = _errorToastIncomingLiveDataEv
 
-    fun fetchContestList() {
-        logD("fetchContestListAndPersist() started")
+    val contestListLiveData: LiveData<List<Contest>>
+            get() = _contestListLiveData
+    val platformListLiveData: LiveData<List<Platform>>
+        get() = _platformListLiveData
 
-        updateContestList()
+    fun fetchContestList() {
+        logD("fetchContestList() started")
+
+        if (_contestListLiveData.value == null) {
+            updateContestList()
+        }
 
         val calendar = Calendar.getInstance()
         calendar.time = Date()
@@ -82,7 +87,7 @@ class ContestListViewModel @ViewModelInject constructor(
     }
 
     fun fetchPlatformList() {
-        logD("fetchPlatformListAndPersist() started")
+        logD("fetchPlatformList() started")
 
         coroutineScope.launch {
             val fetchResult = fetchServerPlatformInfoUseCase()
@@ -102,10 +107,15 @@ class ContestListViewModel @ViewModelInject constructor(
     }
 
     private fun updateContestList() {
-        _contestListUpdatedLiveDataEv.postValue(Event(true))
+        coroutineScope.launch {
+            _contestListLiveData.postValue(getFilteredContestListUseCase())
+        }
     }
 
     private fun updatePlatformList() {
-        _platformListUpdatedLiveDataEv.postValue(Event(true))
+        coroutineScope.launch {
+            _contestListLiveData.postValue(getFilteredContestListUseCase())
+            _platformListLiveData.postValue(getPlatformListUseCase())
+        }
     }
 }

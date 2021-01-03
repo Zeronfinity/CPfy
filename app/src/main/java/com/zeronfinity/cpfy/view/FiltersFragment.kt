@@ -93,11 +93,9 @@ class FiltersFragment
     }
 
     private fun observeContestListViewModel() {
-        contentListViewModel.platformListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
-            it.getContentIfNotHandled()?.let {
-                logD("contestListUpdatedLiveData: refreshing platform list")
-                refreshPlatformList()
-            }
+        contentListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
+            logD("platformListLiveData -> platformList[$it]")
+            adapterPlatformFilters.refreshPlatformList(it)
         })
     }
 
@@ -125,14 +123,6 @@ class FiltersFragment
         filtersViewModel.durationUpperBoundLiveData.observe(viewLifecycleOwner, {
             binding.btnDurationUpperBound.text = makeDurationText(it)
         })
-
-        filtersViewModel.platformListUpdatedLiveData.observe(viewLifecycleOwner, {
-            refreshPlatformList()
-        })
-    }
-
-    private fun refreshPlatformList() {
-        adapterPlatformFilters.refreshPlatformList()
     }
 
     override fun onPlatformFilterClick() {

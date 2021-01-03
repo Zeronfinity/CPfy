@@ -1,5 +1,6 @@
 package com.zeronfinity.cpfy.view.adapter
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -11,20 +12,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.logger.logD
-import com.zeronfinity.core.logger.logI
-import com.zeronfinity.core.usecase.GetFilteredContestListUseCase
 import com.zeronfinity.core.usecase.GetPlatformUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.ItemContestBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 class AdapterContestList @Inject constructor(
-    private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
+    private val activity: Activity,
     private val getPlatformUseCase: GetPlatformUseCase
 ) : RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
-    private var filteredContestList = getFilteredContestListUseCase()
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+    private var contestList = ArrayList<Contest>()
 
     inner class ContestViewHolder(
         private val binding: ItemContestBinding
@@ -84,25 +88,31 @@ class AdapterContestList @Inject constructor(
                     )
             }
 
-            val platform = getPlatformUseCase(contest.platformId)
-//            logD("bind() -> platform: [${contest}]")
+            coroutineScope.launch {
+                val platform = getPlatformUseCase(contest.platformId)
 
-            platform?.imageUrl?.let {
-                Picasso.get()
-                    .load(it)
-                    .resize(50, 50)
-                    .centerCrop()
-                    .into(binding.ivContestPlatform)
+                activity.runOnUiThread {
+                    platform?.imageUrl.let {
+                        Picasso.get()
+                            .load(it)
+                            .resize(50, 50)
+                            .centerCrop()
+                            .into(binding.ivContestPlatform)
+                    }
+                    binding.tvContestPlatform.text = platform?.shortName
+                }
             }
-
-            binding.tvContestPlatform.text = platform?.shortName
 
             binding.ivLaunch.setOnClickListener {
                 val launchUrlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(contest.url))
                 try {
                     it.context.startActivity(launchUrlIntent)
                 } catch (ex: ActivityNotFoundException) {
-                    Toast.makeText(it.context, "No external app found for opening url!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        it.context,
+                        "No external app found for opening url!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -121,16 +131,17 @@ class AdapterContestList @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: ContestViewHolder, position: Int) {
-        holder.bind(filteredContestList[position])
+        holder.bind(contestList[position])
     }
 
     override fun getItemCount(): Int {
-        return filteredContestList.size
+        return contestList.size
     }
 
-    fun refreshContestList() {
-        filteredContestList = getFilteredContestListUseCase()
-        logI("refreshContestList() -> filteredContestList: [${filteredContestList}]")
+    fun refreshContestList(list: List<Contest>) {
+        logD("refreshContestList() started")
+        contestList.clear()
+        contestList.addAll(list)
         notifyDataSetChanged()
     }
 

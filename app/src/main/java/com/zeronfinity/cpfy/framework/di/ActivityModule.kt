@@ -18,9 +18,23 @@ class ActivityModule {
     )
 
     @Provides
+    fun provideAllDisablePlatformUseCase(
+        platformRepository: PlatformRepository
+    ) = DisableAllPlatformsUseCase(
+        platformRepository
+    )
+
+    @Provides
     fun provideEnablePlatformUseCase(
         platformRepository: PlatformRepository
     ) = EnablePlatformUseCase(
+        platformRepository
+    )
+
+    @Provides
+    fun provideEnableAllPlatformsUseCase(
+        platformRepository: PlatformRepository
+    ) = EnableAllPlatformsUseCase(
         platformRepository
     )
 
