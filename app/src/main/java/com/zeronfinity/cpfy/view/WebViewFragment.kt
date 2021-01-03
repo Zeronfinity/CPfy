@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.net.URL
 
 @AndroidEntryPoint
-class WebViewFragment : Fragment() {
+class WebViewFragment : BaseFragment() {
     private var _binding: FragmentWebViewBinding? = null
     private val binding get() = _binding!!
 

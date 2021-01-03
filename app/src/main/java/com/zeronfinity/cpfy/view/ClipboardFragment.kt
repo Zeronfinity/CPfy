@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ClipboardFragment : Fragment() {
+class ClipboardFragment : BaseFragment() {
     private var _binding: FragmentClipboardBinding? = null
     private val binding get() = _binding!!
 

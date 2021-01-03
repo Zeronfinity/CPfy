@@ -37,7 +37,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FiltersFragment
-    : Fragment(), PlatformFilterClickListener {
+    : BaseFragment(), PlatformFilterClickListener {
     private var _binding: FragmentFiltersBinding? = null
     private val binding get() = _binding!!
 
@@ -266,7 +266,7 @@ class FiltersFragment
         val action = FiltersFragmentDirections.actionFiltersFragmentToDurationPickerDiaFrag(
             filterDurationEnum
         )
-        findNavController().navigate(action)
+        findNavController().safeNavigate(action)
 
         // TODO: make this true only if duration is actually changed
         isContestListRefreshRequired = true

@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ContestListFragment : Fragment() {
+class ContestListFragment : BaseFragment() {
     private var _binding: FragmentContestListBinding? = null
     private val binding get() = _binding!!
 
@@ -79,7 +79,7 @@ class ContestListFragment : Fragment() {
                     ContestListFragmentDirections.actionContestListFragmentToWebViewFragment(
                         getString(R.string.clist_login_url)
                     )
-                findNavController().navigate(action)
+                findNavController().safeNavigate(action)
             }
         })
     }
