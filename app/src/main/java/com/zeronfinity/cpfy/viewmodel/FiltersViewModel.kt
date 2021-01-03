@@ -16,13 +16,12 @@ import java.util.Date
 import java.util.Locale
 
 class FiltersViewModel @ViewModelInject constructor(
-    private val disablePlatformUseCase: DisablePlatformUseCase,
-    private val enablePlatformUseCase: EnablePlatformUseCase,
+    private val disableAllPlatformsUseCase: DisableAllPlatformsUseCase,
+    private val enableAllPlatformsUseCase: EnableAllPlatformsUseCase,
     private val getFilterDurationUseCase: GetFilterDurationUseCase,
     private val setFilterDurationUseCase: SetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
     private val setFilterTimeUseCase: SetFilterTimeUseCase,
-    private val getPlatformListUseCase: GetPlatformListUseCase
 ) : ViewModel() {
     private val numberOfDaysBeforeContestsEnd = 7
 
@@ -32,8 +31,6 @@ class FiltersViewModel @ViewModelInject constructor(
     val endTimeUpperBoundLiveData = MutableLiveData<String>()
     val durationLowerBoundLiveData = MutableLiveData<Int>()
     val durationUpperBoundLiveData = MutableLiveData<Int>()
-
-    val platformListUpdatedLiveData = MutableLiveData<Boolean>()
 
     private val simpleDateFormat = SimpleDateFormat(
         "dd-MM-yy\nhh:mm a",
@@ -76,19 +73,11 @@ class FiltersViewModel @ViewModelInject constructor(
     }
 
     fun enableAllPlatforms() {
-        val platformList = getPlatformListUseCase()
-        for (platform in platformList) {
-            enablePlatformUseCase(platform.id)
-        }
-        platformListUpdatedLiveData.postValue(true)
+        enableAllPlatformsUseCase()
     }
 
     fun disableAllPlatforms() {
-        val platformList = getPlatformListUseCase()
-        for (platform in platformList) {
-            disablePlatformUseCase(platform.id)
-        }
-        platformListUpdatedLiveData.postValue(true)
+        disableAllPlatformsUseCase()
     }
 
     fun resetAllFilters() {
@@ -107,7 +96,6 @@ class FiltersViewModel @ViewModelInject constructor(
         setDurationFilters(DURATION_LOWER_BOUND, 0)
         setDurationFilters(DURATION_UPPER_BOUND, 7*24*60*60)
 
-        platformListUpdatedLiveData.postValue(true)
         loadTimeBasedFilterButtonTexts()
     }
 

@@ -1,4 +1,4 @@
-package com.zeronfinity.cpfy.implementations.network
+package com.zeronfinity.cpfy.framework.implementations.network
 
 import com.squareup.moshi.Moshi
 import com.zeronfinity.cpfy.CustomApplication

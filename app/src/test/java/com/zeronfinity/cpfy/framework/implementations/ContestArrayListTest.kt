@@ -1,7 +1,6 @@
-package com.zeronfinity.cpfy.implementations
+package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.Contest
-import com.zeronfinity.cpfy.framework.implementations.ContestArrayList
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

@@ -4,12 +4,14 @@ import android.app.Application
 import com.zeronfinity.core.repository.*
 import com.zeronfinity.core.usecase.GetCookieUseCase
 import com.zeronfinity.cpfy.CustomApplication
+import com.zeronfinity.cpfy.framework.db.dao.PlatformDao
 import com.zeronfinity.cpfy.framework.implementations.*
 import com.zeronfinity.cpfy.framework.network.ClistNetworkCall
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -21,7 +23,11 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    fun providePlatformRepository() = PlatformRepository(PlatformMap())
+    fun providePlatformRepository(platformDao: PlatformDao) = PlatformRepository(
+        PlatformDb(
+            Dispatchers.IO, platformDao
+        )
+    )
 
     @Singleton
     @Provides
@@ -30,8 +36,16 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideServerPlatformInfoRepository(application: Application, clistNetworkCall: ClistNetworkCall) =
-        ServerPlatformInfoRepository(ServerPlatformInfoClist(application as CustomApplication, clistNetworkCall))
+    fun provideServerPlatformInfoRepository(
+        application: Application,
+        clistNetworkCall: ClistNetworkCall
+    ) =
+        ServerPlatformInfoRepository(
+            ServerPlatformInfoClist(
+                application as CustomApplication,
+                clistNetworkCall
+            )
+        )
 
     @Singleton
     @Provides

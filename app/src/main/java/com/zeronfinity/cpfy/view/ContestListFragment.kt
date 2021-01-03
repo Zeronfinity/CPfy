@@ -67,18 +67,9 @@ class ContestListFragment : Fragment() {
             }
         })
 
-        viewModel.contestListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
-            it.getContentIfNotHandled()?.let {
-                logD("contestListUpdatedLiveDataEv: refreshing adapterContestList")
-                adapterContestList.refreshContestList()
-            }
-        })
-
-        viewModel.platformListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
-            it.getContentIfNotHandled()?.let {
-                logD("contestListUpdatedLiveDataEv: refreshing adapterContestList")
-                adapterContestList.refreshContestList()
-            }
+        viewModel.contestListLiveData.observe(viewLifecycleOwner, {
+            logD("contestListLiveData -> contestList:[$it]")
+            adapterContestList.refreshContestList(it)
         })
 
         viewModel.clistWebViewLiveDataEv.observe(viewLifecycleOwner, {

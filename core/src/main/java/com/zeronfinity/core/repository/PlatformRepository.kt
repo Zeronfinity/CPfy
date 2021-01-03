@@ -5,15 +5,19 @@ import com.zeronfinity.core.entity.Platform
 class PlatformRepository(private val platformDataSource: PlatformDataSource) {
     fun addPlatformList(platformList: List<Platform>) = platformDataSource.add(platformList)
 
-    fun enablePlatform(platformId: Int) = platformDataSource.enablePlatform(platformId)
-
     fun disablePlatform(platformId: Int) = platformDataSource.disablePlatform(platformId)
 
-    fun getPlatform(platformId: Int) = platformDataSource.getPlatform(platformId)
+    fun disableAllPlatforms() = platformDataSource.disableAllPlatforms()
 
-    fun getPlatformList() = platformDataSource.getPlatformList()
+    fun enablePlatform(platformId: Int) = platformDataSource.enablePlatform(platformId)
 
-    fun isPlatformEnabled(platformId: Int) = platformDataSource.isPlatformEnabled(platformId)
+    fun enableAllPlatforms() = platformDataSource.enableAllPlatforms()
 
-    fun getImageUrl(platformId: Int) = platformDataSource.getImageUrl(platformId)
+    suspend fun getPlatform(platformId: Int) = platformDataSource.getPlatform(platformId)
+
+    suspend fun getPlatformList() = platformDataSource.getPlatformList()
+
+    suspend fun isPlatformEnabled(platformId: Int) = platformDataSource.isPlatformEnabled(platformId)
+
+    suspend fun getImageUrl(platformId: Int) = platformDataSource.getImageUrl(platformId)
 }

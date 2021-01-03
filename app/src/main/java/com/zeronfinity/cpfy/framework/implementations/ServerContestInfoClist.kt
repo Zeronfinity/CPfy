@@ -2,10 +2,10 @@ package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.entity.Platform
+import com.zeronfinity.core.entity.Platform.Companion.createPlatformShortName
 import com.zeronfinity.core.entity.ServerContestInfoResponse
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.FAILURE
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
-import com.zeronfinity.core.entity.createPlatformShortName
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.ServerContestInfoDataSource
 import com.zeronfinity.cpfy.framework.network.ResultWrapper

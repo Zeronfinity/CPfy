@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.zeronfinity.core.logger.logD
+import com.zeronfinity.core.logger.logE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
@@ -79,6 +80,21 @@ class FiltersFragment
         binding.rvPlatforms.layoutManager = GridLayoutManager(activity, 3)
         binding.rvPlatforms.setHasFixedSize(true)
 
+        contractRecyclerView()
+        binding.ivExpand.setOnClickListener {
+            when (it.tag) {
+                "contracted" -> {
+                    expandRecyclerView()
+                }
+                "expanded" -> {
+                    contractRecyclerView()
+                }
+                else -> {
+                    logE("Invalid ivExpand tag: " + it.tag.toString())
+                }
+            }
+        }
+
         adapterPlatformFilters.setPlatformFilterClickListener(this)
 
         contentListViewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
@@ -92,12 +108,22 @@ class FiltersFragment
         setUpButtons()
     }
 
+    private fun contractRecyclerView() {
+        binding.ivExpand.tag = "contracted"
+        binding.ivExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
+        adapterPlatformFilters.setMaxItemCount()
+    }
+
+    private fun expandRecyclerView() {
+        binding.ivExpand.tag = "expanded"
+        binding.ivExpand.setImageResource(R.drawable.ic_baseline_expand_less_24)
+        adapterPlatformFilters.resetMaxItemCount()
+    }
+
     private fun observeContestListViewModel() {
-        contentListViewModel.platformListUpdatedLiveDataEv.observe(viewLifecycleOwner, {
-            it.getContentIfNotHandled()?.let {
-                logD("contestListUpdatedLiveData: refreshing platform list")
-                refreshPlatformList()
-            }
+        contentListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
+            logD("platformListLiveData -> platformList[$it]")
+            adapterPlatformFilters.refreshPlatformList(it)
         })
     }
 
@@ -125,14 +151,6 @@ class FiltersFragment
         filtersViewModel.durationUpperBoundLiveData.observe(viewLifecycleOwner, {
             binding.btnDurationUpperBound.text = makeDurationText(it)
         })
-
-        filtersViewModel.platformListUpdatedLiveData.observe(viewLifecycleOwner, {
-            refreshPlatformList()
-        })
-    }
-
-    private fun refreshPlatformList() {
-        adapterPlatformFilters.refreshPlatformList()
     }
 
     override fun onPlatformFilterClick() {

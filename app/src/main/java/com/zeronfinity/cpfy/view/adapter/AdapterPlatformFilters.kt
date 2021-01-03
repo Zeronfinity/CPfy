@@ -10,30 +10,34 @@ import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.logger.logE
 import com.zeronfinity.core.usecase.DisablePlatformUseCase
 import com.zeronfinity.core.usecase.EnablePlatformUseCase
-import com.zeronfinity.core.usecase.GetPlatformListUseCase
 import com.zeronfinity.core.usecase.IsPlatformEnabledUseCase
 import com.zeronfinity.cpfy.R
+import com.zeronfinity.cpfy.common.PLATFORM_FILTER_MAX_COUNT
 import com.zeronfinity.cpfy.databinding.ItemPlatformFilterBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AdapterPlatformFilters @Inject constructor(
     private val disablePlatformUseCase: DisablePlatformUseCase,
     private val enablePlatformUseCase: EnablePlatformUseCase,
-    private val isPlatformEnabledUseCase: IsPlatformEnabledUseCase,
-    private val getPlatformListUseCase: GetPlatformListUseCase
+    private val isPlatformEnabledUseCase: IsPlatformEnabledUseCase
 ) : RecyclerView.Adapter<AdapterPlatformFilters.PlatformViewHolder>() {
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     interface PlatformFilterClickListener {
         fun onPlatformFilterClick()
     }
 
     private var platformFilterClickListener: PlatformFilterClickListener? = null
+    private var maxItemCount = PLATFORM_FILTER_MAX_COUNT
 
     fun setPlatformFilterClickListener(clickListener: PlatformFilterClickListener) {
         platformFilterClickListener = clickListener
     }
 
-    private var platformList = getPlatformListUseCase()
+    private var platformList = ArrayList<Platform>()
 
     inner class PlatformViewHolder(
         private val binding: ItemPlatformFilterBinding
@@ -43,14 +47,16 @@ class AdapterPlatformFilters @Inject constructor(
             binding.btnPlatformFilter.isSelected = true
             binding.btnPlatformFilter.text = platform.shortName
 
-            if (isPlatformEnabledUseCase(platform.id)) {
-                enableButton(binding.btnPlatformFilter)
-            } else {
-                disableButton(binding.btnPlatformFilter)
+            coroutineScope.launch {
+                if (isPlatformEnabledUseCase(platform.id) != false) {
+                    enableButton(binding.btnPlatformFilter)
+                } else {
+                    disableButton(binding.btnPlatformFilter)
+                }
             }
 
             binding.btnPlatformFilter.setOnClickListener {
-                logD("platform button clicked -> tag: [${it.tag}], platform: [${platform.name}]")
+                logD("platform button clicked -> oldTag: [${it.tag}], platformName: [${platform.name}], platformId: [${platform.id}]")
                 when (it.tag) {
                     "enabled" -> {
                         disableButton(it as Button)
@@ -94,13 +100,23 @@ class AdapterPlatformFilters @Inject constructor(
     }
 
     override fun getItemCount(): Int {
-        return platformList.size
+        return maxItemCount
     }
 
-    fun refreshPlatformList() {
+    fun refreshPlatformList(list: List<Platform>) {
         logD("refreshPlatformList() started")
+        platformList.clear()
+        platformList.addAll(list)
+        notifyDataSetChanged()
+    }
 
-        platformList = getPlatformListUseCase()
+    fun setMaxItemCount() {
+        maxItemCount = PLATFORM_FILTER_MAX_COUNT
+        notifyDataSetChanged()
+    }
+
+    fun resetMaxItemCount() {
+        maxItemCount = platformList.size
         notifyDataSetChanged()
     }
 }

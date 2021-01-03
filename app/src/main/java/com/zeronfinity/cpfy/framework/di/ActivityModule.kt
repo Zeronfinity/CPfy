@@ -18,9 +18,23 @@ class ActivityModule {
     )
 
     @Provides
+    fun provideAllDisablePlatformUseCase(
+        platformRepository: PlatformRepository
+    ) = DisableAllPlatformsUseCase(
+        platformRepository
+    )
+
+    @Provides
     fun provideEnablePlatformUseCase(
         platformRepository: PlatformRepository
     ) = EnablePlatformUseCase(
+        platformRepository
+    )
+
+    @Provides
+    fun provideEnableAllPlatformsUseCase(
+        platformRepository: PlatformRepository
+    ) = EnableAllPlatformsUseCase(
         platformRepository
     )
 
@@ -55,7 +69,16 @@ class ActivityModule {
     ) = GetPlatformListUseCase(
         platformRepository
     )
-    
+
+    @Provides
+    fun provideGetOrderedPlatformListUseCase(
+        getFilteredContestListUseCase: GetFilteredContestListUseCase,
+        platformRepository: PlatformRepository
+    ) = GetOrderedPlatformListUseCase(
+        getFilteredContestListUseCase,
+        platformRepository
+    )
+
     @Provides
     fun provideFetchServerContestInfoUseCase(
         contestRepository: ContestRepository,

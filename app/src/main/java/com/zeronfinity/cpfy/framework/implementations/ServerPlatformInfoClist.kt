@@ -1,6 +1,7 @@
 package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.*
+import com.zeronfinity.core.entity.Platform.Companion.createPlatformShortName
 import com.zeronfinity.core.entity.ServerPlatformInfoResponse.ResponseStatus.*
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.ServerPlatformInfoDataSource

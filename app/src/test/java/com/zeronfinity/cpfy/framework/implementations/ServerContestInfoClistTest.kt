@@ -1,10 +1,9 @@
-package com.zeronfinity.cpfy.implementations
+package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.entity.ServerContestInfoResponse
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.FAILURE
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
-import com.zeronfinity.cpfy.framework.implementations.ServerContestInfoClist
 import com.zeronfinity.cpfy.framework.network.ErrorResponse
 import com.zeronfinity.cpfy.framework.network.ResultWrapper.*
 import com.zeronfinity.cpfy.framework.network.ClistNetworkCall
