@@ -94,12 +94,11 @@ class ContestListFragment : BaseFragment() {
             prevDurationUpperBound = it.getInt("DURATION_UPPER_BOUND")
         }
 
-        if (isFirstTime) {
-            contestListViewModel.fetchContestList()
-            contestListViewModel.fetchPlatformList()
-        } else if (isTimeFilterChanged()) {
+        if (isFirstTime || isTimeFilterChanged()) {
             contestListViewModel.fetchContestList()
         }
+
+        contestListViewModel.fetchPlatformList()
 
         setPrevTimesToCurrentValues()
         isFirstTime = false

@@ -1,9 +1,7 @@
 package com.zeronfinity.core.usecase
 
-import com.zeronfinity.core.entity.ServerContestInfoResponse
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
 import com.zeronfinity.core.repository.ContestRepository
-import com.zeronfinity.core.repository.PlatformRepository
 import com.zeronfinity.core.repository.ServerContestInfoRepository
 
 class FetchServerContestInfoUseCase(

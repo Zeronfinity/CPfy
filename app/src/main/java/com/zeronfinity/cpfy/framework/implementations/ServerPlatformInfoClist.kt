@@ -33,6 +33,7 @@ class ServerPlatformInfoClist(
             is ResultWrapper.Success -> {
                 responseStatus = SUCCESS
                 clistServerResponsePlatforms = wrappedResult.value.body()
+                application.isPlatformListFetched = true
             }
             is ResultWrapper.GenericError -> {
                 if (wrappedResult.code != null) {
