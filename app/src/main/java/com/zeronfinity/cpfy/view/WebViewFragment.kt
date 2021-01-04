@@ -62,7 +62,7 @@ class WebViewFragment : BaseFragment() {
                 if (args.urlStringArg == getString(R.string.clist_login_url)) {
                     Toast.makeText(
                         activity?.applicationContext,
-                        "API limit reached!\nSign up or log into your own clist.by account to continue",
+                        "API limit reached or session expired!\nSign up or log into your own clist.by account to continue",
                         Toast.LENGTH_LONG
                     ).show()
                 }

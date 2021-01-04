@@ -2,10 +2,12 @@ package com.zeronfinity.core.usecase
 
 import com.zeronfinity.core.entity.ServerContestInfoResponse.ResponseStatus.SUCCESS
 import com.zeronfinity.core.repository.ContestRepository
+import com.zeronfinity.core.repository.CookieRepository
 import com.zeronfinity.core.repository.ServerContestInfoRepository
 
 class FetchServerContestInfoUseCase(
     private val contestRepository: ContestRepository,
+    private val cookieRepository: CookieRepository,
     private val serverContestInfoRepository: ServerContestInfoRepository
 ) {
     sealed class Result {
@@ -25,7 +27,12 @@ class FetchServerContestInfoUseCase(
             if (serverContestInfoResponse.errorCode != null) {
                 when (serverContestInfoResponse.errorCode) {
                     401 -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
-                    429 -> Result.Error("API Limit Reached!\nPlease try again 1 minute later.")
+                    429 -> {
+                        when (cookieRepository.getCookie("clist_session_cookie")) {
+                            null -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
+                            else -> Result.Error("API Limit Reached!\nPlease try again 1 minute later.")
+                        }
+                    }
                     else -> Result.Error("Error ${serverContestInfoResponse.errorCode}: ${serverContestInfoResponse.errorDesc}")
                 }
             } else if (serverContestInfoResponse.errorDesc != null) {
