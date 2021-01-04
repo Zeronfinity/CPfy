@@ -3,6 +3,7 @@ package com.zeronfinity.cpfy.framework.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.zeronfinity.cpfy.framework.db.entity.PlatformEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlatformDao : BaseDao<PlatformEntity> {
@@ -16,7 +17,7 @@ interface PlatformDao : BaseDao<PlatformEntity> {
     suspend fun getPlatform(id: Int): PlatformEntity?
 
     @Query("SELECT * FROM platform")
-    suspend fun getPlatformAll(): List<PlatformEntity>?
+    fun getPlatformAll(): Flow<List<PlatformEntity>>
 
     @Query("SELECT COUNT(id) FROM platform")
     suspend fun getRowCount(): Int?
