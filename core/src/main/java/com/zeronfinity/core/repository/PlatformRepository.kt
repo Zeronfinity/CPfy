@@ -15,9 +15,7 @@ class PlatformRepository(private val platformDataSource: PlatformDataSource) {
 
     suspend fun getPlatform(platformId: Int) = platformDataSource.getPlatform(platformId)
 
-    suspend fun getPlatformList() = platformDataSource.getPlatformList()
+    fun getPlatformList() = platformDataSource.getPlatformList()
 
     suspend fun isPlatformEnabled(platformId: Int) = platformDataSource.isPlatformEnabled(platformId)
-
-    suspend fun getImageUrl(platformId: Int) = platformDataSource.getImageUrl(platformId)
 }

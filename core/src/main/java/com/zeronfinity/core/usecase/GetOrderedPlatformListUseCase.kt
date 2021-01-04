@@ -1,16 +1,13 @@
 package com.zeronfinity.core.usecase
 
 import com.zeronfinity.core.entity.Platform
-import com.zeronfinity.core.repository.PlatformRepository
 
 class GetOrderedPlatformListUseCase(
-    private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
-    private val platformRepository: PlatformRepository
+    private val getFilteredContestListUseCase: GetFilteredContestListUseCase
 ) {
-    suspend operator fun invoke(): List<Platform>? {
+    suspend operator fun invoke(platformList: List<Platform>): List<Platform> {
         val positionMap = mutableMapOf<Int, Int>()
 
-        val platformList = platformRepository.getPlatformList()
         val contestList = getFilteredContestListUseCase()
 
         var index = 0
@@ -20,7 +17,7 @@ class GetOrderedPlatformListUseCase(
             }
         }
 
-        return platformList?.sortedWith(Comparator { platform1, platform2 ->
+        return platformList.sortedWith(Comparator { platform1, platform2 ->
             (positionMap[platform1.id] ?: contestList.size) - (positionMap[platform2.id] ?: contestList.size)
         })
     }

@@ -1,6 +1,7 @@
 package com.zeronfinity.core.repository
 
 import com.zeronfinity.core.entity.Platform
+import kotlinx.coroutines.flow.Flow
 
 interface PlatformDataSource {
     fun add(platform: Platform)
@@ -19,7 +20,7 @@ interface PlatformDataSource {
 
     suspend fun getPlatform(id: Int): Platform?
 
-    suspend fun getPlatformList(): List<Platform>?
+    fun getPlatformList(): Flow<List<Platform>>
 
     suspend fun isPlatformEnabled(id: Int): Boolean?
 

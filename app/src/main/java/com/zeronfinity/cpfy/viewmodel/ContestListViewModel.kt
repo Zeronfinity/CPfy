@@ -1,9 +1,7 @@
 package com.zeronfinity.cpfy.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.logger.logD
@@ -15,6 +13,7 @@ import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
 import com.zeronfinity.cpfy.viewmodel.helpers.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -28,7 +27,8 @@ class ContestListViewModel @ViewModelInject constructor(
     private val getFilterDurationUseCase: GetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
     private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
-    private val getOrderedPlatformListUseCase: GetOrderedPlatformListUseCase
+    private val getOrderedPlatformListUseCase: GetOrderedPlatformListUseCase,
+    private val getPlatformListUseCase: GetPlatformListUseCase
 ) : ViewModel() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val numberOfDaysBeforeContestsEnd = 7
@@ -37,7 +37,6 @@ class ContestListViewModel @ViewModelInject constructor(
     private val _errorToastIncomingLiveDataEv = MutableLiveData<Event<String>>()
 
     private val _contestListLiveData = MutableLiveData<List<Contest>>()
-    private val _platformListLiveData = MutableLiveData<List<Platform>>()
 
     val clistWebViewLiveDataEv: LiveData<Event<Boolean>>
             get() = _clistWebViewLiveDataEv
@@ -46,8 +45,12 @@ class ContestListViewModel @ViewModelInject constructor(
 
     val contestListLiveData: LiveData<List<Contest>>
             get() = _contestListLiveData
-    val platformListLiveData: LiveData<List<Platform>>
-        get() = _platformListLiveData
+
+    val platformListLiveData: LiveData<List<Platform>> = liveData {
+        getPlatformListUseCase().collect {
+            emit(getOrderedPlatformListUseCase(it))
+        }
+    }
 
     fun fetchContestList() {
         logD("fetchContestList() started")
@@ -96,9 +99,7 @@ class ContestListViewModel @ViewModelInject constructor(
 
             when (fetchResult) {
                 is FetchServerPlatformInfoUseCase.Result.Success -> {
-                    if (fetchResult.isUpdateRequired) {
-                        updatePlatformList()
-                    }
+                    logD("fetchPlatformList() succeeded")
                 }
                 is FetchServerPlatformInfoUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(Event(fetchResult.errorMsg))
                 is FetchServerPlatformInfoUseCase.Result.UnauthorizedError -> _clistWebViewLiveDataEv.postValue(Event(true))
@@ -109,13 +110,6 @@ class ContestListViewModel @ViewModelInject constructor(
     fun refreshContestList() {
         coroutineScope.launch {
             _contestListLiveData.postValue(getFilteredContestListUseCase())
-        }
-    }
-
-    private fun updatePlatformList() {
-        coroutineScope.launch {
-            _contestListLiveData.postValue(getFilteredContestListUseCase())
-            _platformListLiveData.postValue(getOrderedPlatformListUseCase())
         }
     }
 }

@@ -74,10 +74,8 @@ class ActivityModule {
     @Provides
     fun provideGetOrderedPlatformListUseCase(
         getFilteredContestListUseCase: GetFilteredContestListUseCase,
-        platformRepository: PlatformRepository
     ) = GetOrderedPlatformListUseCase(
-        getFilteredContestListUseCase,
-        platformRepository
+        getFilteredContestListUseCase
     )
 
     @Provides
