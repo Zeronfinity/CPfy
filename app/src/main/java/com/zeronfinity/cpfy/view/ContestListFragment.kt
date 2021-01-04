@@ -126,6 +126,11 @@ class ContestListFragment : BaseFragment() {
             adapterContestList.refreshContestList(it)
         })
 
+        contestListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
+            logD("platformListLiveData invoked")
+            contestListViewModel.refreshContestList()
+        })
+
         contestListViewModel.clistWebViewLiveDataEv.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
                 logD("clistWebViewLiveDataObserver: navigating to web view fragment")
