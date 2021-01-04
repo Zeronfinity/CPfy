@@ -4,6 +4,10 @@ import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.cpfy.framework.db.dao.PlatformDao
 import com.zeronfinity.cpfy.framework.db.entity.PlatformEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.assertAll
@@ -375,9 +379,9 @@ internal class PlatformDbTest {
             testDispatcher.runBlockingTest {
                 // Arrange
                 // Act
-                val list = sut.getPlatformList()
+                val list = sut.getPlatformList().first()
                 // Assert
-                assertEquals(0, list?.size)
+                assertEquals(0, list.size)
             }
         }
 
@@ -881,7 +885,7 @@ internal class PlatformDbTest {
             testDispatcher.runBlockingTest {
                 // Arrange
                 // Act
-                val list = sut.getPlatformList()
+                val list = sut.getPlatformList().first()
                 // Assert
                 assertEquals(platformListPreInserted, list)
             }
@@ -898,7 +902,7 @@ internal class PlatformDbTest {
                 sut.add(platform1Dup)
                 sut.add(platform2)
                 // Act
-                val list = sut.getPlatformList()
+                val list = sut.getPlatformList().first()
                 // Assert
                 platformListPreInserted.add(platform1Dup)
                 platformListPreInserted.add(platform2)
@@ -1045,8 +1049,10 @@ internal class PlatformDbTest {
             return platformMap[id]
         }
 
-        override suspend fun getPlatformAll(): List<PlatformEntity>? {
-            return platformMap.values.toList()
+        override fun getPlatformAll(): Flow<List<PlatformEntity>> {
+            return flow {
+                emit(platformMap.values.toList())
+            }
         }
 
         override suspend fun getRowCount(): Int? {
