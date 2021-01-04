@@ -25,6 +25,7 @@ class FetchServerContestInfoUseCase(
             if (serverContestInfoResponse.errorCode != null) {
                 when (serverContestInfoResponse.errorCode) {
                     401 -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
+                    429 -> Result.Error("API Limit Reached!\nPlease try again 1 minute later.")
                     else -> Result.Error("Error ${serverContestInfoResponse.errorCode}: ${serverContestInfoResponse.errorDesc}")
                 }
             } else if (serverContestInfoResponse.errorDesc != null) {
