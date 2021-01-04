@@ -41,4 +41,8 @@ class FilterTimeRangeRepository(private val filterTimeRangeDataSource: FilterTim
         DURATION_LOWER_BOUND -> filterTimeRangeDataSource.setDurationLowerBound(duration)
         DURATION_UPPER_BOUND -> filterTimeRangeDataSource.setDurationUpperBound(duration)
     }
+
+    fun isSaved() = filterTimeRangeDataSource.isSaved()
+
+    fun setSaved(value: Boolean) = filterTimeRangeDataSource.setSaved(value)
 }

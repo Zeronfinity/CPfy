@@ -10,6 +10,9 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.core.usecase.*
+import com.zeronfinity.cpfy.common.DEFAULT_DAYS_INTERVAL
+import com.zeronfinity.cpfy.common.DEFAULT_MAX_DURATION
+import com.zeronfinity.cpfy.common.DEFAULT_MIN_DURATION
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -22,8 +25,10 @@ class FiltersViewModel @ViewModelInject constructor(
     private val setFilterDurationUseCase: SetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
     private val setFilterTimeUseCase: SetFilterTimeUseCase,
+    private val isFilterSavedUseCase: IsFilterSavedUseCase,
+    private val setFilterSavedUseCase: SetFilterSavedUseCase
 ) : ViewModel() {
-    private val numberOfDaysBeforeContestsEnd = 7
+    private val numberOfDaysBeforeContestsEnd = DEFAULT_DAYS_INTERVAL
 
     val startTimeLowerBoundLiveData = MutableLiveData<String>()
     val startTimeUpperBoundLiveData = MutableLiveData<String>()
@@ -65,6 +70,10 @@ class FiltersViewModel @ViewModelInject constructor(
 
     fun getDurationFilters(filterDurationEnum: FilterDurationEnum) = getFilterDurationUseCase(filterDurationEnum)
 
+    fun isSaved() = isFilterSavedUseCase()
+
+    fun setSaved(value: Boolean) = setFilterSavedUseCase(value)
+
     fun loadTimeBasedFilterButtonTexts() {
         loadStartTimeLowerBoundBtnText()
         loadStartTimeUpperBoundBtnText()
@@ -83,6 +92,8 @@ class FiltersViewModel @ViewModelInject constructor(
     }
 
     fun resetAllFilters() {
+        logD("resetAllFilters() started")
+
         enableAllPlatforms()
 
         val calendar = Calendar.getInstance()
@@ -95,8 +106,8 @@ class FiltersViewModel @ViewModelInject constructor(
         setTimeFilters(END_TIME_LOWER_BOUND, Date())
         setTimeFilters(END_TIME_UPPER_BOUND, calendar.time)
 
-        setDurationFilters(DURATION_LOWER_BOUND, 0)
-        setDurationFilters(DURATION_UPPER_BOUND, 7*24*60*60)
+        setDurationFilters(DURATION_LOWER_BOUND, DEFAULT_MIN_DURATION)
+        setDurationFilters(DURATION_UPPER_BOUND, DEFAULT_MAX_DURATION)
 
         loadTimeBasedFilterButtonTexts()
     }

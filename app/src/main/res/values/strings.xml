@@ -33,6 +33,7 @@
     <!-- shared preference file names and keys -->
     <string name="shared_preferences_filters">com.zeronfinity.cpfy.filters</string>
     <string name="shared_preferences_cookies">com.zeronfinity.cpfy.cookies</string>
+    <string name="s_pref_filters_is_saved">is_saved</string>
     <string name="s_pref_filters_key_start_time_lower_bound">start_time_lower_bound</string>
     <string name="s_pref_filters_key_start_time_upper_bound">start_time_upper_bound</string>
     <string name="s_pref_filters_key_end_time_lower_bound">end_time_lower_bound</string>

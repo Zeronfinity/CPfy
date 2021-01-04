@@ -100,6 +100,11 @@ class ContestListFragment : BaseFragment() {
 
         contestListViewModel.fetchPlatformList()
 
+        if (isFirstTime && !filtersViewModel.isSaved()) {
+            filtersViewModel.resetAllFilters()
+            filtersViewModel.setSaved(true)
+        }
+
         setPrevTimesToCurrentValues()
         isFirstTime = false
     }

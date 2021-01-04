@@ -3,6 +3,10 @@ package com.zeronfinity.core.repository
 import java.util.Date
 
 interface FilterTimeRangeDataSource {
+    fun isSaved(): Boolean
+
+    fun setSaved(value: Boolean)
+
     fun getStartTimeLowerBound(): Date
 
     fun getStartTimeUpperBound(): Date

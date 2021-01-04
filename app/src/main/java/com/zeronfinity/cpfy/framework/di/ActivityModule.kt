@@ -131,6 +131,20 @@ class ActivityModule {
     )
 
     @Provides
+    fun provideIsFilterSavedUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = IsFilterSavedUseCase(
+        filterTimeRangeRepository
+    )
+
+    @Provides
+    fun provideSetFilterSavedUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = SetFilterSavedUseCase(
+        filterTimeRangeRepository
+    )
+
+    @Provides
     fun provideSetCookieUseCase(
         cookieRepository: CookieRepository
     ) = SetCookieUseCase(

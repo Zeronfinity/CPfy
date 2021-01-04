@@ -4,6 +4,9 @@ import android.app.Application
 import android.content.Context
 import com.zeronfinity.core.repository.FilterTimeRangeDataSource
 import com.zeronfinity.cpfy.R
+import com.zeronfinity.cpfy.common.DEFAULT_DAYS_INTERVAL
+import com.zeronfinity.cpfy.common.DEFAULT_MAX_DURATION
+import com.zeronfinity.cpfy.common.DEFAULT_MIN_DURATION
 import java.util.Calendar
 import java.util.Date
 
@@ -14,9 +17,26 @@ class FilterTimeRangeSharedPreferences(
         application.getString(R.string.shared_preferences_filters),
         Context.MODE_PRIVATE
     )
-    private val minDefaultDuration = 0
-    private val maxDefaultDuration = 7 * 24 * 60 * 60
-    private val numberOfDaysBeforeContestsEnd = 7
+    private val minDefaultDuration = DEFAULT_MIN_DURATION
+    private val maxDefaultDuration = DEFAULT_MAX_DURATION
+    private val numberOfDaysBeforeContestsEnd = DEFAULT_DAYS_INTERVAL
+
+    override fun isSaved(): Boolean {
+        return sharedPref.getBoolean(
+            application.getString(R.string.s_pref_filters_is_saved),
+            false
+        )
+    }
+
+    override fun setSaved(value: Boolean) {
+        with(sharedPref.edit()) {
+            putBoolean(
+                application.getString(R.string.s_pref_filters_is_saved),
+                value
+            )
+            apply()
+        }
+    }
 
     override fun getStartTimeLowerBound(): Date {
         val date = sharedPref.getLong(
