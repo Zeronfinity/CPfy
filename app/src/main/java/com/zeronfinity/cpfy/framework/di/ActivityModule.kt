@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import okhttp3.Cookie
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -82,17 +83,21 @@ class ActivityModule {
     @Provides
     fun provideFetchServerContestInfoUseCase(
         contestRepository: ContestRepository,
+        cookieRepository: CookieRepository,
         serverContestInfoRepository: ServerContestInfoRepository
     ) = FetchServerContestInfoUseCase(
         contestRepository,
+        cookieRepository,
         serverContestInfoRepository
     )
 
     @Provides
     fun provideFetchServerPlatformInfoUseCase(
+        cookieRepository: CookieRepository,
         platformRepository: PlatformRepository,
         serverPlatformInfoRepository: ServerPlatformInfoRepository
     ) = FetchServerPlatformInfoUseCase(
+        cookieRepository,
         platformRepository,
         serverPlatformInfoRepository
     )
