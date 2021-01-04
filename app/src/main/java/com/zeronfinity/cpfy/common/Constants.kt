@@ -5,4 +5,6 @@ package com.zeronfinity.cpfy.common
  */
 const val DATABASE_NAME = "cpfy-db"
 
-const val PLATFORM_FILTER_MAX_COUNT = 12
+const val PLATFORM_FILTER_MAX_COUNT: Int = 12
+
+const val FILTER_DATE_TIME_FORMAT = "dd-MM-yy\nhh:mm a"

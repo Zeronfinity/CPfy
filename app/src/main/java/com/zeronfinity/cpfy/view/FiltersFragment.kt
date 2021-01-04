@@ -21,6 +21,7 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.cpfy.R
+import com.zeronfinity.cpfy.common.FILTER_DATE_TIME_FORMAT
 import com.zeronfinity.cpfy.common.makeDurationText
 import com.zeronfinity.cpfy.databinding.FragmentFiltersBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters
@@ -48,7 +49,7 @@ class FiltersFragment
     lateinit var adapterPlatformFilters: AdapterPlatformFilters
 
     private val simpleDateFormat = SimpleDateFormat(
-        "dd-MM-yy\nhh:mm a",
+        FILTER_DATE_TIME_FORMAT,
         Locale.getDefault()
     )
 
@@ -67,9 +68,6 @@ class FiltersFragment
 
     override fun onStop() {
         logD("onStop() started -> isContestListRefreshRequired: [$isContestListRefreshRequired]")
-        if (isContestListFetchRequired) {
-            contentListViewModel.fetchContestList()
-        }
         if (isContestListRefreshRequired) {
             contentListViewModel.refreshContestList()
         }

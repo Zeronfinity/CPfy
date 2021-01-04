@@ -37,6 +37,8 @@ class FiltersViewModel @ViewModelInject constructor(
         Locale.getDefault()
     )
 
+    fun getTimeFilters(filterTimeEnum: FilterTimeEnum) = getFilterTimeUseCase(filterTimeEnum)
+
     fun setTimeFilters(filterTimeEnum: FilterTimeEnum, date: Date) {
         logD("setTimeFilters called: filterTimeEnum = [${filterTimeEnum.name}], date = [$date]")
 

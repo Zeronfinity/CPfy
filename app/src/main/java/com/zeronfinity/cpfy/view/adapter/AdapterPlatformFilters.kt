@@ -100,7 +100,7 @@ class AdapterPlatformFilters @Inject constructor(
     }
 
     override fun getItemCount(): Int {
-        return maxItemCount
+        return minOf(maxItemCount, platformList.size)
     }
 
     fun refreshPlatformList(list: List<Platform>) {
