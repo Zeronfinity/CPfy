@@ -23,10 +23,14 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+      env:
+          CLIST_API_KEY: ${{ secrets.CLIST_API_KEY }}
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug --stacktrace
-      
+      env:
+          CLIST_API_KEY: ${{ secrets.CLIST_API_KEY }}
+    
     - name: Upload APK
       uses: actions/upload-artifact@v2
       with:
