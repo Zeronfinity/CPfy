@@ -2,7 +2,6 @@ package com.zeronfinity.cpfy.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,11 +26,17 @@ class ContestListFragment : BaseFragment() {
     @Inject
     lateinit var adapterContestList: AdapterContestList
 
+    private var isFirstTime = true
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         logD("onCreateView started")
+
+        savedInstanceState?.let {
+            isFirstTime = it.getBoolean("IS_FIRST_TIME")
+        }
 
         _binding = FragmentContestListBinding.inflate(inflater, container, false)
 
@@ -44,15 +49,24 @@ class ContestListFragment : BaseFragment() {
         return binding.root
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("IS_FIRST_TIME", isFirstTime)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        logD("onViewCreated started")
+        logD("onViewCreated() started -> isFirstTime: [$isFirstTime]")
 
         viewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
         observeViewModel()
 
-        viewModel.fetchContestList()
-        viewModel.fetchPlatformList()
+        if (isFirstTime) {
+            viewModel.fetchContestList()
+            viewModel.fetchPlatformList()
+        }
+
+        isFirstTime = false
     }
 
     private fun observeViewModel() {

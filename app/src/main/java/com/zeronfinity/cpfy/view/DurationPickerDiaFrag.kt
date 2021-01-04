@@ -9,7 +9,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.databinding.FragmentDurationPickerBinding
+import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +22,10 @@ class DurationPickerDiaFrag : DialogFragment() {
 
     private val args: DurationPickerDiaFragArgs by navArgs()
 
+    private lateinit var contentListViewModel: ContestListViewModel
     private lateinit var filtersViewModel: FiltersViewModel
+
+    private var isContestListFetchRequired: Boolean = false
 
     private var days = 7
     private var hours = 0
@@ -38,9 +43,11 @@ class DurationPickerDiaFrag : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        contentListViewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
         filtersViewModel = ViewModelProvider(requireActivity()).get(FiltersViewModel::class.java)
 
-        parseDuration(filtersViewModel.getDurationFilters(args.filterDurationEnumArg))
+        var prevDuration = filtersViewModel.getDurationFilters(args.filterDurationEnumArg)
+        parseDuration(prevDuration)
 
         binding.numPickerDays.minValue = 0
         binding.numPickerDays.maxValue = 365
@@ -64,6 +71,11 @@ class DurationPickerDiaFrag : DialogFragment() {
             duration = duration * 60 + binding.numPickerMinutes.value
             duration *= 60
             filtersViewModel.setDurationFilters(args.filterDurationEnumArg, duration)
+
+            if (prevDuration != duration) {
+                isContestListFetchRequired = true
+            }
+
             findNavController().popBackStack()
         }
     }
@@ -74,6 +86,14 @@ class DurationPickerDiaFrag : DialogFragment() {
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    override fun onStop() {
+        logD("onStop() started -> isContestListRefreshRequired: [$isContestListFetchRequired]")
+        if (isContestListFetchRequired) {
+            contentListViewModel.fetchContestList()
+        }
+        super.onStop()
     }
 
     private fun parseDuration(duration: Int) {

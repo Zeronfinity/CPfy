@@ -53,7 +53,7 @@ class ContestListViewModel @ViewModelInject constructor(
         logD("fetchContestList() started")
 
         if (_contestListLiveData.value == null) {
-            updateContestList()
+            refreshContestList()
         }
 
         val calendar = Calendar.getInstance()
@@ -79,7 +79,7 @@ class ContestListViewModel @ViewModelInject constructor(
             logD("fetchResult: [$fetchResult]")
 
             when (fetchResult) {
-                is FetchServerContestInfoUseCase.Result.Success -> updateContestList()
+                is FetchServerContestInfoUseCase.Result.Success -> refreshContestList()
                 is FetchServerContestInfoUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(Event(fetchResult.errorMsg))
                 is FetchServerContestInfoUseCase.Result.UnauthorizedError -> _clistWebViewLiveDataEv.postValue(Event(true))
             }
@@ -106,7 +106,7 @@ class ContestListViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun updateContestList() {
+    fun refreshContestList() {
         coroutineScope.launch {
             _contestListLiveData.postValue(getFilteredContestListUseCase())
         }

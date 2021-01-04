@@ -52,6 +52,7 @@ class FiltersFragment
         Locale.getDefault()
     )
 
+    private var isContestListFetchRequired: Boolean = false
     private var isContestListRefreshRequired: Boolean = false
 
     override fun onCreateView(
@@ -66,8 +67,11 @@ class FiltersFragment
 
     override fun onStop() {
         logD("onStop() started -> isContestListRefreshRequired: [$isContestListRefreshRequired]")
-        if (isContestListRefreshRequired) {
+        if (isContestListFetchRequired) {
             contentListViewModel.fetchContestList()
+        }
+        if (isContestListRefreshRequired) {
+            contentListViewModel.refreshContestList()
         }
         super.onStop()
     }
@@ -252,7 +256,9 @@ class FiltersFragment
                 { _: TimePicker, hour: Int, minute: Int ->
                     calendar.set(Calendar.HOUR_OF_DAY, hour)
                     calendar.set(Calendar.MINUTE, minute)
-                    isContestListRefreshRequired = true
+                    if (prevCalendar.time != calendar.time) {
+                        isContestListFetchRequired = true
+                    }
                     filtersViewModel.setTimeFilters(filterTimeEnum, calendar.time)
                 },
                 hour,
@@ -267,8 +273,5 @@ class FiltersFragment
             filterDurationEnum
         )
         findNavController().safeNavigate(action)
-
-        // TODO: make this true only if duration is actually changed
-        isContestListRefreshRequired = true
     }
 }
