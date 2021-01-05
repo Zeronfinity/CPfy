@@ -95,7 +95,7 @@ class AdapterContestList @Inject constructor(
                     platform?.imageUrl.let {
                         Picasso.get()
                             .load(it)
-                            .resize(50, 50)
+                            .resize(48, 48)
                             .centerCrop()
                             .into(binding.ivContestPlatform)
                     }
