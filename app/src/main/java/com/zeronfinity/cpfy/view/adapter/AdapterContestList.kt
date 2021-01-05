@@ -37,7 +37,7 @@ class AdapterContestList @Inject constructor(
         fun bind(contest: Contest) {
             binding.tvContestName.text = contest.name
             binding.tvStartTime.text = SimpleDateFormat(
-                "E dd-MMM-yy hh:mm a",
+                "E dd-MMM-yy hh:mm a Z",
                 Locale.getDefault()
             ).format(contest.startTime)
 

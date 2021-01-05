@@ -32,7 +32,7 @@ class ClipboardViewModel @ViewModelInject constructor(
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     private val simpleDateFormat = SimpleDateFormat(
-        "E dd-MMM-yy hh:mm a",
+        "E dd-MMM-yy hh:mm a Z",
         Locale.getDefault()
     )
 

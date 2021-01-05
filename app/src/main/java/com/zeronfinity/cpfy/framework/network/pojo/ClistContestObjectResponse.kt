@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 import com.zeronfinity.core.entity.Contest
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.TimeZone
 
 data class ClistContestObjectResponse (
     @field:Json(name = "event")
@@ -22,14 +23,15 @@ data class ClistContestObjectResponse (
     }
 
     fun toContest(): Contest {
-        val simpleDateFormatUtc = SimpleDateFormat(apiDateFormat, Locale.US)
-        val duration = ((simpleDateFormatUtc.parse(end).time - simpleDateFormatUtc.parse(start).time)/1000).toInt()
+        val simpleDateFormat = SimpleDateFormat(apiDateFormat, Locale.US)
+        simpleDateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val duration = ((simpleDateFormat.parse(end).time - simpleDateFormat.parse(start).time)/1000).toInt()
         return Contest(
             title,
             duration,
             platformResourceObject.platformId,
-            simpleDateFormatUtc.parse(start),
-            simpleDateFormatUtc.parse(end),
+            simpleDateFormat.parse(start),
+            simpleDateFormat.parse(end),
             url
         )
     }
