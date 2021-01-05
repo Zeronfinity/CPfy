@@ -6,20 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.TimePicker
-import androidx.fragment.app.Fragment
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.logger.logE
-import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.*
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
-import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.END_TIME
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.START_TIME
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.common.FILTER_DATE_TIME_FORMAT
 import com.zeronfinity.cpfy.common.makeDurationText
@@ -99,15 +97,17 @@ class FiltersFragment
 
         adapterPlatformFilters.setPlatformFilterClickListener(this)
 
-        contentListViewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
+        contentListViewModel =
+            ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
         observeContestListViewModel()
 
         filtersViewModel = ViewModelProvider(requireActivity()).get(FiltersViewModel::class.java)
         observeFilterDialogViewModel()
 
-        filtersViewModel.loadTimeBasedFilterButtonTexts()
+        filtersViewModel.loadIsLowerBoundToday()
+        filtersViewModel.loadDurationBasedFilterButtonTexts()
 
-        setUpButtons()
+        setUpViews()
     }
 
     private fun contractRecyclerView() {
@@ -131,19 +131,27 @@ class FiltersFragment
 
     private fun observeFilterDialogViewModel() {
         filtersViewModel.startTimeLowerBoundLiveData.observe(viewLifecycleOwner, {
-            binding.btnStartTimeLowerBound.text = it
+            if (!binding.cbStartTime.isChecked) {
+                binding.btnStartTimeLowerBound.text = it
+            }
         })
 
         filtersViewModel.startTimeUpperBoundLiveData.observe(viewLifecycleOwner, {
-            binding.btnStartTimeUpperBound.text = it
+            if (!binding.cbStartTime.isChecked) {
+                binding.btnStartTimeUpperBound.text = it
+            }
         })
 
         filtersViewModel.endTimeLowerBoundLiveData.observe(viewLifecycleOwner, {
-            binding.btnEndTimeLowerBound.text = it
+            if (!binding.cbEndTime.isChecked) {
+                binding.btnEndTimeLowerBound.text = it
+            }
         })
 
         filtersViewModel.endTimeUpperBoundLiveData.observe(viewLifecycleOwner, {
-            binding.btnEndTimeUpperBound.text = it
+            if (!binding.cbEndTime.isChecked) {
+                binding.btnEndTimeUpperBound.text = it
+            }
         })
 
         filtersViewModel.durationLowerBoundLiveData.observe(viewLifecycleOwner, {
@@ -153,13 +161,45 @@ class FiltersFragment
         filtersViewModel.durationUpperBoundLiveData.observe(viewLifecycleOwner, {
             binding.btnDurationUpperBound.text = makeDurationText(it)
         })
+
+        filtersViewModel.isStartTimeLowerBoundTodayLiveData.observe(viewLifecycleOwner, {
+            processStartTimeLowerBoundToday(it)
+        })
+
+        filtersViewModel.isEndTimeLowerBoundTodayLiveData.observe(viewLifecycleOwner, {
+            processEndTimeLowerBoundToday(it)
+        })
+
+        filtersViewModel.startTimeDaysAfterTodayLiveData.observe(viewLifecycleOwner, {
+            binding.tvDaysAfterTodaySt.text = it.toString()
+
+            val calendar = GregorianCalendar.getInstance()
+            calendar.time = Date()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.add(Calendar.DAY_OF_YEAR, it)
+            binding.btnStartTimeUpperBound.text = simpleDateFormat.format(calendar.time)
+        })
+
+        filtersViewModel.endTimeDaysAfterTodayLiveData.observe(viewLifecycleOwner, {
+            binding.tvDaysAfterTodayEd.text = it.toString()
+
+            val calendar = GregorianCalendar.getInstance()
+            calendar.time = Date()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.add(Calendar.DAY_OF_YEAR, it)
+            binding.btnEndTimeUpperBound.text = simpleDateFormat.format(calendar.time)
+        })
     }
 
     override fun onPlatformFilterClick() {
         isContestListRefreshRequired = true
     }
 
-    private fun setUpButtons() {
+    private fun setUpViews() {
         binding.btnStartTimeLowerBound.setOnClickListener { view ->
             val btn = view as Button
             val date = simpleDateFormat.parse(btn.text as String)
@@ -220,6 +260,38 @@ class FiltersFragment
         binding.btnReset.setOnClickListener {
             filtersViewModel.resetAllFilters()
         }
+
+        binding.cbStartTime.setOnClickListener {
+            val checkBox = it as CheckBox
+
+            if (checkBox.isChecked) {
+                filtersViewModel.setStartTimeLowerBoundToday(true)
+                processStartTimeLowerBoundToday(true)
+            } else {
+                filtersViewModel.setStartTimeLowerBoundToday(false)
+                processStartTimeLowerBoundToday(false)
+            }
+        }
+
+        binding.cbEndTime.setOnClickListener {
+            val checkBox = it as CheckBox
+
+            if (checkBox.isChecked) {
+                filtersViewModel.setEndTimeLowerBoundToday(true)
+                processEndTimeLowerBoundToday(true)
+            } else {
+                filtersViewModel.setEndTimeLowerBoundToday(false)
+                processEndTimeLowerBoundToday(false)
+            }
+        }
+
+        binding.tvDaysAfterTodaySt.setOnClickListener {
+            showDayPicker(START_TIME)
+        }
+
+        binding.tvDaysAfterTodayEd.setOnClickListener {
+            showDayPicker(END_TIME)
+        }
     }
 
     private fun showDatePicker(filterTimeEnum: FilterTimeEnum, date: Date) {
@@ -233,7 +305,7 @@ class FiltersFragment
             DatePickerDialog(
                 it,
                 { _: DatePicker, year: Int, month: Int, day: Int ->
-                     showTimePicker(filterTimeEnum, date, GregorianCalendar(year, month, day))
+                    showTimePicker(filterTimeEnum, date, GregorianCalendar(year, month, day))
                 },
                 year,
                 month,
@@ -242,7 +314,11 @@ class FiltersFragment
         }
     }
 
-    private fun showTimePicker(filterTimeEnum: FilterTimeEnum, prevDate: Date, calendar: GregorianCalendar) {
+    private fun showTimePicker(
+        filterTimeEnum: FilterTimeEnum,
+        prevDate: Date,
+        calendar: GregorianCalendar
+    ) {
         val prevCalendar = GregorianCalendar.getInstance()
         prevCalendar.time = prevDate
 
@@ -258,6 +334,12 @@ class FiltersFragment
                         isContestListFetchRequired = true
                     }
                     filtersViewModel.setTimeFilters(filterTimeEnum, calendar.time)
+                    when (filterTimeEnum) {
+                        START_TIME_LOWER_BOUND, START_TIME_UPPER_BOUND ->
+                            filtersViewModel.setStartTimeLowerBoundToday(false)
+                        END_TIME_LOWER_BOUND, END_TIME_UPPER_BOUND ->
+                            filtersViewModel.setEndTimeLowerBoundToday(false)
+                    }
                 },
                 hour,
                 minute,
@@ -271,5 +353,64 @@ class FiltersFragment
             filterDurationEnum
         )
         findNavController().safeNavigate(action)
+    }
+
+    private fun showDayPicker(filterTimeTypeEnum: FilterTimeTypeEnum) {
+        val action = FiltersFragmentDirections.actionFiltersFragmentToDayPickerDiaFrag(
+            filterTimeTypeEnum
+        )
+        findNavController().safeNavigate(action)
+    }
+
+    private fun processStartTimeLowerBoundToday(value: Boolean) {
+        logD("processStartTimeLowerBoundToday() started -> value: [$value]")
+        if (value) {
+            binding.cbStartTime.isChecked = true
+            binding.tvDaysAfterTodaySt.visibility = View.VISIBLE
+            binding.tvDaysAfterTodayLabelSt.visibility = View.VISIBLE
+
+            filtersViewModel.loadStartTimeDaysAfterToday()
+
+            val calendar = GregorianCalendar.getInstance()
+            calendar.time = Date()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            binding.btnStartTimeLowerBound.text = simpleDateFormat.format(calendar.time)
+        } else {
+            binding.cbStartTime.isChecked = false
+            binding.tvDaysAfterTodaySt.visibility = View.INVISIBLE
+            binding.tvDaysAfterTodayLabelSt.visibility = View.INVISIBLE
+
+            filtersViewModel.loadStartTimeBasedFilterButtonTexts()
+        }
+    }
+
+    private fun processEndTimeLowerBoundToday(value: Boolean) {
+        logD("processEndTimeLowerBoundToday() started -> value: [$value]")
+        if (value) {
+            binding.cbEndTime.isChecked = true
+            binding.tvDaysAfterTodayEd.visibility = View.VISIBLE
+            binding.tvDaysAfterTodayLabelEd.visibility = View.VISIBLE
+
+            filtersViewModel.loadEndTimeDaysAfterToday()
+
+            val calendar = GregorianCalendar.getInstance()
+            calendar.time = Date()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            binding.btnEndTimeLowerBound.text = simpleDateFormat.format(calendar.time)
+        } else {
+            binding.cbStartTime.isChecked = false
+            binding.tvDaysAfterTodaySt.visibility = View.INVISIBLE
+            binding.tvDaysAfterTodayLabelSt.visibility = View.INVISIBLE
+
+            filtersViewModel.loadEndTimeBasedFilterButtonTexts()
+        }
     }
 }

@@ -4,15 +4,17 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zeronfinity.core.logger.logD
-import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.*
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
-import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.END_TIME
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.START_TIME
 import com.zeronfinity.core.usecase.*
 import com.zeronfinity.cpfy.common.DEFAULT_DAYS_INTERVAL
 import com.zeronfinity.cpfy.common.DEFAULT_MAX_DURATION
 import com.zeronfinity.cpfy.common.DEFAULT_MIN_DURATION
+import com.zeronfinity.cpfy.common.FILTER_DATE_TIME_FORMAT
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -26,7 +28,11 @@ class FiltersViewModel @ViewModelInject constructor(
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
     private val setFilterTimeUseCase: SetFilterTimeUseCase,
     private val isFilterSavedUseCase: IsFilterSavedUseCase,
-    private val setFilterSavedUseCase: SetFilterSavedUseCase
+    private val setFilterSavedUseCase: SetFilterSavedUseCase,
+    private val isFilterLowerBoundTodayUseCase: IsFilterLowerBoundTodayUseCase,
+    private val setFilterLowerBoundTodayUseCase: SetFilterLowerBoundTodayUseCase,
+    private val getFilterDaysAfterTodayUseCase: GetFilterDaysAfterTodayUseCase,
+    private val setFilterDaysAfterTodayUseCase: SetFilterDaysAfterTodayUseCase,
 ) : ViewModel() {
     private val numberOfDaysBeforeContestsEnd = DEFAULT_DAYS_INTERVAL
 
@@ -37,8 +43,14 @@ class FiltersViewModel @ViewModelInject constructor(
     val durationLowerBoundLiveData = MutableLiveData<Int>()
     val durationUpperBoundLiveData = MutableLiveData<Int>()
 
+    val isStartTimeLowerBoundTodayLiveData = MutableLiveData<Boolean>()
+    val isEndTimeLowerBoundTodayLiveData = MutableLiveData<Boolean>()
+
+    val startTimeDaysAfterTodayLiveData = MutableLiveData<Int>()
+    val endTimeDaysAfterTodayLiveData = MutableLiveData<Int>()
+
     private val simpleDateFormat = SimpleDateFormat(
-        "dd-MM-yy\nhh:mm a",
+        FILTER_DATE_TIME_FORMAT,
         Locale.getDefault()
     )
 
@@ -74,11 +86,62 @@ class FiltersViewModel @ViewModelInject constructor(
 
     fun setSaved(value: Boolean) = setFilterSavedUseCase(value)
 
-    fun loadTimeBasedFilterButtonTexts() {
+    fun loadIsLowerBoundToday() {
+        loadIsStartTimeLowerBoundToday()
+        loadIsEndTimeLowerBoundToday()
+    }
+
+    fun isLowerBoundToday(filterTimeTypeEnum: FilterTimeTypeEnum) = isFilterLowerBoundTodayUseCase(filterTimeTypeEnum)
+
+    private fun loadIsStartTimeLowerBoundToday() {
+        isStartTimeLowerBoundTodayLiveData.postValue(isLowerBoundToday(START_TIME))
+    }
+
+    private fun loadIsEndTimeLowerBoundToday() {
+        isEndTimeLowerBoundTodayLiveData.postValue(isLowerBoundToday(END_TIME))
+    }
+
+    fun setStartTimeLowerBoundToday(value: Boolean) {
+        setFilterLowerBoundTodayUseCase(START_TIME, value)
+        loadIsStartTimeLowerBoundToday()
+    }
+
+    fun setEndTimeLowerBoundToday(value: Boolean) {
+        setFilterLowerBoundTodayUseCase(END_TIME, value)
+        loadIsEndTimeLowerBoundToday()
+    }
+
+    fun getDaysAfterToday(filterTimeTypeEnum: FilterTimeTypeEnum) = getFilterDaysAfterTodayUseCase(filterTimeTypeEnum)
+
+    fun loadStartTimeDaysAfterToday() {
+        startTimeDaysAfterTodayLiveData.postValue(getDaysAfterToday(START_TIME))
+    }
+
+    fun setStartTimeDaysAfterToday(value: Int) {
+        setFilterDaysAfterTodayUseCase(START_TIME, value)
+        loadStartTimeDaysAfterToday()
+    }
+
+    fun loadEndTimeDaysAfterToday() {
+        endTimeDaysAfterTodayLiveData.postValue(getFilterDaysAfterTodayUseCase(END_TIME))
+    }
+
+    fun setEndTimeDaysAfterToday(value: Int) {
+        setFilterDaysAfterTodayUseCase(END_TIME, value)
+        loadEndTimeDaysAfterToday()
+    }
+
+    fun loadStartTimeBasedFilterButtonTexts() {
         loadStartTimeLowerBoundBtnText()
         loadStartTimeUpperBoundBtnText()
+    }
+
+    fun loadEndTimeBasedFilterButtonTexts() {
         loadEndTimeLowerBoundBtnText()
         loadEndTimeUpperBoundBtnText()
+    }
+
+    fun loadDurationBasedFilterButtonTexts() {
         loadDurationLowerBoundBtnText()
         loadDurationUpperBoundBtnText()
     }
@@ -100,6 +163,12 @@ class FiltersViewModel @ViewModelInject constructor(
         calendar.time = Date()
         calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
 
+        setStartTimeLowerBoundToday(true)
+        setEndTimeLowerBoundToday(true)
+
+        setStartTimeDaysAfterToday(DEFAULT_DAYS_INTERVAL)
+        setEndTimeDaysAfterToday(DEFAULT_DAYS_INTERVAL)
+
         setTimeFilters(START_TIME_LOWER_BOUND, Date())
         setTimeFilters(START_TIME_UPPER_BOUND, calendar.time)
 
@@ -109,7 +178,7 @@ class FiltersViewModel @ViewModelInject constructor(
         setDurationFilters(DURATION_LOWER_BOUND, DEFAULT_MIN_DURATION)
         setDurationFilters(DURATION_UPPER_BOUND, DEFAULT_MAX_DURATION)
 
-        loadTimeBasedFilterButtonTexts()
+        loadIsLowerBoundToday()
     }
 
     private fun loadStartTimeLowerBoundBtnText() {

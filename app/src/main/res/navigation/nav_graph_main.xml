@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_filtersFragment_to_durationPickerDiaFrag"
             app:destination="@id/durationPickerDiaFrag" />
+        <action
+            android:id="@+id/action_filtersFragment_to_dayPickerDiaFrag"
+            app:destination="@id/dayPickerDiaFrag" />
     </fragment>
     <dialog
         android:id="@+id/durationPickerDiaFrag"
@@ -50,4 +53,12 @@
         android:name="com.zeronfinity.cpfy.view.ClipboardFragment"
         android:label="Clipboard"
         tools:layout="@layout/fragment_clipboard" />
+    <dialog
+        android:id="@+id/dayPickerDiaFrag"
+        android:name="com.zeronfinity.cpfy.view.DayPickerDiaFrag"
+        android:label="DayPickerDiaFrag">
+        <argument
+            android:name="filterTimeTypeEnumArg"
+            app:argType="com.zeronfinity.core.repository.FilterTimeRangeRepository$FilterTimeTypeEnum" />
+    </dialog>
 </navigation>

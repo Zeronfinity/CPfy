@@ -12,16 +12,17 @@ import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.END_TIME
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.START_TIME
 import com.zeronfinity.cpfy.R
-import com.zeronfinity.cpfy.common.FILTER_DATE_TIME_FORMAT
 import com.zeronfinity.cpfy.databinding.FragmentContestListBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterContestList
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
-import java.util.Locale
+import java.util.GregorianCalendar
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -147,44 +148,100 @@ class ContestListFragment : BaseFragment() {
     private fun isTimeFilterChanged(): Boolean {
         var isChanged = false
 
-        val startTimeLowerBound = filtersViewModel.getTimeFilters(START_TIME_LOWER_BOUND)
-        prevStartTimeLowerBound?.let {
-            if (prevStartTimeLowerBound != startTimeLowerBound) {
-                isChanged = true
+        if (filtersViewModel.isLowerBoundToday(START_TIME)) {
+            val calendar = GregorianCalendar.getInstance()
+            calendar.time = Date()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            prevStartTimeLowerBound?.let {
+                if (it.compareTo(calendar.time) != 0) {
+                    logD("isTimeFilterChanged() -> prevStartTimeLowerBound: [$it], calendar.time: [${calendar.time}]")
+                    isChanged = true
+                }
+            }
+
+            calendar.add(Calendar.DAY_OF_YEAR, filtersViewModel.getDaysAfterToday(START_TIME))
+
+            prevStartTimeUpperBound?.let {
+                if (it.compareTo(calendar.time) != 0) {
+                    logD("isTimeFilterChanged() -> prevStartTimeUpperBound: [$it], calendar.time: [${calendar.time}]")
+                    isChanged = true
+                }
+            }
+        } else {
+            val startTimeLowerBound = filtersViewModel.getTimeFilters(START_TIME_LOWER_BOUND)
+            prevStartTimeLowerBound?.let {
+                if (it.compareTo(startTimeLowerBound) != 0) {
+                    logD("isTimeFilterChanged() -> prevStartTimeLowerBound: [$it], startTimeLowerBound: [${startTimeLowerBound}]")
+                    isChanged = true
+                }
+            }
+
+            val startTimeUpperBound = filtersViewModel.getTimeFilters(START_TIME_UPPER_BOUND)
+            prevStartTimeUpperBound?.let {
+                if (it.compareTo(startTimeUpperBound) != 0) {
+                    logD("isTimeFilterChanged() -> prevStartTimeUpperBound: [$it], startTimeUpperBound: [${startTimeUpperBound}]")
+                    isChanged = true
+                }
             }
         }
 
-        val startTimeUpperBound = filtersViewModel.getTimeFilters(START_TIME_UPPER_BOUND)
-        prevStartTimeUpperBound?.let {
-            if (prevStartTimeUpperBound != startTimeUpperBound) {
-                isChanged = true
-            }
-        }
+        if (filtersViewModel.isLowerBoundToday(END_TIME)) {
+            val calendar = GregorianCalendar.getInstance()
+            calendar.time = Date()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
 
-        val endTimeLowerBound = filtersViewModel.getTimeFilters(END_TIME_LOWER_BOUND)
-        prevEndTimeLowerBound?.let {
-            if (prevEndTimeLowerBound != endTimeLowerBound) {
-                isChanged = true
+            prevEndTimeLowerBound?.let {
+                if (it.compareTo(calendar.time) != 0) {
+                    logD("isTimeFilterChanged() -> prevEndTimeLowerBound: [$it], calendar.time: [${calendar.time}]")
+                    isChanged = true
+                }
             }
-        }
 
-        val endTimeUpperBound = filtersViewModel.getTimeFilters(END_TIME_UPPER_BOUND)
-        prevEndTimeUpperBound?.let {
-            if (prevEndTimeUpperBound != endTimeUpperBound) {
-                isChanged = true
+            calendar.add(Calendar.DAY_OF_YEAR, filtersViewModel.getDaysAfterToday(START_TIME))
+
+            prevEndTimeUpperBound?.let {
+                if (it.compareTo(calendar.time) != 0) {
+                    logD("isTimeFilterChanged() -> prevEndTimeUpperBound: [$it], calendar.time: [${calendar.time}]")
+                    isChanged = true
+                }
+            }
+        } else {
+            val endTimeLowerBound = filtersViewModel.getTimeFilters(END_TIME_LOWER_BOUND)
+            prevEndTimeLowerBound?.let {
+                if (it.compareTo(endTimeLowerBound) != 0) {
+                    logD("isTimeFilterChanged() -> prevEndTimeLowerBound: [$it], endTimeLowerBound: [${endTimeLowerBound}]")
+                    isChanged = true
+                }
+            }
+
+            val endTimeUpperBound = filtersViewModel.getTimeFilters(END_TIME_UPPER_BOUND)
+            prevEndTimeUpperBound?.let {
+                if (it.compareTo(endTimeUpperBound) != 0) {
+                    logD("isTimeFilterChanged() -> prevEndTimeUpperBound: [$it], endTimeUpperBound: [${endTimeUpperBound}]")
+                    isChanged = true
+                }
             }
         }
 
         val durationLowerBound = filtersViewModel.getDurationFilters(DURATION_LOWER_BOUND)
         prevDurationLowerBound?.let {
-            if (prevDurationLowerBound != durationLowerBound) {
+            if (it.compareTo(durationLowerBound) != 0) {
+                logD("isTimeFilterChanged() -> prevDurationLowerBound: [$it], durationLowerBound: [${durationLowerBound}]")
                 isChanged = true
             }
         }
 
         val durationUpperBound = filtersViewModel.getDurationFilters(DURATION_UPPER_BOUND)
         prevDurationUpperBound?.let {
-            if (prevDurationUpperBound != durationUpperBound) {
+            if (it.compareTo(durationUpperBound) != 0) {
+                logD("isTimeFilterChanged() -> prevDurationUpperBound: [$it], durationUpperBound: [${durationUpperBound}]")
                 isChanged = true
             }
         }
@@ -195,10 +252,41 @@ class ContestListFragment : BaseFragment() {
     }
 
     private fun setPrevTimesToCurrentValues() {
-        prevStartTimeLowerBound = filtersViewModel.getTimeFilters(START_TIME_LOWER_BOUND)
-        prevStartTimeUpperBound = filtersViewModel.getTimeFilters(START_TIME_UPPER_BOUND)
-        prevEndTimeLowerBound = filtersViewModel.getTimeFilters(END_TIME_LOWER_BOUND)
-        prevEndTimeUpperBound = filtersViewModel.getTimeFilters(END_TIME_UPPER_BOUND)
+        if (filtersViewModel.isLowerBoundToday(START_TIME)) {
+            val calendar = GregorianCalendar.getInstance()
+            calendar.time = Date()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            prevStartTimeLowerBound = calendar.time
+
+            calendar.add(Calendar.DAY_OF_YEAR, filtersViewModel.getDaysAfterToday(START_TIME))
+            prevStartTimeUpperBound = calendar.time
+
+        } else {
+            prevStartTimeLowerBound = filtersViewModel.getTimeFilters(START_TIME_LOWER_BOUND)
+            prevStartTimeUpperBound = filtersViewModel.getTimeFilters(START_TIME_UPPER_BOUND)
+        }
+
+        if (filtersViewModel.isLowerBoundToday(END_TIME)) {
+            val calendar = GregorianCalendar.getInstance()
+            calendar.time = Date()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            prevEndTimeLowerBound = calendar.time
+
+            calendar.add(Calendar.DAY_OF_YEAR, filtersViewModel.getDaysAfterToday(END_TIME))
+            prevEndTimeUpperBound = calendar.time
+        } else {
+            prevEndTimeLowerBound = filtersViewModel.getTimeFilters(END_TIME_LOWER_BOUND)
+            prevEndTimeUpperBound = filtersViewModel.getTimeFilters(END_TIME_UPPER_BOUND)
+        }
+
         prevDurationLowerBound = filtersViewModel.getDurationFilters(DURATION_LOWER_BOUND)
         prevDurationUpperBound = filtersViewModel.getDurationFilters(DURATION_UPPER_BOUND)
     }

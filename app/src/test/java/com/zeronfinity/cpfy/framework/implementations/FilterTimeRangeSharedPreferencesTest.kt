@@ -2,6 +2,7 @@ package com.zeronfinity.cpfy.framework.implementations
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.zeronfinity.cpfy.common.DEFAULT_DAYS_INTERVAL
 import com.zeronfinity.cpfy.framework.implementations.FilterTimeRangeSharedPreferences
 import io.mockk.every
 import io.mockk.mockk
@@ -29,10 +30,16 @@ internal class FilterTimeRangeSharedPreferencesTest {
 
     private val defaultDuration = 7 * 24 * 60 * 60
 
+    private val defaultDaysAfterToday = DEFAULT_DAYS_INTERVAL
+
     private val sharedPreferencesFilter = "com.zeronfinity.cpfy.filters"
     private val startTimeLowerBoundLabel = "start_time_lower_bound"
+    private val startTimeLowerBoundTodayLabel = "start_time_lower_bound_today"
+    private val startTimeDaysAfterTodayLabel = "start_time_days_after_today"
     private val startTimeUpperBoundLabel = "start_time_upper_bound"
     private val endTimeLowerBoundLabel = "end_time_lower_bound"
+    private val endTimeLowerBoundTodayLabel = "end_time_lower_bound_today"
+    private val endTimeDaysAfterTodayLabel = "end_time_days_after_today"
     private val endTimeUpperBoundLabel = "end_time_upper_bound"
     private val durationLowerBoundLabel = "duration_lower_bound"
     private val durationUpperBoundLabel = "duration_upper_bound"
@@ -54,6 +61,7 @@ internal class FilterTimeRangeSharedPreferencesTest {
     @Nested
     @DisplayName("Given no preference set before")
     inner class EmptyPreferences {
+        private val slotParamsBool = slot<Boolean>()
         private val slotParamsInt = slot<Int>()
         private val slotParamsLong = slot<Long>()
         private val slotParamsString = slot<String>()
@@ -71,8 +79,32 @@ internal class FilterTimeRangeSharedPreferencesTest {
         }
 
         @Test
+        @DisplayName("When isStartTimeLowerBoundToday called, then correct parameters used")
+        fun isStartTimeLowerBoundToday_correctParametersUsed() {
+            // Arrange
+            every { sharedPreferencesMock.getBoolean(capture(slotParamsString), capture(slotParamsBool)) } answers { true }
+            every { applicationMock.getString(any()) } returns startTimeLowerBoundTodayLabel
+            // Act
+            sut.isStartTimeLowerBoundToday()
+            // Assert
+            assertEquals(startTimeLowerBoundTodayLabel, slotParamsString.captured)
+        }
+
+        @Test
+        @DisplayName("When getStartTimeDaysAfterToday called, then correct parameters used")
+        fun getStartTimeDaysAfterToday_correctParametersUsed() {
+            // Arrange
+            every { sharedPreferencesMock.getInt(capture(slotParamsString), capture(slotParamsInt)) } answers { defaultDaysAfterToday }
+            every { applicationMock.getString(any()) } returns startTimeDaysAfterTodayLabel
+            // Act
+            sut.getStartTimeDaysAfterToday()
+            // Assert
+            assertEquals(startTimeDaysAfterTodayLabel, slotParamsString.captured)
+        }
+
+        @Test
         @DisplayName("When getStartTimeUpperBound called, then correct parameters used")
-        fun getStartTimeUpperBound_correctValueSetInPreference() {
+        fun getStartTimeUpperBound_correctParametersUsed() {
             // Arrange
             every { sharedPreferencesMock.getLong(capture(slotParamsString), capture(slotParamsLong)) } answers { dateExpected.time }
             every { applicationMock.getString(any()) } returns startTimeUpperBoundLabel
@@ -84,7 +116,7 @@ internal class FilterTimeRangeSharedPreferencesTest {
 
         @Test
         @DisplayName("When getEndTimeLowerBound called, then correct parameters used")
-        fun getEndTimeLowerBound_correctValueSetInPreference() {
+        fun getEndTimeLowerBound_correctParametersUsed() {
             // Arrange
             every { sharedPreferencesMock.getLong(capture(slotParamsString), capture(slotParamsLong)) } answers { dateExpected.time }
             every { applicationMock.getString(any()) } returns endTimeLowerBoundLabel
@@ -95,8 +127,32 @@ internal class FilterTimeRangeSharedPreferencesTest {
         }
 
         @Test
+        @DisplayName("When isEndTimeLowerBoundToday called, then correct parameters used")
+        fun isEndTimeLowerBoundToday_correctParametersUsed() {
+            // Arrange
+            every { sharedPreferencesMock.getBoolean(capture(slotParamsString), capture(slotParamsBool)) } answers { true }
+            every { applicationMock.getString(any()) } returns endTimeLowerBoundTodayLabel
+            // Act
+            sut.isEndTimeLowerBoundToday()
+            // Assert
+            assertEquals(endTimeLowerBoundTodayLabel, slotParamsString.captured)
+        }
+
+        @Test
+        @DisplayName("When getEndTimeDaysAfterToday called, then correct parameters used")
+        fun getEndTimeDaysAfterToday_correctParametersUsed() {
+            // Arrange
+            every { sharedPreferencesMock.getInt(capture(slotParamsString), capture(slotParamsInt)) } answers { defaultDaysAfterToday }
+            every { applicationMock.getString(any()) } returns endTimeDaysAfterTodayLabel
+            // Act
+            sut.getEndTimeDaysAfterToday()
+            // Assert
+            assertEquals(endTimeDaysAfterTodayLabel, slotParamsString.captured)
+        }
+
+        @Test
         @DisplayName("When getEndTimeUpperBound called, then correct parameters used")
-        fun getEndTimeUpperBound_correctValueSetInPreference() {
+        fun getEndTimeUpperBound_correctParametersUsed() {
             // Arrange
             every { sharedPreferencesMock.getLong(capture(slotParamsString), capture(slotParamsLong)) } answers { dateExpected.time }
             every { applicationMock.getString(any()) } returns endTimeUpperBoundLabel
@@ -108,7 +164,7 @@ internal class FilterTimeRangeSharedPreferencesTest {
 
         @Test
         @DisplayName("When getDurationLowerBound called, then correct parameters used")
-        fun getDurationLowerBound_correctValueSetInPreference() {
+        fun getDurationLowerBound_correctParametersUsed() {
             // Arrange
             every { sharedPreferencesMock.getInt(capture(slotParamsString), capture(slotParamsInt)) } answers { durationExpected }
             every { applicationMock.getString(any()) } returns durationLowerBoundLabel
@@ -120,7 +176,7 @@ internal class FilterTimeRangeSharedPreferencesTest {
 
         @Test
         @DisplayName("When getDurationUpperBound called, then correct parameters used")
-        fun getDurationUpperBound_correctValueSetInPreference() {
+        fun getDurationUpperBound_correctParametersUsed() {
             // Arrange
             every { sharedPreferencesMock.getInt(capture(slotParamsString), capture(slotParamsInt)) } answers { durationExpected }
             every { applicationMock.getString(any()) } returns durationUpperBoundLabel
@@ -144,6 +200,38 @@ internal class FilterTimeRangeSharedPreferencesTest {
             assertAll(
                 Executable { assertEquals(startTimeLowerBoundLabel, slotParamsString.captured) },
                 Executable { assertEquals(dateExpected, dateActual) }
+            )
+        }
+
+        @Test
+        @DisplayName("When setStartTimeLowerBoundToday called, then correct parameters used")
+        fun setStartTimeLowerBoundToday_correctParametersUsed() {
+            // Arrange
+            val valueExpected = true
+            every { sharedPreferencesMock.edit().putBoolean(capture(slotParamsString), capture(slotParamsBool)) } answers { nothing }
+            every { applicationMock.getString(any()) } returns startTimeLowerBoundTodayLabel
+            // Act
+            sut.setStartTimeLowerBoundToday(valueExpected)
+            // Assert
+            assertAll(
+                Executable { assertEquals(startTimeLowerBoundTodayLabel, slotParamsString.captured) },
+                Executable { assertEquals(valueExpected, slotParamsBool.captured) }
+            )
+        }
+
+        @Test
+        @DisplayName("When setStartTimeDaysAfterToday called, then correct parameters used")
+        fun setStartTimeDaysAfterToday_correctParametersUsed() {
+            // Arrange
+            val resultExpected = 7
+            every { sharedPreferencesMock.edit().putInt(capture(slotParamsString), capture(slotParamsInt)) } answers { nothing }
+            every { applicationMock.getString(any()) } returns startTimeLowerBoundTodayLabel
+            // Act
+            sut.setStartTimeDaysAfterToday(resultExpected)
+            // Assert
+            assertAll(
+                Executable { assertEquals(startTimeLowerBoundTodayLabel, slotParamsString.captured) },
+                Executable { assertEquals(resultExpected, slotParamsInt.captured) }
             )
         }
 
@@ -178,6 +266,38 @@ internal class FilterTimeRangeSharedPreferencesTest {
             assertAll(
                 Executable { assertEquals(endTimeLowerBoundLabel, slotParamsString.captured) },
                 Executable { assertEquals(dateExpected, dateActual) }
+            )
+        }
+
+        @Test
+        @DisplayName("When setEndTimeLowerBoundToday called, then correct parameters used")
+        fun setEndTimeLowerBoundToday_correctParametersUsed() {
+            // Arrange
+            val valueExpected = true
+            every { sharedPreferencesMock.edit().putBoolean(capture(slotParamsString), capture(slotParamsBool)) } answers { nothing }
+            every { applicationMock.getString(any()) } returns startTimeLowerBoundTodayLabel
+            // Act
+            sut.setEndTimeLowerBoundToday(valueExpected)
+            // Assert
+            assertAll(
+                Executable { assertEquals(startTimeLowerBoundTodayLabel, slotParamsString.captured) },
+                Executable { assertEquals(valueExpected, slotParamsBool.captured) }
+            )
+        }
+
+        @Test
+        @DisplayName("When setEndTimeDaysAfterToday called, then correct parameters used")
+        fun setEndTimeDaysAfterToday_correctParametersUsed() {
+            // Arrange
+            val resultExpected = 7
+            every { sharedPreferencesMock.edit().putInt(capture(slotParamsString), capture(slotParamsInt)) } answers { nothing }
+            every { applicationMock.getString(any()) } returns startTimeLowerBoundTodayLabel
+            // Act
+            sut.setEndTimeDaysAfterToday(resultExpected)
+            // Assert
+            assertAll(
+                Executable { assertEquals(startTimeLowerBoundTodayLabel, slotParamsString.captured) },
+                Executable { assertEquals(resultExpected, slotParamsInt.captured) }
             )
         }
 
@@ -242,6 +362,30 @@ internal class FilterTimeRangeSharedPreferencesTest {
         }
 
         @Test
+        @DisplayName("When isStartTimeLowerBoundToday called, then true returned")
+        fun isStartTimeLowerBoundToday_trueReturned() {
+            // Arrange
+            every { sharedPreferencesMock.getBoolean(startTimeLowerBoundTodayLabel, any()) } answers { true }
+            every { applicationMock.getString(any()) } returns startTimeLowerBoundTodayLabel
+            // Act
+            val value = sut.isStartTimeLowerBoundToday()
+            // Assert
+            assertEquals(true, value)
+        }
+
+        @Test
+        @DisplayName("When getStartTimeDaysAfterToday called, then defaultDaysAfterToday used")
+        fun getStartTimeDaysAfterToday_defaultDaysAfterTodayUsed() {
+            // Arrange
+            every { sharedPreferencesMock.getInt(startTimeDaysAfterTodayLabel, any()) } answers { defaultDaysAfterToday }
+            every { applicationMock.getString(any()) } returns startTimeDaysAfterTodayLabel
+            // Act
+            val result = sut.getStartTimeDaysAfterToday()
+            // Assert
+            assertEquals(defaultDaysAfterToday, result)
+        }
+
+        @Test
         @DisplayName("When getStartTimeUpperBound called, then current date returned")
         fun getStartTimeUpperBound_currentDateReturned() {
             // Arrange
@@ -265,6 +409,30 @@ internal class FilterTimeRangeSharedPreferencesTest {
             val date = sut.getEndTimeLowerBound()
             // Assert
             assertEquals(currentDate, date)
+        }
+
+        @Test
+        @DisplayName("When isEndTimeLowerBoundToday called, then true returned")
+        fun isEndTimeLowerBoundToday_trueReturned() {
+            // Arrange
+            every { sharedPreferencesMock.getBoolean(endTimeLowerBoundTodayLabel, any()) } answers { true }
+            every { applicationMock.getString(any()) } returns endTimeLowerBoundTodayLabel
+            // Act
+            val value = sut.isEndTimeLowerBoundToday()
+            // Assert
+            assertEquals(true, value)
+        }
+
+        @Test
+        @DisplayName("When getEndTimeDaysAfterToday called, then defaultDaysAfterToday used")
+        fun getEndTimeDaysAfterToday_defaultDaysAfterTodayUsed() {
+            // Arrange
+            every { sharedPreferencesMock.getInt(endTimeDaysAfterTodayLabel, any()) } answers { defaultDaysAfterToday }
+            every { applicationMock.getString(any()) } returns endTimeDaysAfterTodayLabel
+            // Act
+            val result = sut.getEndTimeDaysAfterToday()
+            // Assert
+            assertEquals(defaultDaysAfterToday, result)
         }
 
         @Test
@@ -308,6 +476,7 @@ internal class FilterTimeRangeSharedPreferencesTest {
     @Nested
     @DisplayName("Given preference set before")
     inner class AlreadySetPreferences {
+        private val slotParamsBool = slot<Boolean>()
         private val slotParamsInt = slot<Int>()
         private val slotParamsLong = slot<Long>()
 
@@ -327,6 +496,36 @@ internal class FilterTimeRangeSharedPreferencesTest {
             val dateActual = sut.getStartTimeLowerBound()
             // Assert
             assertEquals(dateExpected, dateActual)
+        }
+
+        @Test
+        @DisplayName("When isStartTimeLowerBoundToday called, then last set value returned")
+        fun isStartTimeLowerBoundToday_setValueReturned() {
+            // Arrange
+            val valueExpected = true
+            every { applicationMock.getString(any()) } returns startTimeLowerBoundTodayLabel
+            every { sharedPreferencesMock.edit().putBoolean(startTimeLowerBoundTodayLabel, capture(slotParamsBool)) } answers { nothing }
+            sut.setStartTimeLowerBoundToday(valueExpected)
+            every { sharedPreferencesMock.getBoolean(startTimeLowerBoundTodayLabel, any()) } returns slotParamsBool.captured
+            // Act
+            val valueActual = sut.isStartTimeLowerBoundToday()
+            // Assert
+            assertEquals(valueExpected, valueActual)
+        }
+
+        @Test
+        @DisplayName("When getStartTimeDaysAfterToday called, then last set value returned")
+        fun getStartTimeDaysAfterToday_setValueReturned() {
+            // Arrange
+            val resultExpected = 7
+            every { applicationMock.getString(any()) } returns startTimeDaysAfterTodayLabel
+            every { sharedPreferencesMock.edit().putInt(startTimeDaysAfterTodayLabel, capture(slotParamsInt)) } answers { nothing }
+            sut.setStartTimeDaysAfterToday(resultExpected)
+            every { sharedPreferencesMock.getInt(startTimeDaysAfterTodayLabel, any()) } returns slotParamsInt.captured
+            // Act
+            val resultActual = sut.getStartTimeDaysAfterToday()
+            // Assert
+            assertEquals(resultExpected, resultActual)
         }
 
         @Test
@@ -355,6 +554,36 @@ internal class FilterTimeRangeSharedPreferencesTest {
             val dateActual = sut.getEndTimeLowerBound()
             // Assert
             assertEquals(dateExpected, dateActual)
+        }
+
+        @Test
+        @DisplayName("When isEndTimeLowerBoundToday called, then last set value returned")
+        fun isEndTimeLowerBoundToday_setValueReturned() {
+            // Arrange
+            val valueExpected = true
+            every { applicationMock.getString(any()) } returns endTimeLowerBoundTodayLabel
+            every { sharedPreferencesMock.edit().putBoolean(endTimeLowerBoundTodayLabel, capture(slotParamsBool)) } answers { nothing }
+            sut.setEndTimeLowerBoundToday(valueExpected)
+            every { sharedPreferencesMock.getBoolean(endTimeLowerBoundTodayLabel, any()) } returns slotParamsBool.captured
+            // Act
+            val valueActual = sut.isEndTimeLowerBoundToday()
+            // Assert
+            assertEquals(valueExpected, valueActual)
+        }
+
+        @Test
+        @DisplayName("When getEndTimeDaysAfterToday called, then last set value returned")
+        fun getEndTimeDaysAfterToday_setValueReturned() {
+            // Arrange
+            val resultExpected = 7
+            every { applicationMock.getString(any()) } returns startTimeDaysAfterTodayLabel
+            every { sharedPreferencesMock.edit().putInt(startTimeDaysAfterTodayLabel, capture(slotParamsInt)) } answers { nothing }
+            sut.setEndTimeDaysAfterToday(resultExpected)
+            every { sharedPreferencesMock.getInt(startTimeDaysAfterTodayLabel, any()) } returns slotParamsInt.captured
+            // Act
+            val resultActual = sut.getEndTimeDaysAfterToday()
+            // Assert
+            assertEquals(resultExpected, resultActual)
         }
 
         @Test
@@ -403,6 +632,7 @@ internal class FilterTimeRangeSharedPreferencesTest {
     @Nested
     @DisplayName("Given preference set twice before")
     inner class SetPreferencesTwice {
+        private val slotParamsBool = slot<Boolean>()
         private val slotParamsInt = slot<Int>()
         private val slotParamsLong = slot<Long>()
 
@@ -423,6 +653,40 @@ internal class FilterTimeRangeSharedPreferencesTest {
             val dateActual = sut.getStartTimeLowerBound()
             // Assert
             assertEquals(dateExpected2, dateActual)
+        }
+
+        @Test
+        @DisplayName("When isStartTimeLowerBoundToday called, then last set value returned")
+        fun isStartTimeLowerBoundToday_setValueReturned() {
+            // Arrange
+            val valueExpected = true
+            val valueExpected2 = false
+            every { applicationMock.getString(any()) } returns startTimeLowerBoundTodayLabel
+            every { sharedPreferencesMock.edit().putBoolean(startTimeLowerBoundTodayLabel, capture(slotParamsBool)) } answers { nothing }
+            sut.setStartTimeLowerBoundToday(valueExpected)
+            sut.setStartTimeLowerBoundToday(valueExpected2)
+            every { sharedPreferencesMock.getBoolean(startTimeLowerBoundTodayLabel, any()) } returns slotParamsBool.captured
+            // Act
+            val valueActual = sut.isStartTimeLowerBoundToday()
+            // Assert
+            assertEquals(valueExpected2, valueActual)
+        }
+
+        @Test
+        @DisplayName("When getStartTimeDaysAfterToday called, then last set value returned")
+        fun getStartTimeDaysAfterToday_setValueReturned() {
+            // Arrange
+            val resultExpected = 7
+            val resultExpected2 = 1
+            every { applicationMock.getString(any()) } returns startTimeDaysAfterTodayLabel
+            every { sharedPreferencesMock.edit().putInt(startTimeDaysAfterTodayLabel, capture(slotParamsInt)) } answers { nothing }
+            sut.setStartTimeDaysAfterToday(resultExpected)
+            sut.setStartTimeDaysAfterToday(resultExpected2)
+            every { sharedPreferencesMock.getInt(startTimeDaysAfterTodayLabel, any()) } returns slotParamsInt.captured
+            // Act
+            val resultActual = sut.getStartTimeDaysAfterToday()
+            // Assert
+            assertEquals(resultExpected2, resultActual)
         }
 
         @Test
@@ -453,6 +717,40 @@ internal class FilterTimeRangeSharedPreferencesTest {
             val dateActual = sut.getEndTimeLowerBound()
             // Assert
             assertEquals(dateExpected2, dateActual)
+        }
+
+        @Test
+        @DisplayName("When isEndTimeLowerBoundToday called, then last set value returned")
+        fun isEndTimeLowerBoundToday_setValueReturned() {
+            // Arrange
+            val valueExpected = true
+            val valueExpected2 = false
+            every { applicationMock.getString(any()) } returns endTimeLowerBoundTodayLabel
+            every { sharedPreferencesMock.edit().putBoolean(endTimeLowerBoundTodayLabel, capture(slotParamsBool)) } answers { nothing }
+            sut.setEndTimeLowerBoundToday(valueExpected)
+            sut.setEndTimeLowerBoundToday(valueExpected2)
+            every { sharedPreferencesMock.getBoolean(endTimeLowerBoundTodayLabel, any()) } returns slotParamsBool.captured
+            // Act
+            val valueActual = sut.isEndTimeLowerBoundToday()
+            // Assert
+            assertEquals(valueExpected2, valueActual)
+        }
+
+        @Test
+        @DisplayName("When getEndTimeDaysAfterToday called, then last set value returned")
+        fun getEndTimeDaysAfterToday_setValueReturned() {
+            // Arrange
+            val resultExpected = 7
+            val resultExpected2 = 1
+            every { applicationMock.getString(any()) } returns endTimeDaysAfterTodayLabel
+            every { sharedPreferencesMock.edit().putInt(endTimeDaysAfterTodayLabel, capture(slotParamsInt)) } answers { nothing }
+            sut.setEndTimeDaysAfterToday(resultExpected)
+            sut.setEndTimeDaysAfterToday(resultExpected2)
+            every { sharedPreferencesMock.getInt(endTimeDaysAfterTodayLabel, any()) } returns slotParamsInt.captured
+            // Act
+            val resultActual = sut.getEndTimeDaysAfterToday()
+            // Assert
+            assertEquals(resultExpected2, resultActual)
         }
 
         @Test

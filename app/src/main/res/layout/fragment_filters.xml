@@ -21,213 +21,286 @@
             android:textSize="@dimen/fragment_filter_header_text_size"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <!-- start time stuff -->
+
+            <Button
+                android:id="@+id/btnStartTimeLowerBound"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                 android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:backgroundTint="@color/secondaryColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvLe1"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/btnStartTimeLowerBound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:backgroundTint="@color/secondaryColor" />
-
-                <Button
-                    android:id="@+id/btnEndTimeLowerBound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:backgroundTint="@color/secondaryColor" />
-
-                <Button
-                    android:id="@+id/btnDurationLowerBound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:backgroundTint="@color/secondaryColor" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvStartTimeLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/start_time_tv_label"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-
-                <TextView
-                    android:id="@+id/tvEndTimeLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/end_time_tv_label"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-
-                <TextView
-                    android:id="@+id/tvDurationLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/duration_tv_label"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/less_than_or_equal_to"
-                    android:textColor="@color/primaryTextColor"
-                    app:layout_gravity="center" />
-            </LinearLayout>
-
-            <LinearLayout
+            <CheckBox
+                android:id="@+id/cbStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                 android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:translationX="-4dp"
+                android:translationY="-5dp"
+                android:text="@string/today"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/btnStartTimeLowerBound"
+                app:layout_constraintTop_toBottomOf="@+id/btnStartTimeLowerBound" />
 
-                <Button
-                    android:id="@+id/btnStartTimeUpperBound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:backgroundTint="@color/secondaryColor" />
+            <TextView
+                android:id="@+id/tvLe1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/less_than_or_equal_to"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnStartTimeLowerBound"
+                app:layout_constraintEnd_toStartOf="@+id/tvStartTimeLabel"
+                app:layout_constraintStart_toEndOf="@+id/btnStartTimeLowerBound"
+                app:layout_constraintTop_toTopOf="@+id/btnStartTimeLowerBound" />
 
-                <Button
-                    android:id="@+id/btnEndTimeUpperBound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:backgroundTint="@color/secondaryColor" />
+            <TextView
+                android:id="@+id/tvStartTimeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/start_time_tv_label"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnStartTimeLowerBound"
+                app:layout_constraintEnd_toStartOf="@+id/tvLe2"
+                app:layout_constraintStart_toEndOf="@+id/tvLe1"
+                app:layout_constraintTop_toTopOf="@+id/btnStartTimeLowerBound" />
 
-                <Button
-                    android:id="@+id/btnDurationUpperBound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fragment_filter_horizontal_gap"
-                    android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
-                    android:backgroundTint="@color/secondaryColor" />
-            </LinearLayout>
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tvLe2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/less_than_or_equal_to"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnStartTimeLowerBound"
+                app:layout_constraintEnd_toStartOf="@+id/btnStartTimeUpperBound"
+                app:layout_constraintStart_toEndOf="@+id/tvStartTimeLabel"
+                app:layout_constraintTop_toTopOf="@+id/btnStartTimeLowerBound" />
+
+            <Button
+                android:id="@+id/btnStartTimeUpperBound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:backgroundTint="@color/secondaryColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnStartTimeLowerBound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvLe2"
+                app:layout_constraintTop_toTopOf="@+id/btnStartTimeLowerBound" />
+
+            <TextView
+                android:id="@+id/tvDaysAfterTodaySt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvDaysAfterTodayLabelSt"
+                app:layout_constraintTop_toBottomOf="@+id/btnStartTimeUpperBound" />
+
+            <TextView
+                android:id="@+id/tvDaysAfterTodayLabelSt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="day(s) after"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintEnd_toEndOf="@+id/btnStartTimeUpperBound"
+                app:layout_constraintTop_toBottomOf="@+id/btnStartTimeUpperBound" />
+
+            <!-- end time stuff -->
+
+            <Button
+                android:id="@+id/btnEndTimeLowerBound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:backgroundTint="@color/secondaryColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvLe3"
+                app:layout_constraintTop_toBottomOf="@+id/cbStartTime" />
+
+            <CheckBox
+                android:id="@+id/cbEndTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:translationX="-4dp"
+                android:translationY="-5dp"
+                android:text="@string/today"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/btnEndTimeLowerBound"
+                app:layout_constraintTop_toBottomOf="@+id/btnEndTimeLowerBound" />
+
+            <TextView
+                android:id="@+id/tvLe3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/less_than_or_equal_to"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnEndTimeLowerBound"
+                app:layout_constraintEnd_toEndOf="@+id/tvLe1"
+                app:layout_constraintStart_toStartOf="@+id/tvLe1"
+                app:layout_constraintTop_toTopOf="@+id/btnEndTimeLowerBound" />
+
+            <TextView
+                android:id="@+id/tvEndTimeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/end_time_tv_label"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnEndTimeLowerBound"
+                app:layout_constraintEnd_toEndOf="@+id/tvStartTimeLabel"
+                app:layout_constraintStart_toStartOf="@+id/tvStartTimeLabel"
+                app:layout_constraintTop_toTopOf="@+id/btnEndTimeLowerBound" />
+
+            <TextView
+                android:id="@+id/tvLe4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/less_than_or_equal_to"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnEndTimeLowerBound"
+                app:layout_constraintEnd_toEndOf="@+id/tvLe2"
+                app:layout_constraintStart_toStartOf="@+id/tvLe2"
+                app:layout_constraintTop_toTopOf="@+id/btnEndTimeLowerBound" />
+
+            <Button
+                android:id="@+id/btnEndTimeUpperBound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:backgroundTint="@color/secondaryColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnEndTimeLowerBound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvLe4"
+                app:layout_constraintTop_toTopOf="@+id/btnEndTimeLowerBound" />
+
+            <TextView
+                android:id="@+id/tvDaysAfterTodayEd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvDaysAfterTodayLabelEd"
+                app:layout_constraintTop_toBottomOf="@+id/btnEndTimeUpperBound" />
+
+            <TextView
+                android:id="@+id/tvDaysAfterTodayLabelEd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="day(s) after"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintEnd_toEndOf="@+id/btnEndTimeUpperBound"
+                app:layout_constraintTop_toBottomOf="@+id/btnEndTimeUpperBound" />
+
+            <!-- duration stuff -->
+
+            <Button
+                android:id="@+id/btnDurationLowerBound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:backgroundTint="@color/secondaryColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvLe5"
+                app:layout_constraintTop_toBottomOf="@+id/cbEndTime" />
+
+            <TextView
+                android:id="@+id/tvLe5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/less_than_or_equal_to"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnDurationLowerBound"
+                app:layout_constraintEnd_toEndOf="@+id/tvLe1"
+                app:layout_constraintStart_toStartOf="@+id/tvLe1"
+                app:layout_constraintTop_toTopOf="@+id/btnDurationLowerBound" />
+
+            <TextView
+                android:id="@+id/tvDurationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/duration_tv_label"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnDurationLowerBound"
+                app:layout_constraintEnd_toEndOf="@+id/tvStartTimeLabel"
+                app:layout_constraintStart_toStartOf="@+id/tvStartTimeLabel"
+                app:layout_constraintTop_toTopOf="@+id/btnDurationLowerBound" />
+
+            <TextView
+                android:id="@+id/tvLe6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:gravity="center"
+                android:text="@string/less_than_or_equal_to"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnDurationLowerBound"
+                app:layout_constraintEnd_toEndOf="@+id/tvLe2"
+                app:layout_constraintStart_toStartOf="@+id/tvLe2"
+                app:layout_constraintTop_toTopOf="@+id/btnDurationLowerBound" />
+
+            <Button
+                android:id="@+id/btnDurationUpperBound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
+                android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
+                android:backgroundTint="@color/secondaryColor"
+                app:layout_constraintBottom_toBottomOf="@+id/btnDurationLowerBound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvLe6"
+                app:layout_constraintTop_toTopOf="@+id/btnDurationLowerBound" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tvPlatformsLabel"
