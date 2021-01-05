@@ -11,6 +11,8 @@ import okhttp3.Cookie
 @Module
 @InstallIn(ActivityComponent::class)
 class ActivityModule {
+    /* platform use cases */
+
     @Provides
     fun provideDisablePlatformUseCase(
         platformRepository: PlatformRepository
@@ -45,6 +47,8 @@ class ActivityModule {
     ) = IsPlatformEnabledUseCase(
         platformRepository
     )
+
+    /* filter use cases */
 
     @Provides
     fun provideGetFilteredContestListUseCase(
@@ -141,6 +145,36 @@ class ActivityModule {
     ) = SetFilterSavedUseCase(
         filterTimeRangeRepository
     )
+
+    @Provides
+    fun provideIsFilterLowerBoundTodayUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = IsFilterLowerBoundTodayUseCase(
+        filterTimeRangeRepository
+    )
+
+    @Provides
+    fun provideSetFilterLowerBoundTodayUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = SetFilterLowerBoundTodayUseCase(
+        filterTimeRangeRepository
+    )
+
+    @Provides
+    fun provideGetFilterDaysAfterTodayUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = GetFilterDaysAfterTodayUseCase(
+        filterTimeRangeRepository
+    )
+
+    @Provides
+    fun provideSetFilterDaysAfterTodayUseCase(
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = SetFilterDaysAfterTodayUseCase(
+        filterTimeRangeRepository
+    )
+
+    /* cookie use cases */
 
     @Provides
     fun provideSetCookieUseCase(

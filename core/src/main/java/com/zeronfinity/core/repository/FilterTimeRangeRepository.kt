@@ -1,5 +1,7 @@
 package com.zeronfinity.core.repository
 
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.END_TIME
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.START_TIME
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
@@ -16,6 +18,11 @@ class FilterTimeRangeRepository(private val filterTimeRangeDataSource: FilterTim
     enum class FilterDurationEnum {
         DURATION_LOWER_BOUND,
         DURATION_UPPER_BOUND
+    }
+
+    enum class FilterTimeTypeEnum {
+        START_TIME,
+        END_TIME
     }
 
     fun getFilterTimeRange(filterTimeEnum: FilterTimeEnum) = when (filterTimeEnum) {
@@ -45,4 +52,24 @@ class FilterTimeRangeRepository(private val filterTimeRangeDataSource: FilterTim
     fun isSaved() = filterTimeRangeDataSource.isSaved()
 
     fun setSaved(value: Boolean) = filterTimeRangeDataSource.setSaved(value)
+
+    fun isLowerBoundToday(filterTimeTypeEnum: FilterTimeTypeEnum) = when (filterTimeTypeEnum) {
+        START_TIME -> filterTimeRangeDataSource.isStartTimeLowerBoundToday()
+        END_TIME -> filterTimeRangeDataSource.isEndTimeLowerBoundToday()
+    }
+
+    fun getDaysAfterToday(filterTimeTypeEnum: FilterTimeTypeEnum) = when (filterTimeTypeEnum) {
+        START_TIME -> filterTimeRangeDataSource.getStartTimeDaysAfterToday()
+        END_TIME -> filterTimeRangeDataSource.getEndTimeDaysAfterToday()
+    }
+
+    fun setLowerBoundToday(filterTimeTypeEnum: FilterTimeTypeEnum, value: Boolean) = when (filterTimeTypeEnum) {
+        START_TIME -> filterTimeRangeDataSource.setStartTimeLowerBoundToday(value)
+        END_TIME -> filterTimeRangeDataSource.setEndTimeLowerBoundToday(value)
+    }
+
+    fun setDaysAfterToday(filterTimeTypeEnum: FilterTimeTypeEnum, value: Int) = when (filterTimeTypeEnum) {
+        START_TIME -> filterTimeRangeDataSource.setStartTimeDaysAfterToday(value)
+        END_TIME -> filterTimeRangeDataSource.setEndTimeDaysAfterToday(value)
+    }
 }

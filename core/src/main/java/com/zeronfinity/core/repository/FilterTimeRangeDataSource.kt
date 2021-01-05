@@ -9,9 +9,17 @@ interface FilterTimeRangeDataSource {
 
     fun getStartTimeLowerBound(): Date
 
+    fun isStartTimeLowerBoundToday(): Boolean
+
+    fun getStartTimeDaysAfterToday(): Int
+
     fun getStartTimeUpperBound(): Date
 
     fun getEndTimeLowerBound(): Date
+
+    fun isEndTimeLowerBoundToday(): Boolean
+
+    fun getEndTimeDaysAfterToday(): Int
 
     fun getEndTimeUpperBound(): Date
 
@@ -21,9 +29,17 @@ interface FilterTimeRangeDataSource {
 
     fun setStartTimeLowerBound(date: Date)
 
+    fun setStartTimeLowerBoundToday(value: Boolean)
+
+    fun setStartTimeDaysAfterToday(daysAfterToday: Int)
+
     fun setStartTimeUpperBound(date: Date)
 
     fun setEndTimeLowerBound(date: Date)
+
+    fun setEndTimeLowerBoundToday(value: Boolean)
+
+    fun setEndTimeDaysAfterToday(daysAfterToday: Int)
 
     fun setEndTimeUpperBound(date: Date)
 

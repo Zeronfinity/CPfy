@@ -19,7 +19,7 @@ class FilterTimeRangeSharedPreferences(
     )
     private val minDefaultDuration = DEFAULT_MIN_DURATION
     private val maxDefaultDuration = DEFAULT_MAX_DURATION
-    private val numberOfDaysBeforeContestsEnd = DEFAULT_DAYS_INTERVAL
+    private val numberOfDaysAfterLowerBound = DEFAULT_DAYS_INTERVAL
 
     override fun isSaved(): Boolean {
         return sharedPref.getBoolean(
@@ -47,10 +47,24 @@ class FilterTimeRangeSharedPreferences(
         return Date(date)
     }
 
+    override fun isStartTimeLowerBoundToday(): Boolean {
+        return sharedPref.getBoolean(
+            application.getString(R.string.s_pref_filters_key_start_time_lower_bound_today),
+            true
+        )
+    }
+
+    override fun getStartTimeDaysAfterToday(): Int {
+        return sharedPref.getInt(
+            application.getString(R.string.s_pref_filters_key_start_time_days_after_today),
+            numberOfDaysAfterLowerBound
+        )
+    }
+
     override fun getStartTimeUpperBound(): Date {
         val calendar = Calendar.getInstance()
         calendar.time = Date()
-        calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
+        calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysAfterLowerBound)
 
         val date = sharedPref.getLong(
             application.getString(R.string.s_pref_filters_key_start_time_upper_bound),
@@ -69,10 +83,24 @@ class FilterTimeRangeSharedPreferences(
         return Date(date)
     }
 
+    override fun isEndTimeLowerBoundToday(): Boolean {
+        return sharedPref.getBoolean(
+            application.getString(R.string.s_pref_filters_key_end_time_lower_bound_today),
+            true
+        )
+    }
+
+    override fun getEndTimeDaysAfterToday(): Int {
+        return sharedPref.getInt(
+            application.getString(R.string.s_pref_filters_key_end_time_days_after_today),
+            numberOfDaysAfterLowerBound
+        )
+    }
+
     override fun getEndTimeUpperBound(): Date {
         val calendar = Calendar.getInstance()
         calendar.time = Date()
-        calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
+        calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysAfterLowerBound)
 
         val date = sharedPref.getLong(
             application.getString(R.string.s_pref_filters_key_end_time_upper_bound),
@@ -106,6 +134,26 @@ class FilterTimeRangeSharedPreferences(
         }
     }
 
+    override fun setStartTimeLowerBoundToday(value: Boolean) {
+        with(sharedPref.edit()) {
+            putBoolean(
+                application.getString(R.string.s_pref_filters_key_start_time_lower_bound_today),
+                value
+            )
+            apply()
+        }
+    }
+
+    override fun setStartTimeDaysAfterToday(daysAfterToday: Int) {
+        with(sharedPref.edit()) {
+            putInt(
+                application.getString(R.string.s_pref_filters_key_start_time_days_after_today),
+                daysAfterToday
+            )
+            apply()
+        }
+    }
+
     override fun setStartTimeUpperBound(date: Date) {
         with(sharedPref.edit()) {
             putLong(
@@ -121,6 +169,26 @@ class FilterTimeRangeSharedPreferences(
             putLong(
                 application.getString(R.string.s_pref_filters_key_end_time_lower_bound),
                 date.time
+            )
+            apply()
+        }
+    }
+
+    override fun setEndTimeLowerBoundToday(value: Boolean) {
+        with(sharedPref.edit()) {
+            putBoolean(
+                application.getString(R.string.s_pref_filters_key_end_time_lower_bound_today),
+                value
+            )
+            apply()
+        }
+    }
+
+    override fun setEndTimeDaysAfterToday(daysAfterToday: Int) {
+        with(sharedPref.edit()) {
+            putInt(
+                application.getString(R.string.s_pref_filters_key_end_time_days_after_today),
+                daysAfterToday
             )
             apply()
         }

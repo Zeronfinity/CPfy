@@ -35,8 +35,12 @@
     <string name="shared_preferences_cookies">com.zeronfinity.cpfy.cookies</string>
     <string name="s_pref_filters_is_saved">is_saved</string>
     <string name="s_pref_filters_key_start_time_lower_bound">start_time_lower_bound</string>
+    <string name="s_pref_filters_key_start_time_lower_bound_today">start_time_lower_bound_today</string>
+    <string name="s_pref_filters_key_start_time_days_after_today">start_time_days_after_today</string>
     <string name="s_pref_filters_key_start_time_upper_bound">start_time_upper_bound</string>
     <string name="s_pref_filters_key_end_time_lower_bound">end_time_lower_bound</string>
+    <string name="s_pref_filters_key_end_time_lower_bound_today">end_time_lower_bound_today</string>
+    <string name="s_pref_filters_key_end_time_days_after_today">end_time_days_after_today</string>
     <string name="s_pref_filters_key_end_time_upper_bound">end_time_upper_bound</string>
     <string name="s_pref_filters_key_duration_lower_bound">duration_lower_bound</string>
     <string name="s_pref_filters_key_duration_upper_bound">duration_upper_bound</string>
@@ -57,4 +61,5 @@
     <string name="copy">Copy</string>
     <string name="link_colon">Link:</string>
     <string name="contests">contests</string>
+    <string name="today">Today</string>
 </resources>
