@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 import java.util.Date
 
 internal class ContestArrayListTest {
-    private val contest1 = Contest("title1", 1, 1, Date(1), Date(2),"url1")
-    private val contest2 = Contest("title2", 2, 2, Date(2), Date(4),"url2")
-    private val contest3 = Contest("title3", 3, 3, Date(3), Date(6),"url3")
-    private val contest4 = Contest("title4", 4, 4, Date(4), Date(8),"url4")
+    private val contest1 = Contest(1, "title1", 1, 1, Date(1), Date(2),"url1")
+    private val contest2 = Contest(2, "title2", 2, 2, Date(2), Date(4),"url2")
+    private val contest3 = Contest(3, "title3", 3, 3, Date(3), Date(6),"url3")
+    private val contest4 = Contest(4, "title4", 4, 4, Date(4), Date(8),"url4")
     private val contestListExpected = arrayListOf(contest1, contest2, contest1)
     private val contestListPreInserted = arrayListOf(contest3, contest4)
 

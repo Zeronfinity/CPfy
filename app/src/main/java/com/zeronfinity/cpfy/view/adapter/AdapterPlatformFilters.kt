@@ -10,13 +10,9 @@ import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.logger.logE
 import com.zeronfinity.core.usecase.DisablePlatformUseCase
 import com.zeronfinity.core.usecase.EnablePlatformUseCase
-import com.zeronfinity.core.usecase.IsPlatformEnabledUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.common.PLATFORM_FILTER_MAX_COUNT
 import com.zeronfinity.cpfy.databinding.ItemPlatformFilterBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AdapterPlatformFilters @Inject constructor(

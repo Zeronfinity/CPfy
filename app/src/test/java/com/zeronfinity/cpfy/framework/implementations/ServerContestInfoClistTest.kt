@@ -25,8 +25,8 @@ internal class ServerContestInfoClistTest {
     private val validParamsMap: Map<String, String> = mapOf("key1" to "val1", "key2" to "val2")
 
     private val platformResource = ClistResourceObjectResponse(1, "/icon_url_segment", "platform_name")
-    private val contestObject1 = ClistContestObjectResponse("title1", "2020-12-30T07:00:00", "2020-12-30T08:00:00", "url1", platformResource)
-    private val contestObject2 = ClistContestObjectResponse("title2", "2020-12-20T08:00:00", "2020-12-22T08:00:00", "url2", platformResource)
+    private val contestObject1 = ClistContestObjectResponse(1, "title1", "2020-12-30T07:00:00", "2020-12-30T08:00:00", "url1", platformResource)
+    private val contestObject2 = ClistContestObjectResponse(2, "title2", "2020-12-20T08:00:00", "2020-12-22T08:00:00", "url2", platformResource)
 
     private val serverResponseResult = Success(Response.success(ClistServerResponseContests(listOf(contestObject1, contestObject2))))
     private val serverResponseExpectedForSuccess = ServerContestInfoResponse(
