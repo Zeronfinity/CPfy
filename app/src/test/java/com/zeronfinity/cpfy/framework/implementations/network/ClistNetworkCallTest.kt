@@ -32,6 +32,7 @@ internal class ClistNetworkCallTest {
 
     private val platformResource = ClistResourceObjectResponse(1, "/icon_url_segment", "platform_name")
     private val contestObject1 = ClistContestObjectResponse(
+        1,
         "title1",
         "2020-12-30T07:00:00",
         "2020-12-30T08:00:00",
@@ -39,6 +40,7 @@ internal class ClistNetworkCallTest {
         platformResource
     )
     private val contestObject2 = ClistContestObjectResponse(
+        2,
         "title2",
         "2020-12-20T08:00:00",
         "2020-12-22T08:00:00",
