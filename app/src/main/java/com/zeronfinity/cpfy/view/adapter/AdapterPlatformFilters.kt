@@ -21,11 +21,8 @@ import javax.inject.Inject
 
 class AdapterPlatformFilters @Inject constructor(
     private val disablePlatformUseCase: DisablePlatformUseCase,
-    private val enablePlatformUseCase: EnablePlatformUseCase,
-    private val isPlatformEnabledUseCase: IsPlatformEnabledUseCase
+    private val enablePlatformUseCase: EnablePlatformUseCase
 ) : RecyclerView.Adapter<AdapterPlatformFilters.PlatformViewHolder>() {
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
-
     interface PlatformFilterClickListener {
         fun onPlatformFilterClick()
     }
@@ -47,12 +44,10 @@ class AdapterPlatformFilters @Inject constructor(
             binding.btnPlatformFilter.isSelected = true
             binding.btnPlatformFilter.text = platform.shortName
 
-            coroutineScope.launch {
-                if (isPlatformEnabledUseCase(platform.id) != false) {
-                    enableButton(binding.btnPlatformFilter)
-                } else {
-                    disableButton(binding.btnPlatformFilter)
-                }
+            if (platform.isEnabled) {
+                enableButton(binding.btnPlatformFilter)
+            } else {
+                disableButton(binding.btnPlatformFilter)
             }
 
             binding.btnPlatformFilter.setOnClickListener {

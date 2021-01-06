@@ -115,8 +115,6 @@ class AdapterContestList @Inject constructor(
                     ).show()
                 }
             }
-
-//            logD("bind() ended -> contest: [${contest}]")
         }
     }
 
