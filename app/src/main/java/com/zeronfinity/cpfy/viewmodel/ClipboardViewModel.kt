@@ -32,7 +32,7 @@ class ClipboardViewModel @ViewModelInject constructor(
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     private val simpleDateFormat = SimpleDateFormat(
-        "E dd-MMM-yy hh:mm a Z",
+        "hh:mm a, dd-MMM-yy",
         Locale.getDefault()
     )
 
@@ -46,8 +46,11 @@ class ClipboardViewModel @ViewModelInject constructor(
         coroutineScope.launch {
             val contestList = getFilteredContestListUseCase()
             var clipboardText: CharSequence = ""
+            var index = 0
 
             for (contest in contestList) {
+                index++
+
                 if (clipboardText.isNotEmpty()) {
                     clipboardText = TextUtils.concat(clipboardText, "\n")
                 }
@@ -55,7 +58,7 @@ class ClipboardViewModel @ViewModelInject constructor(
                 val spannableString = SpannableStringBuilder()
                     .bold {
                         getPlatformUseCase(contest.platformId)?.let{
-                            append(">>> ${it.shortName}:")
+                            append("${index}. ${it.shortName}:")
                         }
                     }
                     .append(" ${contest.name}\n")
@@ -85,9 +88,7 @@ class ClipboardViewModel @ViewModelInject constructor(
                 clipboardText = TextUtils.concat(clipboardText, spannableString)
             }
 
-            if (clipboardText.isNotEmpty()) {
-                _clipboardTextLiveData.postValue(clipboardText)
-            }
+            _clipboardTextLiveData.postValue(clipboardText)
         }
     }
 }
