@@ -12,8 +12,8 @@ android {
         applicationId "com.zeronfinity.cpfy"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 9
-        versionName "0.5.2"
+        versionCode 10
+        versionName "0.6.0"
 
         kapt {
             arguments {
@@ -81,8 +81,9 @@ dependencies {
     // hilt for dependency injection
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_version"
-    kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_androidx_version"
+    implementation "androidx.hilt:hilt-work:$hilt_androidx_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_androidx_version"
 
     // picasso for image loading and processing
     implementation "com.squareup.picasso:picasso:$picasso_version"
@@ -102,6 +103,9 @@ dependencies {
 
     // room test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+
+    // work manager
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
     testImplementation "org.junit.jupiter:junit-jupiter:$junit5_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -10,6 +10,7 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.core.usecase.*
 import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
+import com.zeronfinity.cpfy.framework.notification.NotificationHelper
 import com.zeronfinity.cpfy.viewmodel.helpers.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +23,8 @@ import java.util.Locale
 import java.util.TimeZone
 
 class ContestListViewModel @ViewModelInject constructor(
-    private val fetchServerContestInfoUseCase: FetchServerContestInfoUseCase,
-    private val fetchServerPlatformInfoUseCase: FetchServerPlatformInfoUseCase,
+    private val fetchAndPersistServerContestsUseCase: FetchAndPersistServerContestsUseCase,
+    private val fetchAndPersistServerPlatformsUseCase: FetchAndPersistServerPlatformsUseCase,
     private val getFilterDurationUseCase: GetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
     private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
@@ -31,7 +32,6 @@ class ContestListViewModel @ViewModelInject constructor(
     private val getPlatformListUseCase: GetPlatformListUseCase
 ) : ViewModel() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val numberOfDaysBeforeContestsEnd = 7
 
     private val _clistWebViewLiveDataEv = MutableLiveData<Event<Boolean>>()
     private val _errorToastIncomingLiveDataEv = MutableLiveData<Event<String>>()
@@ -39,12 +39,12 @@ class ContestListViewModel @ViewModelInject constructor(
     private val _contestListLiveData = MutableLiveData<List<Contest>>()
 
     val clistWebViewLiveDataEv: LiveData<Event<Boolean>>
-            get() = _clistWebViewLiveDataEv
+        get() = _clistWebViewLiveDataEv
     val errorToastIncomingLiveDataEv: LiveData<Event<String>>
-            get() = _errorToastIncomingLiveDataEv
+        get() = _errorToastIncomingLiveDataEv
 
     val contestListLiveData: LiveData<List<Contest>>
-            get() = _contestListLiveData
+        get() = _contestListLiveData
 
     val platformListLiveData: LiveData<List<Platform>> = liveData {
         getPlatformListUseCase().collect {
@@ -59,20 +59,33 @@ class ContestListViewModel @ViewModelInject constructor(
             refreshContestList()
         }
 
-        val calendar = Calendar.getInstance()
-        calendar.time = Date()
-        calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysBeforeContestsEnd)
-
-        val simpleDateFormatUtc = SimpleDateFormat(ClistContestObjectResponse.apiDateFormat, Locale.US)
+        val simpleDateFormatUtc =
+            SimpleDateFormat(ClistContestObjectResponse.apiDateFormat, Locale.US)
         simpleDateFormatUtc.timeZone = TimeZone.getTimeZone("UTC")
 
         coroutineScope.launch {
-            val fetchResult = fetchServerContestInfoUseCase(
+            val fetchResult = fetchAndPersistServerContestsUseCase(
                 mapOf(
-                    "start__gte" to simpleDateFormatUtc.format(getFilterTimeUseCase(START_TIME_LOWER_BOUND)),
-                    "start__lte" to simpleDateFormatUtc.format(getFilterTimeUseCase(START_TIME_UPPER_BOUND)),
-                    "end__gte" to simpleDateFormatUtc.format(getFilterTimeUseCase(END_TIME_LOWER_BOUND)),
-                    "end__lte" to simpleDateFormatUtc.format(getFilterTimeUseCase(END_TIME_UPPER_BOUND)),
+                    "start__gte" to simpleDateFormatUtc.format(
+                        getFilterTimeUseCase(
+                            START_TIME_LOWER_BOUND
+                        )
+                    ),
+                    "start__lte" to simpleDateFormatUtc.format(
+                        getFilterTimeUseCase(
+                            START_TIME_UPPER_BOUND
+                        )
+                    ),
+                    "end__gte" to simpleDateFormatUtc.format(
+                        getFilterTimeUseCase(
+                            END_TIME_LOWER_BOUND
+                        )
+                    ),
+                    "end__lte" to simpleDateFormatUtc.format(
+                        getFilterTimeUseCase(
+                            END_TIME_UPPER_BOUND
+                        )
+                    ),
                     "duration__gte" to getFilterDurationUseCase(DURATION_LOWER_BOUND).toString(),
                     "duration__lte" to getFilterDurationUseCase(DURATION_UPPER_BOUND).toString(),
                     "order_by" to "start"
@@ -82,9 +95,13 @@ class ContestListViewModel @ViewModelInject constructor(
             logD("fetchResult: [$fetchResult]")
 
             when (fetchResult) {
-                is FetchServerContestInfoUseCase.Result.Success -> refreshContestList()
-                is FetchServerContestInfoUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(Event(fetchResult.errorMsg))
-                is FetchServerContestInfoUseCase.Result.UnauthorizedError -> _clistWebViewLiveDataEv.postValue(Event(true))
+                is FetchAndPersistServerContestsUseCase.Result.Success -> refreshContestList()
+                is FetchAndPersistServerContestsUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(
+                    Event(fetchResult.errorMsg)
+                )
+                is FetchAndPersistServerContestsUseCase.Result.UnauthorizedError -> _clistWebViewLiveDataEv.postValue(
+                    Event(true)
+                )
             }
         }
     }
@@ -93,16 +110,20 @@ class ContestListViewModel @ViewModelInject constructor(
         logD("fetchPlatformList() started")
 
         coroutineScope.launch {
-            val fetchResult = fetchServerPlatformInfoUseCase()
+            val fetchResult = fetchAndPersistServerPlatformsUseCase()
 
             logD("fetchResult: [$fetchResult]")
 
             when (fetchResult) {
-                is FetchServerPlatformInfoUseCase.Result.Success -> {
+                is FetchAndPersistServerPlatformsUseCase.Result.Success -> {
                     logD("fetchPlatformList() succeeded")
                 }
-                is FetchServerPlatformInfoUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(Event(fetchResult.errorMsg))
-                is FetchServerPlatformInfoUseCase.Result.UnauthorizedError -> _clistWebViewLiveDataEv.postValue(Event(true))
+                is FetchAndPersistServerPlatformsUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(
+                    Event(fetchResult.errorMsg)
+                )
+                is FetchAndPersistServerPlatformsUseCase.Result.UnauthorizedError -> _clistWebViewLiveDataEv.postValue(
+                    Event(true)
+                )
             }
         }
     }

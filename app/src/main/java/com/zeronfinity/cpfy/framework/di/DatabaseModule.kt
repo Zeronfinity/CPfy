@@ -16,5 +16,8 @@ class DatabaseModule {
     fun provideAppDatabase(application: Application) = AppDatabase.getInstance(application)
 
     @Provides
+    fun provideContestNotificationDao(appDatabase: AppDatabase) = appDatabase.contestNotificationDao()
+
+    @Provides
     fun providePlatformDao(appDatabase: AppDatabase) = appDatabase.platformDao()
 }

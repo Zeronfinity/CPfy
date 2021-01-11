@@ -5,7 +5,7 @@ import com.zeronfinity.core.repository.ContestRepository
 import com.zeronfinity.core.repository.CookieRepository
 import com.zeronfinity.core.repository.ServerContestInfoRepository
 
-class FetchServerContestInfoUseCase(
+class FetchAndPersistServerContestsUseCase(
     private val contestRepository: ContestRepository,
     private val cookieRepository: CookieRepository,
     private val serverContestInfoRepository: ServerContestInfoRepository
