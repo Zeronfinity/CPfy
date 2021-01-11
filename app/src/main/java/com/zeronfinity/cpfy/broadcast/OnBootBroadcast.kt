@@ -12,14 +12,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class OnBootBroadcast(
-    private val getContestUseCase: GetContestUseCase,
-    private val getNotificationContestsUseCase: GetNotificationContestsUseCase
-) : BroadcastReceiver() {
+class OnBootBroadcast : BroadcastReceiver() {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private val oneHourInMilliSeconds = 60 * 60 * 1000
+
+    @Inject lateinit var getContestUseCase: GetContestUseCase
+    @Inject lateinit var getNotificationContestsUseCase: GetNotificationContestsUseCase
 
     override fun onReceive(context: Context?, intent: Intent?) {
         logD("onReceive() started -> intent action: [${intent?.action}]")

@@ -15,18 +15,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotificationBroadcast(
-    private val getContestUseCase: GetContestUseCase,
-    private val getPlatformUseCase: GetPlatformUseCase,
-    private val notificationHelper: NotificationHelper
-) : BroadcastReceiver() {
+class NotificationBroadcast : BroadcastReceiver() {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private val simpleDateFormat = SimpleDateFormat(
         "hh:mm a",
         Locale.getDefault()
     )
+
+    @Inject lateinit var getContestUseCase: GetContestUseCase
+    @Inject lateinit var getPlatformUseCase: GetPlatformUseCase
+    @Inject lateinit var notificationHelper: NotificationHelper
+
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val contestId = intent?.getIntExtra("contestId", -1)

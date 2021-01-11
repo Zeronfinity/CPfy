@@ -83,6 +83,13 @@ class ApplicationModule {
     )
 
     @Provides
+    fun provideGetPlatformUseCase(
+        platformRepository: PlatformRepository
+    ) = GetPlatformUseCase(
+        platformRepository
+    )
+
+    @Provides
     fun provideGetCookieUseCase(
         cookieRepository: CookieRepository
     ) = GetCookieUseCase(

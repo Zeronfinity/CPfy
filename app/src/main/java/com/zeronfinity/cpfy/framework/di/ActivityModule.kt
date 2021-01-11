@@ -59,14 +59,7 @@ class ActivityModule {
         platformRepository,
         filterTimeRangeRepository
     )
-    
-    @Provides
-    fun provideGetPlatformUseCase(
-        platformRepository: PlatformRepository
-    ) = GetPlatformUseCase(
-        platformRepository
-    )
-    
+
     @Provides
     fun provideGetPlatformListUseCase(
         platformRepository: PlatformRepository
