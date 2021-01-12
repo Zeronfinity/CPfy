@@ -17,8 +17,9 @@ class GetOrderedPlatformListUseCase(
             }
         }
 
-        return platformList.sortedWith(Comparator { platform1, platform2 ->
-            (positionMap[platform1.id] ?: contestList.size) - (positionMap[platform2.id] ?: contestList.size)
-        })
+        return platformList.sortedWith { platform1, platform2 ->
+            (positionMap[platform1.id] ?: contestList.size) - (positionMap[platform2.id]
+                ?: contestList.size)
+        }
     }
 }

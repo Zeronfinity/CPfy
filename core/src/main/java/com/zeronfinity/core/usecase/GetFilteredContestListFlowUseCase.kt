@@ -1,25 +1,26 @@
 package com.zeronfinity.core.usecase
 
 import com.zeronfinity.core.entity.Contest
-import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.ContestRepository
 import com.zeronfinity.core.repository.FilterTimeRangeRepository
-import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_LOWER_BOUND
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationEnum.DURATION_UPPER_BOUND
+import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.END_TIME
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.START_TIME
 import com.zeronfinity.core.repository.PlatformRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
 
-class GetFilteredContestListUseCase(
+class GetFilteredContestListFlowUseCase(
     private val contestRepository: ContestRepository,
     private val platformRepository: PlatformRepository,
     private val filterTimeRepository: FilterTimeRangeRepository
 ) {
-    suspend operator fun invoke(): List<Contest> {
+    operator fun invoke(): Flow<List<Contest>> {
         var startTimeLowerBound = filterTimeRepository.getFilterTimeRange(START_TIME_LOWER_BOUND)
         var startTimeUpperBound = filterTimeRepository.getFilterTimeRange(START_TIME_UPPER_BOUND)
         var endTimeLowerBound = filterTimeRepository.getFilterTimeRange(END_TIME_LOWER_BOUND)
@@ -53,31 +54,13 @@ class GetFilteredContestListUseCase(
             endTimeUpperBound = calendar.time
         }
 
-        val filteredContestList = ArrayList<Contest>()
-        val allContestList = contestRepository.getContestList()
-
-        logD("allContestList: [$allContestList]")
-        logD(
-            "startTimeLowerBound: [$startTimeLowerBound], startTimeUpperBound: [$startTimeUpperBound]" +
-            ", endTimeLowerBound: [$endTimeLowerBound], endTimeUpperBound: [$endTimeUpperBound]" +
-            ", durationLowerBound: [$durationLowerBound], durationUpperBound: [$durationUpperBound]"
-        )
-
-        allContestList?.let {
-            for (contest in it) {
-                val isEnabled = platformRepository.isPlatformEnabled(contest.platformId)
-                if (isEnabled != false &&
-                    contest.startTime in startTimeLowerBound..startTimeUpperBound &&
-                    contest.endTime in endTimeLowerBound..endTimeUpperBound &&
-                    contest.duration in durationLowerBound..durationUpperBound
-                ) {
-                    filteredContestList.add(contest)
-                }
+        return contestRepository.getContestListFlow().map { list ->
+            list.filter { contest ->
+                (platformRepository.isPlatformEnabled(contest.platformId) != false) &&
+                        (contest.startTime in startTimeLowerBound..startTimeUpperBound) &&
+                        (contest.endTime in endTimeLowerBound..endTimeUpperBound) &&
+                        (contest.duration in durationLowerBound..durationUpperBound)
             }
         }
-
-        logD("filteredContestList: [$filteredContestList]")
-
-        return filteredContestList
     }
 }

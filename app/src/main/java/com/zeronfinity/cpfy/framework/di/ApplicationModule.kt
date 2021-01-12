@@ -4,6 +4,7 @@ import android.app.Application
 import com.zeronfinity.core.repository.*
 import com.zeronfinity.core.usecase.*
 import com.zeronfinity.cpfy.CustomApplication
+import com.zeronfinity.cpfy.framework.db.dao.ContestDao
 import com.zeronfinity.cpfy.framework.db.dao.ContestNotificationDao
 import com.zeronfinity.cpfy.framework.db.dao.PlatformDao
 import com.zeronfinity.cpfy.framework.implementations.*
@@ -12,16 +13,17 @@ import com.zeronfinity.cpfy.framework.notification.NotificationHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 class ApplicationModule {
     @Singleton
     @Provides
-    fun provideContestRepository() = ContestRepository(ContestArrayList())
+    fun provideContestRepository(contestDao: ContestDao) =
+        ContestRepository(ContestDb(Dispatchers.IO, contestDao))
 
     @Singleton
     @Provides

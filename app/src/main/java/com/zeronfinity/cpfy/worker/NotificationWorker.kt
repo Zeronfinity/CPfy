@@ -15,10 +15,10 @@ import com.zeronfinity.core.usecase.ClearNotificationContestsUseCase
 import com.zeronfinity.core.usecase.FetchServerContestsUseCase
 import com.zeronfinity.core.usecase.InsertNotificationContestsUseCase
 import com.zeronfinity.cpfy.broadcast.NotificationBroadcast
+import com.zeronfinity.cpfy.common.NOTI_MILLI_SECONDS_BEFORE_CONTEST_STARTS
 import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -33,7 +33,6 @@ class NotificationWorker @WorkerInject constructor(
     private val insertNotificationContestsUseCase: InsertNotificationContestsUseCase
 ) : CoroutineWorker(context, workerParams) {
     private val numberOfDaysForContestStartTime = 2
-    private val oneHourInMilliSeconds = 60 * 60 * 1000
 
     override suspend fun doWork(): Result {
         logD("doWork() started")
@@ -71,7 +70,7 @@ class NotificationWorker @WorkerInject constructor(
 
                             alarmManager.setExact(
                                 AlarmManager.RTC_WAKEUP,
-                                contest.startTime.time - oneHourInMilliSeconds,
+                                contest.startTime.time - NOTI_MILLI_SECONDS_BEFORE_CONTEST_STARTS,
                                 pendingIntent
                             )
 

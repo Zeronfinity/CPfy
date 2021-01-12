@@ -17,6 +17,8 @@
         android:layout_weight="1"
         android:autofillHints="Contests"
         android:gravity="top"
+        android:hint="@string/contest_info_clipboard"
+        android:inputType="text"
         android:textSize="14sp" />
 
     <Button

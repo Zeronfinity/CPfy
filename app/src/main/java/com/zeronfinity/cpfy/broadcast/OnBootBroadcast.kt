@@ -8,6 +8,7 @@ import android.content.Intent
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.usecase.GetContestUseCase
 import com.zeronfinity.core.usecase.GetNotificationContestsUseCase
+import com.zeronfinity.cpfy.common.NOTI_MILLI_SECONDS_BEFORE_CONTEST_STARTS
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OnBootBroadcast : BroadcastReceiver() {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
-    private val oneHourInMilliSeconds = 60 * 60 * 1000
 
     @Inject lateinit var getContestUseCase: GetContestUseCase
     @Inject lateinit var getNotificationContestsUseCase: GetNotificationContestsUseCase
@@ -33,21 +33,21 @@ class OnBootBroadcast : BroadcastReceiver() {
 
                 contestIdList?.let { list ->
                     for (id in list) {
-                        val contest = getContestUseCase(id)
+                        getContestUseCase(id)?.let { contest ->
+                            val broadcastIntent = Intent(context, NotificationBroadcast::class.java)
+                            broadcastIntent.putExtra("contestId", contest.id)
 
-                        val broadcastIntent = Intent(context, NotificationBroadcast::class.java)
-                        broadcastIntent.putExtra("contestId", contest.id)
+                            val pendingIntent = PendingIntent.getBroadcast(
+                                context, contest.id, intent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                            )
 
-                        val pendingIntent = PendingIntent.getBroadcast(
-                            context, contest.id, intent,
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                        )
-
-                        alarmManager.setExact(
-                            AlarmManager.RTC_WAKEUP,
-                            contest.startTime.time - oneHourInMilliSeconds,
-                            pendingIntent
-                        )
+                            alarmManager.setExact(
+                                AlarmManager.RTC_WAKEUP,
+                                contest.startTime.time - NOTI_MILLI_SECONDS_BEFORE_CONTEST_STARTS,
+                                pendingIntent
+                            )
+                        }
                     }
                 }
             }

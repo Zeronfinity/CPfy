@@ -10,15 +10,12 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterDurationE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.*
 import com.zeronfinity.core.usecase.*
 import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
-import com.zeronfinity.cpfy.framework.notification.NotificationHelper
 import com.zeronfinity.cpfy.viewmodel.helpers.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
@@ -28,6 +25,7 @@ class ContestListViewModel @ViewModelInject constructor(
     private val getFilterDurationUseCase: GetFilterDurationUseCase,
     private val getFilterTimeUseCase: GetFilterTimeUseCase,
     private val getFilteredContestListUseCase: GetFilteredContestListUseCase,
+    getFilteredContestListFlowUseCase: GetFilteredContestListFlowUseCase,
     private val getOrderedPlatformListUseCase: GetOrderedPlatformListUseCase,
     private val getPlatformListUseCase: GetPlatformListUseCase
 ) : ViewModel() {
@@ -45,6 +43,8 @@ class ContestListViewModel @ViewModelInject constructor(
 
     val contestListLiveData: LiveData<List<Contest>>
         get() = _contestListLiveData
+
+    val contestListLiveDataFlow = getFilteredContestListFlowUseCase().asLiveData()
 
     val platformListLiveData: LiveData<List<Platform>> = liveData {
         getPlatformListUseCase().collect {

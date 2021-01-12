@@ -33,7 +33,7 @@ class CustomApplication : Application(), Configuration.Provider {
 
         val notificationWork = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
             .setConstraints(constraints)
-            .setInitialDelay(5, TimeUnit.MINUTES)
+            .setInitialDelay(1, TimeUnit.MINUTES)
             .build()
 
         val workManager = WorkManager.getInstance(applicationContext)

@@ -124,7 +124,7 @@
                 android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                 android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
                 android:gravity="center"
-                android:text="day(s) after"
+                android:text="@string/day_s_after"
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintEnd_toEndOf="@+id/btnStartTimeUpperBound"
                 app:layout_constraintTop_toBottomOf="@+id/btnStartTimeUpperBound" />
@@ -228,7 +228,7 @@
                 android:layout_marginStart="@dimen/fragment_filter_horizontal_gap_half"
                 android:layout_marginEnd="@dimen/fragment_filter_horizontal_gap_half"
                 android:gravity="center"
-                android:text="day(s) after"
+                android:text="@string/day_s_after"
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintEnd_toEndOf="@+id/btnEndTimeUpperBound"
                 app:layout_constraintTop_toBottomOf="@+id/btnEndTimeUpperBound" />
@@ -327,7 +327,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            app:srcCompat="@drawable/ic_baseline_expand_more_24" />
+            app:srcCompat="@drawable/ic_baseline_expand_more_24"
+            android:contentDescription="@string/expand_contract_icon" />
 
         <Button
             android:id="@+id/btnAllPlatforms"

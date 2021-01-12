@@ -1,15 +1,18 @@
 package com.zeronfinity.core.repository
 
 import com.zeronfinity.core.entity.Contest
+import kotlinx.coroutines.flow.Flow
 
 interface ContestDataSource {
     fun add(contestList: List<Contest>)
 
-    fun get(index: Int): Contest
+    suspend fun get(id: Int): Contest?
 
-    fun getList(): List<Contest>
+    suspend fun getList(): List<Contest>?
 
-    fun size(): Int
+    fun getListFlow(): Flow<List<Contest>>
+
+    suspend fun size(): Int?
 
     fun clear()
 }

@@ -9,9 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.databinding.FragmentDurationPickerBinding
-import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

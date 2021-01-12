@@ -2,14 +2,11 @@ package com.zeronfinity.cpfy.view
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.R

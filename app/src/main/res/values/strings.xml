@@ -62,4 +62,7 @@
     <string name="link_colon">Link:</string>
     <string name="contests">contests</string>
     <string name="today">Today</string>
+    <string name="expand_contract_icon">Expand/contract icon</string>
+    <string name="contest_info_clipboard">Contest Info Clipboard</string>
+    <string name="day_s_after">day(s) after</string>
 </resources>

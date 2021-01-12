@@ -9,11 +9,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.zeronfinity.core.repository.FilterTimeRangeRepository
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.END_TIME
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.START_TIME
 import com.zeronfinity.cpfy.databinding.FragmentDayPickerBinding
-import com.zeronfinity.cpfy.databinding.FragmentDurationPickerBinding
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

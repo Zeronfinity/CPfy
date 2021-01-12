@@ -61,6 +61,17 @@ class ActivityModule {
     )
 
     @Provides
+    fun provideGetFilteredContestListFlowUseCase(
+        contestRepository: ContestRepository,
+        platformRepository: PlatformRepository,
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = GetFilteredContestListFlowUseCase(
+        contestRepository,
+        platformRepository,
+        filterTimeRangeRepository
+    )
+
+    @Provides
     fun provideGetPlatformListUseCase(
         platformRepository: PlatformRepository
     ) = GetPlatformListUseCase(
