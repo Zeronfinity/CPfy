@@ -9,13 +9,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.util.Date
 
-internal class ContestArrayListTest {
+internal class ContestDbTest {
     @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
 
