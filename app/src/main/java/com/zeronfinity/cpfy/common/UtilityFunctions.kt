@@ -27,8 +27,8 @@ fun createNotificationAlarm(context: Context, contest: Contest) {
     )
 }
 
-fun makeDurationText(duration: Int): String {
-    var remainingDuration = duration / 60
+fun makeDurationText(durationInSeconds: Int): String {
+    var remainingDuration = durationInSeconds / 60
 
     val minutes = remainingDuration % 60
     remainingDuration /= 60
@@ -58,6 +58,50 @@ fun makeDurationText(duration: Int): String {
         text += " "
     }
     text += "${minutes}m"
+
+    return text
+}
+
+fun makeFullDurationText(durationInSeconds: Long): String {
+    var remainingDuration = durationInSeconds / 60
+
+    val minutes = remainingDuration % 60
+    remainingDuration /= 60
+
+    val hours = remainingDuration % 24
+    remainingDuration /= 24
+
+    val days = remainingDuration
+
+    var text = ""
+
+    if (days != 0L) {
+        if (text.isNotEmpty()) {
+            text += " "
+        }
+        text += "$days day"
+        if (days > 1) {
+            text += "s"
+        }
+    }
+
+    if (hours != 0L || text.isNotEmpty()) {
+        if (text.isNotEmpty()) {
+            text += " "
+        }
+        text += "$hours hour"
+        if (hours > 1) {
+            text += "s"
+        }
+    }
+
+    if (text.isNotEmpty()) {
+        text += " "
+    }
+    text += "$minutes minute"
+    if (minutes > 1) {
+        text += "s"
+    }
 
     return text
 }
