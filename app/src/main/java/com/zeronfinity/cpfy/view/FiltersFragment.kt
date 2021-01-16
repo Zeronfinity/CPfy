@@ -406,9 +406,9 @@ class FiltersFragment
 
             binding.btnEndTimeLowerBound.text = simpleDateFormat.format(calendar.time)
         } else {
-            binding.cbStartTime.isChecked = false
-            binding.tvDaysAfterTodaySt.visibility = View.INVISIBLE
-            binding.tvDaysAfterTodayLabelSt.visibility = View.INVISIBLE
+            binding.cbEndTime.isChecked = false
+            binding.tvDaysAfterTodayEd.visibility = View.INVISIBLE
+            binding.tvDaysAfterTodayLabelEd.visibility = View.INVISIBLE
 
             filtersViewModel.loadEndTimeBasedFilterButtonTexts()
         }
