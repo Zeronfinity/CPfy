@@ -9,6 +9,7 @@
     <string name="time_left_colon_tv_label">Time left:</string>
     <string name="time_left_to_start">%s to start</string>
     <string name="contest_already_started">Contest already started!</string>
+    <string name="contest_already_ended">Contest already ended!</string>
 
     <!-- fragment_filters string -->
     <string name="time_filters_heading">Press a date/time to change it</string>
