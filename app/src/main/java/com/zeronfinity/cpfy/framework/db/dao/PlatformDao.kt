@@ -26,8 +26,14 @@ interface PlatformDao : BaseDao<PlatformEntity> {
     suspend fun isEnabled(id: Int): Boolean?
 
     @Query("UPDATE platform SET is_enabled = :isEnabled WHERE id = :id")
-    suspend fun setIsEnabled(id: Int, isEnabled: Boolean)
+    suspend fun setEnabled(id: Int, isEnabled: Boolean)
 
     @Query("UPDATE platform SET is_enabled = :isEnabled")
-    suspend fun setAllIsEnabled(isEnabled: Boolean)
+    suspend fun setEnabledAll(isEnabled: Boolean)
+
+    @Query("SELECT notification_priority FROM platform WHERE id = :id LIMIT 1")
+    suspend fun getNotificationPriority(id: Int): String?
+
+    @Query("UPDATE platform SET notification_priority = :notificationPriority WHERE id = :id")
+    suspend fun setNotificationPriority(id: Int, notificationPriority: String)
 }

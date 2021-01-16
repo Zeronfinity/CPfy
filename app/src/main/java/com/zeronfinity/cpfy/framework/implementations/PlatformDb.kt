@@ -1,6 +1,7 @@
 package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.Platform
+import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.PlatformDataSource
 import com.zeronfinity.cpfy.framework.db.dao.PlatformDao
 import com.zeronfinity.cpfy.framework.db.entity.PlatformEntity.Companion.fromPlatform
@@ -19,6 +20,7 @@ class PlatformDb(
         coroutineScope.launch {
             getPlatform(platform.id)?.let {
                 platform.isEnabled = it.isEnabled
+                platform.notificationPriority = it.notificationPriority
             }
 
             platformDao.insert(fromPlatform(platform))
@@ -33,25 +35,25 @@ class PlatformDb(
 
     override fun disablePlatform(id: Int) {
         coroutineScope.launch {
-            platformDao.setIsEnabled(id, false)
+            platformDao.setEnabled(id, false)
         }
     }
 
     override fun disableAllPlatforms() {
         coroutineScope.launch {
-            platformDao.setAllIsEnabled(false)
+            platformDao.setEnabledAll(false)
         }
     }
 
     override fun enablePlatform(id: Int) {
         coroutineScope.launch {
-            platformDao.setIsEnabled(id, true)
+            platformDao.setEnabled(id, true)
         }
     }
 
     override fun enableAllPlatforms() {
         coroutineScope.launch {
-            platformDao.setAllIsEnabled(true)
+            platformDao.setEnabledAll(true)
         }
     }
 
@@ -68,6 +70,15 @@ class PlatformDb(
         }
 
     override suspend fun isPlatformEnabled(id: Int) = platformDao.isEnabled(id)
+
+    override suspend fun getNotificationPriority(id: Int) = platformDao.getNotificationPriority(id)
+
+    override fun setNotificationPriority(id: Int, notificationPriority: String) {
+        logD("setNotificationPriority() -> id: [$id], notificationPriority: [$notificationPriority]")
+        coroutineScope.launch {
+            platformDao.setNotificationPriority(id, notificationPriority)
+        }
+    }
 
     override suspend fun size() = platformDao.getRowCount()
 

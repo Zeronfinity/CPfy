@@ -6,7 +6,7 @@ import com.zeronfinity.core.repository.CookieRepository
 import com.zeronfinity.core.repository.PlatformRepository
 import com.zeronfinity.core.repository.ServerPlatformInfoRepository
 
-class FetchServerPlatformInfoUseCase(
+class FetchAndPersistServerPlatformsUseCase(
     private val cookieRepository: CookieRepository,
     private val platformRepository: PlatformRepository,
     private val serverPlatformInfoRepository: ServerPlatformInfoRepository

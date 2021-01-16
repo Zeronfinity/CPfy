@@ -20,9 +20,6 @@ class GetFilteredContestListUseCase(
     private val filterTimeRepository: FilterTimeRangeRepository
 ) {
     suspend operator fun invoke(): List<Contest> {
-        val filteredContestList = ArrayList<Contest>()
-        val allContestList = contestRepository.getContestList()
-
         var startTimeLowerBound = filterTimeRepository.getFilterTimeRange(START_TIME_LOWER_BOUND)
         var startTimeUpperBound = filterTimeRepository.getFilterTimeRange(START_TIME_UPPER_BOUND)
         var endTimeLowerBound = filterTimeRepository.getFilterTimeRange(END_TIME_LOWER_BOUND)
@@ -56,6 +53,9 @@ class GetFilteredContestListUseCase(
             endTimeUpperBound = calendar.time
         }
 
+        val filteredContestList = ArrayList<Contest>()
+        val allContestList = contestRepository.getContestList()
+
         logD("allContestList: [$allContestList]")
         logD(
             "startTimeLowerBound: [$startTimeLowerBound], startTimeUpperBound: [$startTimeUpperBound]" +
@@ -63,14 +63,16 @@ class GetFilteredContestListUseCase(
             ", durationLowerBound: [$durationLowerBound], durationUpperBound: [$durationUpperBound]"
         )
 
-        for (contest in allContestList) {
-            val isEnabled = platformRepository.isPlatformEnabled(contest.platformId)
-            if (isEnabled != false &&
-                contest.startTime in startTimeLowerBound..startTimeUpperBound &&
-                contest.endTime in endTimeLowerBound..endTimeUpperBound &&
-                contest.duration in durationLowerBound..durationUpperBound
-            ) {
-                filteredContestList.add(contest)
+        allContestList?.let {
+            for (contest in it) {
+                val isEnabled = platformRepository.isPlatformEnabled(contest.platformId)
+                if (isEnabled != false &&
+                    contest.startTime in startTimeLowerBound..startTimeUpperBound &&
+                    contest.endTime in endTimeLowerBound..endTimeUpperBound &&
+                    contest.duration in durationLowerBound..durationUpperBound
+                ) {
+                    filteredContestList.add(contest)
+                }
             }
         }
 

@@ -24,6 +24,10 @@ interface PlatformDataSource {
 
     suspend fun isPlatformEnabled(id: Int): Boolean?
 
+    suspend fun getNotificationPriority(id: Int): String?
+
+    fun setNotificationPriority(id: Int, notificationPriority: String)
+
     fun removeAll()
 
     suspend fun size(): Int?

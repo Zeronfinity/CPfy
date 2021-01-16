@@ -46,10 +46,8 @@ class ClipboardViewModel @ViewModelInject constructor(
         coroutineScope.launch {
             val contestList = getFilteredContestListUseCase()
             var clipboardText: CharSequence = ""
-            var index = 0
 
-            for (contest in contestList) {
-                index++
+            for ((index, contest) in contestList.withIndex()) {
 
                 if (clipboardText.isNotEmpty()) {
                     clipboardText = TextUtils.concat(clipboardText, "\n")
@@ -58,7 +56,7 @@ class ClipboardViewModel @ViewModelInject constructor(
                 val spannableString = SpannableStringBuilder()
                     .bold {
                         getPlatformUseCase(contest.platformId)?.let{
-                            append("${index}. ${it.shortName}:")
+                            append("${index + 1}. ${it.shortName}:")
                         }
                     }
                     .append(" ${contest.name}\n")

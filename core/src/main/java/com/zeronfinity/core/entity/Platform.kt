@@ -5,7 +5,8 @@ data class Platform(
     val name: String,
     val imageUrl: String,
     val shortName: String,
-    var isEnabled: Boolean = true
+    var isEnabled: Boolean = true,
+    var notificationPriority: String = "Default"
 ) {
     companion object {
         fun createPlatformShortName(name: String): String = when {

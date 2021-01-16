@@ -127,6 +127,11 @@ class ContestListFragment : BaseFragment() {
             adapterContestList.refreshContestList(it)
         })
 
+        contestListViewModel.contestListLiveDataFlow.observe(viewLifecycleOwner, {
+            logD("contestListLiveDataFlow -> contestList:[$it]")
+            adapterContestList.refreshContestList(it)
+        })
+
         contestListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
             logD("platformListLiveData invoked")
             contestListViewModel.refreshContestList()

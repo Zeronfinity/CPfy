@@ -6,7 +6,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import okhttp3.Cookie
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -60,14 +59,18 @@ class ActivityModule {
         platformRepository,
         filterTimeRangeRepository
     )
-    
+
     @Provides
-    fun provideGetPlatformUseCase(
-        platformRepository: PlatformRepository
-    ) = GetPlatformUseCase(
-        platformRepository
+    fun provideGetFilteredContestListFlowUseCase(
+        contestRepository: ContestRepository,
+        platformRepository: PlatformRepository,
+        filterTimeRangeRepository: FilterTimeRangeRepository
+    ) = GetFilteredContestListFlowUseCase(
+        contestRepository,
+        platformRepository,
+        filterTimeRangeRepository
     )
-    
+
     @Provides
     fun provideGetPlatformListUseCase(
         platformRepository: PlatformRepository
@@ -83,22 +86,22 @@ class ActivityModule {
     )
 
     @Provides
-    fun provideFetchServerContestInfoUseCase(
+    fun provideFetchAndPersistServerContestsUseCase(
         contestRepository: ContestRepository,
         cookieRepository: CookieRepository,
         serverContestInfoRepository: ServerContestInfoRepository
-    ) = FetchServerContestInfoUseCase(
+    ) = FetchAndPersistServerContestsUseCase(
         contestRepository,
         cookieRepository,
         serverContestInfoRepository
     )
 
     @Provides
-    fun provideFetchServerPlatformInfoUseCase(
+    fun provideFetchAndPersistServerPlatformsUseCase(
         cookieRepository: CookieRepository,
         platformRepository: PlatformRepository,
         serverPlatformInfoRepository: ServerPlatformInfoRepository
-    ) = FetchServerPlatformInfoUseCase(
+    ) = FetchAndPersistServerPlatformsUseCase(
         cookieRepository,
         platformRepository,
         serverPlatformInfoRepository
