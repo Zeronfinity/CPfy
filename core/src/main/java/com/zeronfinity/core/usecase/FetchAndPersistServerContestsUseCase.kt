@@ -24,21 +24,21 @@ class FetchAndPersistServerContestsUseCase(
             serverContestInfoResponse.contestList?.let { contestRepository.addContestList(it) }
             Result.Success(true)
         } else {
-            if (serverContestInfoResponse.errorCode != null) {
-                when (serverContestInfoResponse.errorCode) {
-                    401 -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
-                    429 -> {
-                        when (cookieRepository.getCookie("clist_session_cookie")) {
-                            null -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
-                            else -> Result.Error("API Limit Reached!\nPlease try again 1 minute later.")
+            when {
+                serverContestInfoResponse.errorCode != null ->
+                    when (serverContestInfoResponse.errorCode) {
+                        401 -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
+                        429 -> {
+                            when (cookieRepository.getCookie("clist_session_cookie")) {
+                                null -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
+                                else -> Result.Error("API Limit Reached!\nPlease try again 1 minute later.")
+                            }
                         }
+                        else -> Result.Error("Error ${serverContestInfoResponse.errorCode}: ${serverContestInfoResponse.errorDesc}")
                     }
-                    else -> Result.Error("Error ${serverContestInfoResponse.errorCode}: ${serverContestInfoResponse.errorDesc}")
-                }
-            } else if (serverContestInfoResponse.errorDesc != null) {
-                Result.Error(serverContestInfoResponse.errorDesc)
-            } else {
-                Result.Error("Unknown Network Error!")
+                serverContestInfoResponse.errorDesc != null ->
+                    Result.Error(serverContestInfoResponse.errorDesc)
+                else -> Result.Error("Unknown Network Error!")
             }
         }
     }

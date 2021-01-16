@@ -215,7 +215,7 @@ class ContestListFragment : BaseFragment() {
                 }
             }
 
-            calendar.add(Calendar.DAY_OF_YEAR, filtersViewModel.getDaysAfterToday(START_TIME))
+            calendar.add(Calendar.DAY_OF_YEAR, filtersViewModel.getDaysAfterToday(END_TIME))
 
             prevEndTimeUpperBound?.let {
                 if (it.compareTo(calendar.time) != 0) {
@@ -275,7 +275,6 @@ class ContestListFragment : BaseFragment() {
 
             calendar.add(Calendar.DAY_OF_YEAR, filtersViewModel.getDaysAfterToday(START_TIME))
             prevStartTimeUpperBound = calendar.time
-
         } else {
             prevStartTimeLowerBound = filtersViewModel.getTimeFilters(START_TIME_LOWER_BOUND)
             prevStartTimeUpperBound = filtersViewModel.getTimeFilters(START_TIME_UPPER_BOUND)
