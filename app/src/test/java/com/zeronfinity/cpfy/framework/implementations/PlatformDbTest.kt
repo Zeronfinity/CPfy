@@ -1060,14 +1060,11 @@ internal class PlatformDbTest {
         }
 
         override suspend fun isEnabled(id: Int): Boolean? {
-            println("isEnabled() -> id = [$id], isEnabled = [${platformMap[id]?.isEnabled}], platformMap = [$platformMap]")
             return platformMap[id]?.isEnabled
         }
 
         override suspend fun setEnabled(id: Int, isEnabled: Boolean) {
-            println("setIsEnabled() -> id = [$id], isEnabled = [$isEnabled], platformMap = [$platformMap]")
             platformMap[id]?.let {
-                println("id = [$id], isEnabled = [$isEnabled]")
                 it.isEnabled = isEnabled
             }
         }
@@ -1075,6 +1072,16 @@ internal class PlatformDbTest {
         override suspend fun setEnabledAll(isEnabled: Boolean) {
             platformMap.map {
                 it.value.isEnabled = isEnabled
+            }
+        }
+
+        override suspend fun getNotificationPriority(id: Int): String? {
+            return platformMap[id]?.notificationPriority
+        }
+
+        override suspend fun setNotificationPriority(id: Int, notificationPriority: String) {
+            platformMap[id]?.let {
+                it.notificationPriority = notificationPriority
             }
         }
 
