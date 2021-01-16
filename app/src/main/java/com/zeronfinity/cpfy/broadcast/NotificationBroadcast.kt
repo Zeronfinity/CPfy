@@ -42,7 +42,7 @@ class NotificationBroadcast : BroadcastReceiver() {
                 coroutineScope.launch {
                     getContestUseCase(contestId)?.let { contest ->
                         getPlatformUseCase(contest.platformId)?.let { platform->
-                            if (platform.notificationPriority != "None") {
+                            if (platform.notificationPriority != "Hide") {
                                 notificationHelper.createNotificationChannel(
                                     "ch-${platform.id}",
                                     platform.shortName,

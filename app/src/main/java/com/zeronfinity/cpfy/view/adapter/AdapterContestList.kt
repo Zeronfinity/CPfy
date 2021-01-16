@@ -14,6 +14,7 @@ import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.usecase.GetPlatformUseCase
 import com.zeronfinity.cpfy.R
+import com.zeronfinity.cpfy.common.makeFullDurationText
 import com.zeronfinity.cpfy.databinding.ItemContestBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,7 +60,7 @@ class AdapterContestList @Inject constructor(
                         R.string.duration_colon_tv_label
                     )
                     binding.tvDuration.text =
-                        parseSecondsToString(
+                        makeFullDurationText(
                             contest.duration.toLong()
                         )
                 }
@@ -80,14 +81,14 @@ class AdapterContestList @Inject constructor(
                         R.string.time_left_colon_tv_label
                     )
                     binding.tvDuration.text =
-                        parseSecondsToString(
+                        makeFullDurationText(
                             contest.duration.toLong() + (contest.startTime.time - Date().time) / 1000
                         )
                 }
                 else -> {
                     binding.tvTimeLeft.text = binding.tvTimeLeft.context.getString(
                         R.string.time_left_to_start,
-                        parseSecondsToString(
+                        makeFullDurationText(
                             (contest.startTime.time - Date().time) / 1000
                         )
                     )
@@ -105,7 +106,7 @@ class AdapterContestList @Inject constructor(
                         R.string.duration_colon_tv_label
                     )
                     binding.tvDuration.text =
-                        parseSecondsToString(
+                        makeFullDurationText(
                             contest.duration.toLong()
                         )
                 }
@@ -164,27 +165,5 @@ class AdapterContestList @Inject constructor(
         contestList.clear()
         contestList.addAll(list)
         notifyDataSetChanged()
-    }
-
-    private fun parseSecondsToString(durationInSeconds: Long): String {
-        val minutes = (durationInSeconds / 60) % 60
-        val hours = (durationInSeconds / 60 / 60) % 24
-        val days = durationInSeconds / 60 / 60 / 24
-        var ret = ""
-        if (days != 0L) {
-            ret += "$days day"
-            if (days > 1) ret += "s"
-        }
-        if (hours != 0L) {
-            if (ret.isNotEmpty()) ret += " "
-            ret += "$hours hour"
-            if (hours > 1) ret += "s"
-        }
-        if (minutes != 0L) {
-            if (ret.isNotEmpty()) ret += " "
-            ret += "$minutes minute"
-            if (minutes > 1) ret += "s"
-        }
-        return ret
     }
 }

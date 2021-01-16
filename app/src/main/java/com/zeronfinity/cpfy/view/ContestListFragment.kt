@@ -95,6 +95,10 @@ class ContestListFragment : BaseFragment() {
             prevDurationUpperBound = it.getInt("DURATION_UPPER_BOUND")
         }
 
+        binding.swipeRefresh.setOnRefreshListener {
+            contestListViewModel.fetchContestList()
+        }
+
         if (isFirstTime || isTimeFilterChanged()) {
             contestListViewModel.fetchContestList()
         }
@@ -120,16 +124,19 @@ class ContestListFragment : BaseFragment() {
                         .show()
                 }
             }
+            binding.swipeRefresh.isRefreshing = false
         })
 
         contestListViewModel.contestListLiveData.observe(viewLifecycleOwner, {
             logD("contestListLiveData -> contestList:[$it]")
             adapterContestList.refreshContestList(it)
+            binding.swipeRefresh.isRefreshing = false
         })
 
         contestListViewModel.contestListLiveDataFlow.observe(viewLifecycleOwner, {
             logD("contestListLiveDataFlow -> contestList:[$it]")
             adapterContestList.refreshContestList(it)
+            binding.swipeRefresh.isRefreshing = false
         })
 
         contestListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
@@ -148,7 +155,6 @@ class ContestListFragment : BaseFragment() {
             }
         })
     }
-
 
     private fun isTimeFilterChanged(): Boolean {
         var isChanged = false
