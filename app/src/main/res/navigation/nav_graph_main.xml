@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_contestListFragment_to_clipboardFragment"
             app:destination="@id/clipboardFragment" />
+        <action
+            android:id="@+id/action_contestListFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/filtersFragment"
@@ -61,4 +64,9 @@
             android:name="filterTimeTypeEnumArg"
             app:argType="com.zeronfinity.core.repository.FilterTimeRangeRepository$FilterTimeTypeEnum" />
     </dialog>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.zeronfinity.cpfy.view.NotificationFragment"
+        android:label="Notification"
+        tools:layout="@layout/fragment_notification" />
 </navigation>

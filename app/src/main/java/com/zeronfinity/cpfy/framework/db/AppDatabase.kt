@@ -16,7 +16,7 @@ import com.zeronfinity.cpfy.framework.db.entity.PlatformEntity
 
 @Database(
     entities = [ContestEntity::class, ContestNotificationEntity::class, PlatformEntity::class],
-    version = 3
+    version = 4
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun contestDao(): ContestDao
@@ -54,12 +54,20 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "ALTER TABLE `platform` ADD COLUMN `notification_priority` TEXT NOT NULL"
+                )
+            }
+        }
+
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(
                 context,
                 AppDatabase::class.java,
                 DATABASE_NAME
-            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
+            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).build()
         }
     }
 }

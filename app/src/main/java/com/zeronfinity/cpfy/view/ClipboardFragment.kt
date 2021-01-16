@@ -14,7 +14,6 @@ import com.zeronfinity.cpfy.databinding.FragmentClipboardBinding
 import com.zeronfinity.cpfy.viewmodel.ClipboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class ClipboardFragment : BaseFragment() {
     private var _binding: FragmentClipboardBinding? = null

@@ -18,7 +18,7 @@
         android:autofillHints="Contests"
         android:gravity="top"
         android:hint="@string/contest_info_clipboard"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:textSize="14sp" />
 
     <Button

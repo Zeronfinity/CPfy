@@ -78,6 +78,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    // crom app whitelist for chinese custom roms
+    implementation 'com.wanghong.cromappwhitelist:crom-app-whitelist:0.1.1'
+
     // hilt for dependency injection
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"

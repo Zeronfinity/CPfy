@@ -1064,7 +1064,7 @@ internal class PlatformDbTest {
             return platformMap[id]?.isEnabled
         }
 
-        override suspend fun setIsEnabled(id: Int, isEnabled: Boolean) {
+        override suspend fun setEnabled(id: Int, isEnabled: Boolean) {
             println("setIsEnabled() -> id = [$id], isEnabled = [$isEnabled], platformMap = [$platformMap]")
             platformMap[id]?.let {
                 println("id = [$id], isEnabled = [$isEnabled]")
@@ -1072,7 +1072,7 @@ internal class PlatformDbTest {
             }
         }
 
-        override suspend fun setAllIsEnabled(isEnabled: Boolean) {
+        override suspend fun setEnabledAll(isEnabled: Boolean) {
             platformMap.map {
                 it.value.isEnabled = isEnabled
             }

@@ -56,7 +56,7 @@ class ClipboardViewModel @ViewModelInject constructor(
                 val spannableString = SpannableStringBuilder()
                     .bold {
                         getPlatformUseCase(contest.platformId)?.let{
-                            append("${index}. ${it.shortName}:")
+                            append("${index + 1}. ${it.shortName}:")
                         }
                     }
                     .append(" ${contest.name}\n")

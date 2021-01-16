@@ -17,5 +17,14 @@ class PlatformRepository(private val platformDataSource: PlatformDataSource) {
 
     fun getPlatformList() = platformDataSource.getPlatformList()
 
-    suspend fun isPlatformEnabled(platformId: Int) = platformDataSource.isPlatformEnabled(platformId)
+    suspend fun isPlatformEnabled(platformId: Int) =
+        platformDataSource.isPlatformEnabled(platformId)
+
+    suspend fun getNotificationPriority(platformId: Int) =
+        platformDataSource.getNotificationPriority(platformId)
+
+    fun setNotificationPriority(platformId: Int, notificationPriority: String) =
+        platformDataSource.setNotificationPriority(
+            platformId, notificationPriority
+        )
 }

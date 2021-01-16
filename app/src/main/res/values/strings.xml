@@ -23,7 +23,7 @@
     <!-- menu strings -->
     <string name="menu_filter">Filter</string>
     <string name="menu_clipboard">Clipboard</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_notification">Notification</string>
     <string name="menu_web_view">Web View</string>
     <string name="menu_about">About</string>
 
@@ -65,4 +65,23 @@
     <string name="expand_contract_icon">Expand/contract icon</string>
     <string name="contest_info_clipboard">Contest Info Clipboard</string>
     <string name="day_s_after">day(s) after</string>
+
+
+    <!-- fragment_notification strings -->
+    <string name="allow_auto_start">Allow Auto Start</string>
+    <string name="allow_notifications">Allow Notifications</string>
+    <string name="lift_battery_restrictions">Lift Battery Restrictions</string>
+    <string name="notification_header_label">Some Android manufacturers, specially ones with chinese custom rom, kill any background process whenever app is closed. So CPfy can not start a background service to show notification before a contest. You need to give that permission to CPfy manually, the following buttons lead to those places for some manufacturers. To learn more, visit https://dontkillmyapp.com/</string>
+    <string name="notification_auto_start_label">This will allow starting service to show notification</string>
+    <string name="notification_allow_label">This will allow showing notifications in case it\'s disabled</string>
+    <string name="notification_battery_saver_label">This will fix aggressive battery optimizations issues</string>
+    <string name="notification_priorities">Notification Priorities</string>
+    <string-array name="notification_priority">
+        <item>Default</item>
+        <item>None</item>
+        <item>Max</item>
+        <item>High</item>
+        <item>Low</item>
+        <item>Min</item>
+    </string-array>
 </resources>

@@ -92,6 +92,21 @@ class ApplicationModule {
     )
 
     @Provides
+    fun provideGetPlatformNotificationPriorityUseCase(
+        platformRepository: PlatformRepository
+    ) = GetPlatformNotificationPriorityUseCase(
+        platformRepository
+    )
+
+    @Provides
+    fun provideSetPlatformNotificationPriorityUseCase(
+        platformRepository: PlatformRepository
+    ) = SetPlatformNotificationPriorityUseCase(
+        platformRepository
+    )
+
+
+    @Provides
     fun provideGetCookieUseCase(
         cookieRepository: CookieRepository
     ) = GetCookieUseCase(

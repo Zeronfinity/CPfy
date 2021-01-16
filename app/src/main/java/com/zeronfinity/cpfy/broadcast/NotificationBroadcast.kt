@@ -30,7 +30,6 @@ class NotificationBroadcast : BroadcastReceiver() {
     @Inject lateinit var getPlatformUseCase: GetPlatformUseCase
     @Inject lateinit var notificationHelper: NotificationHelper
 
-
     override fun onReceive(context: Context?, intent: Intent?) {
         val contestId = intent?.getIntExtra("contestId", -1)
 
@@ -43,21 +42,24 @@ class NotificationBroadcast : BroadcastReceiver() {
                 coroutineScope.launch {
                     getContestUseCase(contestId)?.let { contest ->
                         getPlatformUseCase(contest.platformId)?.let { platform->
-                            notificationHelper.createNotificationChannel(
-                                "ch-${platform.id}",
-                                platform.shortName,
-                                "${platform.shortName} notification channel"
-                            )
+                            if (platform.notificationPriority != "None") {
+                                notificationHelper.createNotificationChannel(
+                                    "ch-${platform.id}",
+                                    platform.shortName,
+                                    "${platform.shortName} notification channel",
+                                    platform.notificationPriority
+                                )
 
-                            val builder = NotificationCompat.Builder(ctx, "ch-${contest.platformId}")
-                                .setSmallIcon(R.drawable.ic_stat_cpfy)
-                                .setContentTitle("${platform.shortName}: ${contest.name}")
-                                .setContentText("Starts at ${simpleDateFormat.format(contest.startTime)}!")
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                val builder = NotificationCompat.Builder(ctx, "ch-${contest.platformId}")
+                                    .setSmallIcon(R.drawable.ic_stat_cpfy)
+                                    .setContentTitle("${platform.shortName}: ${contest.name}")
+                                    .setContentText("Starts at ${simpleDateFormat.format(contest.startTime)}!")
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-                            val notificationManager = NotificationManagerCompat.from(ctx)
+                                val notificationManager = NotificationManagerCompat.from(ctx)
 
-                            notificationManager.notify(contestId, builder.build())
+                                notificationManager.notify(contestId, builder.build())
+                            }
                         }
                     }
                 }

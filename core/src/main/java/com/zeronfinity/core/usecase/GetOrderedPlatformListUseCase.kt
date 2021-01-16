@@ -1,11 +1,14 @@
 package com.zeronfinity.core.usecase
 
 import com.zeronfinity.core.entity.Platform
+import com.zeronfinity.core.logger.logD
 
 class GetOrderedPlatformListUseCase(
     private val getFilteredContestListUseCase: GetFilteredContestListUseCase
 ) {
     suspend operator fun invoke(platformList: List<Platform>): List<Platform> {
+        logD("platformList: [$platformList]")
+
         val positionMap = mutableMapOf<Int, Int>()
 
         val contestList = getFilteredContestListUseCase()

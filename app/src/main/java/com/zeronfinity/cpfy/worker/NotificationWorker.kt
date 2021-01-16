@@ -1,11 +1,6 @@
 package com.zeronfinity.cpfy.worker
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
-import android.content.Context.ALARM_SERVICE
-import android.content.Intent
 import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
@@ -14,8 +9,7 @@ import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.usecase.ClearNotificationContestsUseCase
 import com.zeronfinity.core.usecase.FetchServerContestsUseCase
 import com.zeronfinity.core.usecase.InsertNotificationContestsUseCase
-import com.zeronfinity.cpfy.broadcast.NotificationBroadcast
-import com.zeronfinity.cpfy.common.NOTI_MILLI_SECONDS_BEFORE_CONTEST_STARTS
+import com.zeronfinity.cpfy.common.createNotificationAlarm
 import com.zeronfinity.cpfy.framework.network.pojo.ClistContestObjectResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -45,8 +39,6 @@ class NotificationWorker @WorkerInject constructor(
         calendar.time = Date()
         calendar.add(Calendar.DAY_OF_YEAR, numberOfDaysForContestStartTime)
 
-        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-
         return withContext(Dispatchers.IO) {
             try {
                 val contestList = fetchServerContestsUseCase(
@@ -63,17 +55,7 @@ class NotificationWorker @WorkerInject constructor(
                     if (it.isNotEmpty()) {
                         val contestIdList = mutableListOf<Int>()
                         for (contest in it) {
-                            val intent = Intent(context, NotificationBroadcast::class.java)
-                            intent.putExtra("contestId", contest.id)
-
-                            val pendingIntent = PendingIntent.getBroadcast(context, contest.id, intent, FLAG_UPDATE_CURRENT)
-
-                            alarmManager.setExact(
-                                AlarmManager.RTC_WAKEUP,
-                                contest.startTime.time - NOTI_MILLI_SECONDS_BEFORE_CONTEST_STARTS,
-                                pendingIntent
-                            )
-
+                            createNotificationAlarm(context, contest)
                             contestIdList.add(contest.id)
                         }
                         clearNotificationContestsUseCase()
