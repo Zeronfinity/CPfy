@@ -41,51 +41,74 @@ class AdapterContestList @Inject constructor(
                 Locale.getDefault()
             ).format(contest.startTime)
 
-            val diffInMillis = contest.startTime.time - Date().time
-            if (diffInMillis < 0) {
-                binding.tvTimeLeft.text =
-                    binding.tvTimeLeft.context.getString(R.string.contest_already_started)
-                binding.tvTimeLeft.setTextColor(
-                    ContextCompat.getColor(
-                        binding.tvTimeLeft.context,
-                        R.color.primaryTextColor
+            when {
+                contest.endTime.time < Date().time -> {
+                    binding.tvTimeLeft.text =
+                        binding.tvTimeLeft.context.getString(R.string.contest_already_ended)
+                    binding.tvTimeLeft.setTextColor(
+                        ContextCompat.getColor(
+                            binding.tvTimeLeft.context,
+                            R.color.primaryTextColor
+                        )
                     )
-                )
 
-                binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
-                    R.string.started_at_colon_tv_label
-                )
-                binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(
-                    R.string.time_left_colon_tv_label
-                )
-                binding.tvDuration.text =
-                    parseSecondsToString(
-                        contest.duration.toLong() + diffInMillis / 1000
+                    binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
+                        R.string.started_at_colon_tv_label
                     )
-            } else {
-                binding.tvTimeLeft.text = binding.tvTimeLeft.context.getString(
-                    R.string.time_left_to_start,
-                    parseSecondsToString(
-                        diffInMillis / 1000
+                    binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(
+                        R.string.duration_colon_tv_label
                     )
-                )
-                binding.tvTimeLeft.setTextColor(
-                    ContextCompat.getColor(
-                        binding.tvTimeLeft.context,
-                        R.color.primaryDarkColor
+                    binding.tvDuration.text =
+                        parseSecondsToString(
+                            contest.duration.toLong()
+                        )
+                }
+                contest.startTime.time < Date().time -> {
+                    binding.tvTimeLeft.text =
+                        binding.tvTimeLeft.context.getString(R.string.contest_already_started)
+                    binding.tvTimeLeft.setTextColor(
+                        ContextCompat.getColor(
+                            binding.tvTimeLeft.context,
+                            R.color.primaryTextColor
+                        )
                     )
-                )
 
-                binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
-                    R.string.starts_at_colon_tv_label
-                )
-                binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(
-                    R.string.duration_colon_tv_label
-                )
-                binding.tvDuration.text =
-                    parseSecondsToString(
-                        contest.duration.toLong()
+                    binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
+                        R.string.started_at_colon_tv_label
                     )
+                    binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(
+                        R.string.time_left_colon_tv_label
+                    )
+                    binding.tvDuration.text =
+                        parseSecondsToString(
+                            contest.duration.toLong() + (contest.startTime.time - Date().time) / 1000
+                        )
+                }
+                else -> {
+                    binding.tvTimeLeft.text = binding.tvTimeLeft.context.getString(
+                        R.string.time_left_to_start,
+                        parseSecondsToString(
+                            (contest.startTime.time - Date().time) / 1000
+                        )
+                    )
+                    binding.tvTimeLeft.setTextColor(
+                        ContextCompat.getColor(
+                            binding.tvTimeLeft.context,
+                            R.color.primaryDarkColor
+                        )
+                    )
+
+                    binding.tvStartsOnLabel.text = binding.tvStartsOnLabel.context.getString(
+                        R.string.starts_at_colon_tv_label
+                    )
+                    binding.tvDurationLabel.text = binding.tvDurationLabel.context.getString(
+                        R.string.duration_colon_tv_label
+                    )
+                    binding.tvDuration.text =
+                        parseSecondsToString(
+                            contest.duration.toLong()
+                        )
+                }
             }
 
             coroutineScope.launch {
