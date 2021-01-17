@@ -26,7 +26,6 @@ import com.zeronfinity.cpfy.common.FILTER_DATE_TIME_FORMAT
 import com.zeronfinity.cpfy.common.makeDurationText
 import com.zeronfinity.cpfy.databinding.FragmentFiltersBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters
-import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters.PlatformFilterClickListener
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,8 +37,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FiltersFragment
-    : BaseFragment(), PlatformFilterClickListener {
+class FiltersFragment : BaseFragment() {
     private var _binding: FragmentFiltersBinding? = null
     private val binding get() = _binding!!
 
@@ -54,8 +52,6 @@ class FiltersFragment
         Locale.getDefault()
     )
 
-    private var isContestListRefreshRequired: Boolean = false
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,14 +60,6 @@ class FiltersFragment
         logD("onCreateView() started")
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onStop() {
-        logD("onStop() started -> isContestListRefreshRequired: [$isContestListRefreshRequired]")
-        if (isContestListRefreshRequired) {
-            contentListViewModel.refreshContestList()
-        }
-        super.onStop()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,8 +84,6 @@ class FiltersFragment
                 }
             }
         }
-
-        adapterPlatformFilters.setPlatformFilterClickListener(this)
 
         contentListViewModel =
             ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
@@ -195,10 +181,6 @@ class FiltersFragment
             calendar.add(Calendar.DAY_OF_YEAR, it)
             binding.btnEndTimeUpperBound.text = simpleDateFormat.format(calendar.time)
         })
-    }
-
-    override fun onPlatformFilterClick() {
-        isContestListRefreshRequired = true
     }
 
     private fun setUpViews() {

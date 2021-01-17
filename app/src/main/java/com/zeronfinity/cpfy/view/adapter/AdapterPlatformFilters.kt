@@ -19,16 +19,7 @@ class AdapterPlatformFilters @Inject constructor(
     private val disablePlatformUseCase: DisablePlatformUseCase,
     private val enablePlatformUseCase: EnablePlatformUseCase
 ) : RecyclerView.Adapter<AdapterPlatformFilters.PlatformViewHolder>() {
-    interface PlatformFilterClickListener {
-        fun onPlatformFilterClick()
-    }
-
-    private var platformFilterClickListener: PlatformFilterClickListener? = null
     private var maxItemCount = PLATFORM_FILTER_MAX_COUNT
-
-    fun setPlatformFilterClickListener(clickListener: PlatformFilterClickListener) {
-        platformFilterClickListener = clickListener
-    }
 
     private var platformList = ArrayList<Platform>()
 
@@ -61,7 +52,6 @@ class AdapterPlatformFilters @Inject constructor(
                         logE("Invalid platform filter button tag: " + it.tag.toString())
                     }
                 }
-                platformFilterClickListener?.onPlatformFilterClick()
             }
         }
 
