@@ -4,18 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wanghong.cromappwhitelist.AppWhitelist
 import com.zeronfinity.core.logger.logD
+import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.FragmentNotificationBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterNotificationPriorities
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
+import com.zeronfinity.cpfy.viewmodel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotificationFragment : BaseFragment() {
+class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
@@ -23,6 +27,7 @@ class NotificationFragment : BaseFragment() {
     lateinit var adapterNotificationPriorities: AdapterNotificationPriorities
 
     private lateinit var contentListViewModel: ContestListViewModel
+    private lateinit var notificationViewModel: NotificationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +48,7 @@ class NotificationFragment : BaseFragment() {
             logD("btnAutoStart clicked!")
 
             activity?.let {
-                AppWhitelist.settingForAutoStart(it);
+                AppWhitelist.settingForAutoStart(it)
             }
         }
 
@@ -51,7 +56,7 @@ class NotificationFragment : BaseFragment() {
             logD("btnNotifications clicked!")
 
             activity?.let {
-                AppWhitelist.settingForNotification(it);
+                AppWhitelist.settingForNotification(it)
             }
         }
 
@@ -59,7 +64,7 @@ class NotificationFragment : BaseFragment() {
             logD("btnBatterySaver clicked!")
 
             activity?.let {
-                AppWhitelist.settingForBatterySaver(it);
+                AppWhitelist.settingForBatterySaver(it)
             }
         }
 
@@ -67,9 +72,24 @@ class NotificationFragment : BaseFragment() {
         binding.rvNotificationPriorities.layoutManager = LinearLayoutManager(activity)
         binding.rvNotificationPriorities.setHasFixedSize(true)
 
+        binding.tvChangeAll.isSelected = true
+
+        ArrayAdapter.createFromResource(
+            binding.spinnerPriorityAll.context,
+            R.array.notification_priority,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerPriorityAll.adapter = adapter
+        }
+
+        binding.spinnerPriorityAll.onItemSelectedListener = this
+
         contentListViewModel =
             ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
         observeContestListViewModel()
+
+        notificationViewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
     }
 
     private fun observeContestListViewModel() {
@@ -77,5 +97,13 @@ class NotificationFragment : BaseFragment() {
             logD("platformListLiveData -> platformList[$it]")
             adapterNotificationPriorities.refreshPlatformList(it)
         })
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val notificationPriorityList = resources.getStringArray(R.array.notification_priority).toList()
+        notificationViewModel.setAllNotificationPriorityList(notificationPriorityList[position])
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
     }
 }

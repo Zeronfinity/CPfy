@@ -13,8 +13,7 @@
         android:layout_margin="8dp"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="TextView" />
+        android:singleLine="true" />
 
     <Spinner
         android:id="@+id/spinnerPriority"

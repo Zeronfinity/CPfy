@@ -27,4 +27,9 @@ class PlatformRepository(private val platformDataSource: PlatformDataSource) {
         platformDataSource.setNotificationPriority(
             platformId, notificationPriority
         )
+
+    fun setAllNotificationPriority(notificationPriority: String) =
+        platformDataSource.setAllNotificationPriority(
+            notificationPriority
+        )
 }

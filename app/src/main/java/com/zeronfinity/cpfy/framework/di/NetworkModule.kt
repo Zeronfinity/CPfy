@@ -3,17 +3,17 @@ package com.zeronfinity.cpfy.framework.di
 import android.app.Application
 import com.zeronfinity.core.usecase.GetCookieUseCase
 import com.zeronfinity.cpfy.CustomApplication
+import com.zeronfinity.cpfy.framework.network.ClistNetworkCall
 import com.zeronfinity.cpfy.framework.network.retrofit.RetrofitClistApiClient
 import com.zeronfinity.cpfy.framework.network.retrofit.RetrofitClistApiInterface
-import com.zeronfinity.cpfy.framework.network.ClistNetworkCall
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 class NetworkModule {
     @Singleton
     @Provides

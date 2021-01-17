@@ -1,7 +1,6 @@
 package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.Platform
-import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.PlatformDataSource
 import com.zeronfinity.cpfy.framework.db.dao.PlatformDao
 import com.zeronfinity.cpfy.framework.db.entity.PlatformEntity.Companion.fromPlatform
@@ -74,9 +73,14 @@ class PlatformDb(
     override suspend fun getNotificationPriority(id: Int) = platformDao.getNotificationPriority(id)
 
     override fun setNotificationPriority(id: Int, notificationPriority: String) {
-        logD("setNotificationPriority() -> id: [$id], notificationPriority: [$notificationPriority]")
         coroutineScope.launch {
             platformDao.setNotificationPriority(id, notificationPriority)
+        }
+    }
+
+    override fun setAllNotificationPriority(notificationPriority: String) {
+        coroutineScope.launch {
+            platformDao.setAllNotificationPriority(notificationPriority)
         }
     }
 

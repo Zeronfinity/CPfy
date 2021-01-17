@@ -5,7 +5,6 @@ import com.zeronfinity.cpfy.framework.db.dao.PlatformDao
 import com.zeronfinity.cpfy.framework.db.entity.PlatformEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -1082,6 +1081,12 @@ internal class PlatformDbTest {
         override suspend fun setNotificationPriority(id: Int, notificationPriority: String) {
             platformMap[id]?.let {
                 it.notificationPriority = notificationPriority
+            }
+        }
+
+        override suspend fun setAllNotificationPriority(notificationPriority: String) {
+            platformMap.forEach { (_, value) ->
+                value.notificationPriority = notificationPriority
             }
         }
 

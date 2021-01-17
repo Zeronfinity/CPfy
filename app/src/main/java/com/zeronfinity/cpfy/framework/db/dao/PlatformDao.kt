@@ -36,4 +36,7 @@ interface PlatformDao : BaseDao<PlatformEntity> {
 
     @Query("UPDATE platform SET notification_priority = :notificationPriority WHERE id = :id")
     suspend fun setNotificationPriority(id: Int, notificationPriority: String)
+
+    @Query("UPDATE platform SET notification_priority = :notificationPriority")
+    suspend fun setAllNotificationPriority(notificationPriority: String)
 }

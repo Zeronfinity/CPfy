@@ -86,6 +86,13 @@ class ActivityModule {
     )
 
     @Provides
+    fun provideSetAllNotificationPriorityUseCase(
+        platformRepository: PlatformRepository
+    ) = SetAllNotificationPriorityUseCase(
+        platformRepository
+    )
+
+    @Provides
     fun provideFetchAndPersistServerContestsUseCase(
         contestRepository: ContestRepository,
         cookieRepository: CookieRepository,

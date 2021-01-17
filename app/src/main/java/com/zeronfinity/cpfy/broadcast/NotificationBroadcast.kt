@@ -42,7 +42,7 @@ class NotificationBroadcast : BroadcastReceiver() {
                 coroutineScope.launch {
                     getContestUseCase(contestId)?.let { contest ->
                         getPlatformUseCase(contest.platformId)?.let { platform->
-                            if (platform.notificationPriority != "Hide") {
+                            if (platform.notificationPriority != "None") {
                                 notificationHelper.createNotificationChannel(
                                     "ch-${platform.id}",
                                     platform.shortName,
@@ -54,7 +54,7 @@ class NotificationBroadcast : BroadcastReceiver() {
                                     .setSmallIcon(R.drawable.ic_stat_cpfy)
                                     .setContentTitle("${platform.shortName}: ${contest.name}")
                                     .setContentText("Starts at ${simpleDateFormat.format(contest.startTime)}!")
-                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                    .setPriority(getPriorityValue(platform.notificationPriority))
 
                                 val notificationManager = NotificationManagerCompat.from(ctx)
 
@@ -64,6 +64,17 @@ class NotificationBroadcast : BroadcastReceiver() {
                     }
                 }
             }
+        }
+    }
+
+    private fun getPriorityValue(notificationPriority: String): Int {
+        return when (notificationPriority) {
+            "Default" -> NotificationCompat.PRIORITY_DEFAULT
+            "Max" -> NotificationCompat.PRIORITY_MAX
+            "High" -> NotificationCompat.PRIORITY_HIGH
+            "Low" -> NotificationCompat.PRIORITY_LOW
+            "Min" -> NotificationCompat.PRIORITY_MIN
+            else -> NotificationCompat.PRIORITY_DEFAULT
         }
     }
 }
