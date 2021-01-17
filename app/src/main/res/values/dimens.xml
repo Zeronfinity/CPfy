@@ -8,4 +8,14 @@
     <dimen name="fragment_filter_vertical_gap_half">2dp</dimen>
     <dimen name="fragment_filter_vertical_gap">4dp</dimen>
     <dimen name="fragment_filter_header_text_size">18sp</dimen>
+
+    <dimen name="fragment_about_padding_top">12dp</dimen>
+    <dimen name="fragment_about_padding_bottom">12dp</dimen>
+    <dimen name="fragment_about_padding_start">16dp</dimen>
+    <dimen name="fragment_about_padding_end">16dp</dimen>
+    <dimen name="fragment_about_standalone_text_margin_top">32dp</dimen>
+    <dimen name="fragment_about_text_margin_top">24dp</dimen>
+    <dimen name="fragment_about_text_size">18sp</dimen>
+    <dimen name="fragment_about_subtext_margin_top">8dp</dimen>
+    <dimen name="fragment_about_subtext_size">16sp</dimen>
 </resources>
