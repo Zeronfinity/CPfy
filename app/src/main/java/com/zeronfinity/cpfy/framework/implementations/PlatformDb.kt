@@ -27,8 +27,15 @@ class PlatformDb(
     }
 
     override fun add(platformList: List<Platform>) {
-        for (platform in platformList) {
-            add(platform)
+        coroutineScope.launch {
+            val platformEntityList = platformList.map { platform ->
+                getPlatform(platform.id)?.let {
+                    platform.isEnabled = it.isEnabled
+                    platform.notificationPriority = it.notificationPriority
+                }
+                fromPlatform(platform)
+            }
+            platformDao.insert(*platformEntityList.toTypedArray())
         }
     }
 
