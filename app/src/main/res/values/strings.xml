@@ -77,6 +77,7 @@
     <string name="notification_allow_label">This will allow showing notifications in case it\'s disabled</string>
     <string name="notification_battery_saver_label">This will fix aggressive battery optimizations issues</string>
     <string name="notification_priorities">Notification Priorities</string>
+    <string name="change_all">Change All</string>
     <string-array name="notification_priority">
         <item>Default</item>
         <item>None</item>

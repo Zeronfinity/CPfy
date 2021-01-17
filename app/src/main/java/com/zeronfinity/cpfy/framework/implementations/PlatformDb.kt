@@ -74,9 +74,14 @@ class PlatformDb(
     override suspend fun getNotificationPriority(id: Int) = platformDao.getNotificationPriority(id)
 
     override fun setNotificationPriority(id: Int, notificationPriority: String) {
-        logD("setNotificationPriority() -> id: [$id], notificationPriority: [$notificationPriority]")
         coroutineScope.launch {
             platformDao.setNotificationPriority(id, notificationPriority)
+        }
+    }
+
+    override fun setAllNotificationPriority(notificationPriority: String) {
+        coroutineScope.launch {
+            platformDao.setAllNotificationPriority(notificationPriority)
         }
     }
 

@@ -28,6 +28,8 @@ interface PlatformDataSource {
 
     fun setNotificationPriority(id: Int, notificationPriority: String)
 
+    fun setAllNotificationPriority(notificationPriority: String)
+
     fun removeAll()
 
     suspend fun size(): Int?
