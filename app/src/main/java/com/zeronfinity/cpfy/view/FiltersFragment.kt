@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,7 +26,6 @@ import com.zeronfinity.cpfy.common.FILTER_DATE_TIME_FORMAT
 import com.zeronfinity.cpfy.common.makeDurationText
 import com.zeronfinity.cpfy.databinding.FragmentFiltersBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters
-import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters.PlatformFilterClickListener
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,8 +37,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FiltersFragment
-    : BaseFragment(), PlatformFilterClickListener {
+class FiltersFragment : BaseFragment() {
     private var _binding: FragmentFiltersBinding? = null
     private val binding get() = _binding!!
 
@@ -51,9 +52,6 @@ class FiltersFragment
         Locale.getDefault()
     )
 
-    private var isContestListFetchRequired: Boolean = false
-    private var isContestListRefreshRequired: Boolean = false
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,14 +60,6 @@ class FiltersFragment
         logD("onCreateView() started")
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onStop() {
-        logD("onStop() started -> isContestListRefreshRequired: [$isContestListRefreshRequired]")
-        if (isContestListRefreshRequired) {
-            contentListViewModel.refreshContestList()
-        }
-        super.onStop()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,8 +84,6 @@ class FiltersFragment
                 }
             }
         }
-
-        adapterPlatformFilters.setPlatformFilterClickListener(this)
 
         contentListViewModel =
             ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
@@ -195,10 +183,6 @@ class FiltersFragment
         })
     }
 
-    override fun onPlatformFilterClick() {
-        isContestListRefreshRequired = true
-    }
-
     private fun setUpViews() {
         binding.btnStartTimeLowerBound.setOnClickListener { view ->
             val btn = view as Button
@@ -294,9 +278,9 @@ class FiltersFragment
         }
     }
 
-    private fun showDatePicker(filterTimeEnum: FilterTimeEnum, date: Date) {
+    private fun showDatePicker(filterTimeEnum: FilterTimeEnum, prevDate: Date) {
         val calendar = GregorianCalendar.getInstance()
-        calendar.time = date
+        calendar.time = prevDate
 
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -305,7 +289,7 @@ class FiltersFragment
             DatePickerDialog(
                 it,
                 { _: DatePicker, year: Int, month: Int, day: Int ->
-                    showTimePicker(filterTimeEnum, date, GregorianCalendar(year, month, day))
+                    showTimePicker(filterTimeEnum, prevDate, GregorianCalendar(year, month, day))
                 },
                 year,
                 month,
@@ -330,9 +314,6 @@ class FiltersFragment
                 { _: TimePicker, hour: Int, minute: Int ->
                     calendar.set(Calendar.HOUR_OF_DAY, hour)
                     calendar.set(Calendar.MINUTE, minute)
-                    if (prevCalendar.time != calendar.time) {
-                        isContestListFetchRequired = true
-                    }
                     filtersViewModel.setTimeFilters(filterTimeEnum, calendar.time)
                     when (filterTimeEnum) {
                         START_TIME_LOWER_BOUND, START_TIME_UPPER_BOUND ->

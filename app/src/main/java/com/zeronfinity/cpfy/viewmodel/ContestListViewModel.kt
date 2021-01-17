@@ -1,7 +1,10 @@
 package com.zeronfinity.cpfy.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.logger.logD
@@ -47,11 +50,17 @@ class ContestListViewModel @ViewModelInject constructor(
     val contestListLiveData: LiveData<List<Contest>>
         get() = _contestListLiveData
 
-    val contestListLiveDataFlow = getFilteredContestListFlowUseCase().asLiveData()
-
     val platformListLiveData: LiveData<List<Platform>> = liveData {
         getPlatformListUseCase().collect {
             emit(getOrderedPlatformListUseCase(it))
+        }
+    }
+
+    init {
+        coroutineScope.launch {
+            getFilteredContestListFlowUseCase().collect {
+                _contestListLiveData.postValue(it)
+            }
         }
     }
 
@@ -113,7 +122,9 @@ class ContestListViewModel @ViewModelInject constructor(
             logD("fetchResult: [$fetchResult]")
 
             when (fetchResult) {
-                is FetchAndPersistServerContestsUseCase.Result.Success -> refreshContestList()
+                is FetchAndPersistServerContestsUseCase.Result.Success -> {
+                    logD("fetchContestList() succeeded")
+                }
                 is FetchAndPersistServerContestsUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(
                     Event(fetchResult.errorMsg)
                 )

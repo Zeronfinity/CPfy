@@ -103,7 +103,9 @@ class ContestListFragment : BaseFragment() {
             contestListViewModel.fetchContestList()
         }
 
-        contestListViewModel.fetchPlatformList()
+        if (isFirstTime) {
+            contestListViewModel.fetchPlatformList()
+        }
 
         if (isFirstTime && !filtersViewModel.isSaved()) {
             filtersViewModel.resetAllFilters()
@@ -129,12 +131,6 @@ class ContestListFragment : BaseFragment() {
 
         contestListViewModel.contestListLiveData.observe(viewLifecycleOwner, {
             logD("contestListLiveData -> contestList:[$it]")
-            adapterContestList.refreshContestList(it)
-            binding.swipeRefresh.isRefreshing = false
-        })
-
-        contestListViewModel.contestListLiveDataFlow.observe(viewLifecycleOwner, {
-            logD("contestListLiveDataFlow -> contestList:[$it]")
             adapterContestList.refreshContestList(it)
             binding.swipeRefresh.isRefreshing = false
         })

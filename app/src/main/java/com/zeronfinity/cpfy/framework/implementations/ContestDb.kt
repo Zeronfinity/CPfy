@@ -15,9 +15,10 @@ class ContestDb(
     }
 
     override suspend fun add(contestList: List<Contest>) {
-        for (contest in contestList) {
-            add(contest)
+        val contestEntityList = contestList.map {
+            fromContest(it)
         }
+        contestDao.insert(*contestEntityList.toTypedArray())
     }
 
     override suspend fun get(id: Int) = contestDao.getContest(id)?.toContest()
