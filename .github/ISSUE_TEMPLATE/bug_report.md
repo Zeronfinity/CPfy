@@ -8,6 +8,7 @@ about: Create a report to help us improve
 ## Bug Report
 
 Bug: Some Sad Bug Title
+App version: Enter the app version here, like 0.7.0
 
 ### Description
 
