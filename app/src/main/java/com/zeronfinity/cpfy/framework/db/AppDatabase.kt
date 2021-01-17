@@ -57,7 +57,7 @@ abstract class AppDatabase : RoomDatabase() {
         private val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
-                    "ALTER TABLE `platform` ADD COLUMN `notification_priority` TEXT NOT NULL"
+                    "ALTER TABLE `platform` ADD COLUMN `notification_priority` TEXT NOT NULL DEFAULT 'Default'"
                 )
             }
         }
