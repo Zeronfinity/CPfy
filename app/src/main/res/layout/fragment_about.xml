@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.FiltersFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/fragment_about_padding_bottom"
+        android:paddingEnd="@dimen/fragment_about_padding_end"
+        android:paddingStart="@dimen/fragment_about_padding_start"
+        android:paddingTop="@dimen/fragment_about_padding_top"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvVersionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/version_label"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/fragment_about_text_size" />
+
+        <TextView
+            android:id="@+id/tvVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_about_subtext_margin_top"
+            android:textSize="@dimen/fragment_about_subtext_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutDev"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/fragment_about_padding_bottom"
+        android:paddingEnd="@dimen/fragment_about_padding_end"
+        android:paddingStart="@dimen/fragment_about_padding_start"
+        android:paddingTop="@dimen/fragment_about_padding_top"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDevLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/developer"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/fragment_about_text_size" />
+
+        <TextView
+            android:id="@+id/tvDevName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_about_subtext_margin_top"
+            android:text="@string/tahsin_masrur_zeronfinity"
+            android:textSize="@dimen/fragment_about_subtext_size" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvGooglePlayLicenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/fragment_about_padding_bottom"
+        android:paddingEnd="@dimen/fragment_about_padding_end"
+        android:paddingStart="@dimen/fragment_about_padding_start"
+        android:paddingTop="@dimen/fragment_about_padding_top"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/google_play_licenses"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="@dimen/fragment_about_text_size" />
+
+    <TextView
+        android:id="@+id/tv3rdPartyLicenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/fragment_about_padding_bottom"
+        android:paddingEnd="@dimen/fragment_about_padding_end"
+        android:paddingStart="@dimen/fragment_about_padding_start"
+        android:paddingTop="@dimen/fragment_about_padding_top"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/third_party_licenses"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="@dimen/fragment_about_text_size" />
+</LinearLayout>

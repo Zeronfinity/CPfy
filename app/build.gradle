@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -13,7 +14,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 11
-        versionName '0.7.3'
+        versionName '0.8.0'
 
         kapt {
             arguments {
@@ -91,6 +92,9 @@ dependencies {
 
     // picasso for image loading and processing
     implementation "com.squareup.picasso:picasso:$picasso_version"
+
+    // play service oss licenses
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
     // retrofit for network operations
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"

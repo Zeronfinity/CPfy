@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_contestListFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_contestListFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
         android:id="@+id/filtersFragment"
@@ -69,4 +72,16 @@
         android:name="com.zeronfinity.cpfy.view.NotificationFragment"
         android:label="Notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.zeronfinity.cpfy.view.AboutFragment"
+        android:label="About" >
+        <action
+            android:id="@+id/action_aboutFragment_to_licenseFragment"
+            app:destination="@id/licenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/licenseFragment"
+        android:name="com.zeronfinity.cpfy.view.LicenseFragment"
+        android:label="Third Party Licenses" />
 </navigation>
