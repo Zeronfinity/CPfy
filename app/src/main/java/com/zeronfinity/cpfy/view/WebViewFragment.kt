@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs

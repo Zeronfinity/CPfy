@@ -3,13 +3,12 @@ package com.zeronfinity.cpfy.framework.implementations
 import android.app.Application
 import android.content.SharedPreferences
 import com.zeronfinity.cpfy.common.DEFAULT_DAYS_INTERVAL
-import com.zeronfinity.cpfy.framework.implementations.FilterTimeRangeSharedPreferences
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

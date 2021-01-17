@@ -4,10 +4,7 @@ import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.repository.ContestDataSource
 import com.zeronfinity.cpfy.framework.db.dao.ContestDao
 import com.zeronfinity.cpfy.framework.db.entity.ContestEntity.Companion.fromContest
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 class ContestDb(
     private val contestDao: ContestDao

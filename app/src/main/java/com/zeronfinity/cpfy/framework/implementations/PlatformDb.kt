@@ -1,7 +1,6 @@
 package com.zeronfinity.cpfy.framework.implementations
 
 import com.zeronfinity.core.entity.Platform
-import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.repository.PlatformDataSource
 import com.zeronfinity.cpfy.framework.db.dao.PlatformDao
 import com.zeronfinity.cpfy.framework.db.entity.PlatformEntity.Companion.fromPlatform

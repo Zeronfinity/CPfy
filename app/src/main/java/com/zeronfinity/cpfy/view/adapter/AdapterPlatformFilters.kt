@@ -1,7 +1,5 @@
 package com.zeronfinity.cpfy.view.adapter
 
-import android.app.Activity
-import android.app.Application
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button

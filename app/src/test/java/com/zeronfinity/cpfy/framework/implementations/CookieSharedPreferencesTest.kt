@@ -2,7 +2,6 @@ package com.zeronfinity.cpfy.framework.implementations
 
 import android.app.Application
 import android.content.SharedPreferences
-import com.zeronfinity.cpfy.framework.implementations.CookieSharedPreferences
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot

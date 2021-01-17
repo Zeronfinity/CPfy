@@ -48,7 +48,7 @@ class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener 
             logD("btnAutoStart clicked!")
 
             activity?.let {
-                AppWhitelist.settingForAutoStart(it);
+                AppWhitelist.settingForAutoStart(it)
             }
         }
 
@@ -56,7 +56,7 @@ class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener 
             logD("btnNotifications clicked!")
 
             activity?.let {
-                AppWhitelist.settingForNotification(it);
+                AppWhitelist.settingForNotification(it)
             }
         }
 
@@ -64,7 +64,7 @@ class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener 
             logD("btnBatterySaver clicked!")
 
             activity?.let {
-                AppWhitelist.settingForBatterySaver(it);
+                AppWhitelist.settingForBatterySaver(it)
             }
         }
 
