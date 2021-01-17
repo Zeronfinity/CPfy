@@ -20,7 +20,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.ArrayList
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class AdapterContestList @Inject constructor(
@@ -161,7 +163,7 @@ class AdapterContestList @Inject constructor(
     }
 
     fun refreshContestList(list: List<Contest>) {
-        logD("refreshContestList() started")
+        logD("refreshContestList() started -> list: [$list]")
         contestList.clear()
         contestList.addAll(list)
         notifyDataSetChanged()

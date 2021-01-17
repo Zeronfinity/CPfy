@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -51,7 +54,6 @@ class FiltersFragment
         Locale.getDefault()
     )
 
-    private var isContestListFetchRequired: Boolean = false
     private var isContestListRefreshRequired: Boolean = false
 
     override fun onCreateView(
@@ -294,9 +296,9 @@ class FiltersFragment
         }
     }
 
-    private fun showDatePicker(filterTimeEnum: FilterTimeEnum, date: Date) {
+    private fun showDatePicker(filterTimeEnum: FilterTimeEnum, prevDate: Date) {
         val calendar = GregorianCalendar.getInstance()
-        calendar.time = date
+        calendar.time = prevDate
 
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -305,7 +307,7 @@ class FiltersFragment
             DatePickerDialog(
                 it,
                 { _: DatePicker, year: Int, month: Int, day: Int ->
-                    showTimePicker(filterTimeEnum, date, GregorianCalendar(year, month, day))
+                    showTimePicker(filterTimeEnum, prevDate, GregorianCalendar(year, month, day))
                 },
                 year,
                 month,
@@ -330,9 +332,6 @@ class FiltersFragment
                 { _: TimePicker, hour: Int, minute: Int ->
                     calendar.set(Calendar.HOUR_OF_DAY, hour)
                     calendar.set(Calendar.MINUTE, minute)
-                    if (prevCalendar.time != calendar.time) {
-                        isContestListFetchRequired = true
-                    }
                     filtersViewModel.setTimeFilters(filterTimeEnum, calendar.time)
                     when (filterTimeEnum) {
                         START_TIME_LOWER_BOUND, START_TIME_UPPER_BOUND ->

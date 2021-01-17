@@ -113,7 +113,9 @@ class ContestListViewModel @ViewModelInject constructor(
             logD("fetchResult: [$fetchResult]")
 
             when (fetchResult) {
-                is FetchAndPersistServerContestsUseCase.Result.Success -> refreshContestList()
+                is FetchAndPersistServerContestsUseCase.Result.Success -> {
+                    logD("fetchContestList() succeeded")
+                }
                 is FetchAndPersistServerContestsUseCase.Result.Error -> _errorToastIncomingLiveDataEv.postValue(
                     Event(fetchResult.errorMsg)
                 )
