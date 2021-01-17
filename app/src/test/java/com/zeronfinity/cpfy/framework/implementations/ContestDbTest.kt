@@ -26,7 +26,7 @@ internal class ContestDbTest {
     private val contestListExpected = arrayListOf(contest1, contest2)
     private val contestListPreInserted = arrayListOf(contest3, contest4)
 
-    private val sut = ContestDb(testDispatcher, ContestDaoTd())
+    private val sut = ContestDb(ContestDaoTd())
 
     @Nested
     @DisplayName("Given empty contest list")

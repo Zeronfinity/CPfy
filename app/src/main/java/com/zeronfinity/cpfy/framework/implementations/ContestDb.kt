@@ -10,18 +10,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class ContestDb(
-    dispatcher: CoroutineDispatcher,
     private val contestDao: ContestDao
 ) : ContestDataSource {
-    private val coroutineScope = CoroutineScope(dispatcher)
 
-    fun add(contest: Contest) {
-        coroutineScope.launch {
-            contestDao.insert(fromContest(contest))
-        }
+    suspend fun add(contest: Contest) {
+        contestDao.insert(fromContest(contest))
     }
 
-    override fun add(contestList: List<Contest>) {
+    override suspend fun add(contestList: List<Contest>) {
         for (contest in contestList) {
             add(contest)
         }
@@ -41,9 +37,7 @@ class ContestDb(
 
     override suspend fun size() = contestDao.getRowCount()
 
-    override fun clear() {
-        coroutineScope.launch {
-            contestDao.deleteAll()
-        }
+    override suspend fun clear() {
+        contestDao.deleteAll()
     }
 }

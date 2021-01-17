@@ -4,7 +4,7 @@ import com.zeronfinity.core.entity.Contest
 import kotlinx.coroutines.flow.Flow
 
 interface ContestDataSource {
-    fun add(contestList: List<Contest>)
+    suspend fun add(contestList: List<Contest>)
 
     suspend fun get(id: Int): Contest?
 
@@ -14,5 +14,5 @@ interface ContestDataSource {
 
     suspend fun size(): Int?
 
-    fun clear()
+    suspend fun clear()
 }

@@ -23,7 +23,7 @@ class ApplicationModule {
     @Singleton
     @Provides
     fun provideContestRepository(contestDao: ContestDao) =
-        ContestRepository(ContestDb(Dispatchers.IO, contestDao))
+        ContestRepository(ContestDb(contestDao))
 
     @Singleton
     @Provides
