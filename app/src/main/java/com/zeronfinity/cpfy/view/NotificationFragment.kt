@@ -1,6 +1,9 @@
 package com.zeronfinity.cpfy.view
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +47,12 @@ class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener 
         super.onViewCreated(view, savedInstanceState)
         logD("onViewCreated started")
 
+        val dontKillMyAppUrl = getString(R.string.dontkillmyapp_url)
+        val spannableString = SpannableStringBuilder()
+            .append(getString(R.string.notification_header_label) + " ")
+            .append(dontKillMyAppUrl, URLSpan(dontKillMyAppUrl), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.tvNotificationHeader.text = spannableString
         binding.btnAutoStart.setOnClickListener {
             logD("btnAutoStart clicked!")
 
