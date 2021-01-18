@@ -72,7 +72,7 @@
     <string name="allow_auto_start">Allow Auto Start</string>
     <string name="allow_notifications">Allow Notifications</string>
     <string name="lift_battery_restrictions">Lift Battery Restrictions</string>
-    <string name="notification_header_label">Some Android manufacturers, specially ones with chinese custom rom, kill any background process whenever app is closed. So CPfy can not start a background service to show notification before a contest. You need to give that permission to CPfy manually, the following buttons lead to those places for some manufacturers. To learn more, visit</string>
+    <string name="notification_header_label">Some Android manufacturers, specially ones with chinese custom roms, kill any background process whenever app is closed. So, you may need to give some permissions manually for CPfy to show notifications, the following buttons will lead to the permission allowance screen if they exist in your phone. To learn more, visit</string>
     <string name="dontkillmyapp_url">https://dontkillmyapp.com/</string>
     <string name="notification_auto_start_label">This will allow starting service to show notification</string>
     <string name="notification_allow_label">This will allow showing notifications in case it\'s disabled</string>

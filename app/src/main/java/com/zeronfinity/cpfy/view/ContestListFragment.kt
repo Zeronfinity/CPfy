@@ -136,7 +136,7 @@ class ContestListFragment : BaseFragment() {
         })
 
         contestListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
-            logD("platformListLiveData invoked")
+            logD("platformListLiveData -> platformList:[$it]")
             contestListViewModel.refreshContestList()
         })
 

@@ -24,7 +24,8 @@ class AdapterNotificationPriorities @Inject constructor(
     inner class ViewHolder(
         private val binding: ItemNotificationPriorityBinding
     ) : RecyclerView.ViewHolder(binding.root), AdapterView.OnItemSelectedListener {
-        private val notificationPriorityList = activity.resources.getStringArray(R.array.notification_priority).toList()
+        private val notificationPriorityList =
+            activity.resources.getStringArray(R.array.notification_priority).toList()
 
         fun bind(platformPosition: Int) {
             val platform = platformList[platformPosition]
@@ -51,7 +52,10 @@ class AdapterNotificationPriorities @Inject constructor(
                 val platform = platformList[it.tag as Int]
                 if (platform.notificationPriority != notificationPriorityList[position]) {
                     logD("onItemSelected() -> platform: [$platform], priorityPosition: [$position], notificationPriority: [${notificationPriorityList[position]}]")
-                    setPlatformNotificationPriorityUseCase(platform.id, notificationPriorityList[position])
+                    setPlatformNotificationPriorityUseCase(
+                        platform.id,
+                        notificationPriorityList[position]
+                    )
                 }
             }
         }
@@ -79,7 +83,7 @@ class AdapterNotificationPriorities @Inject constructor(
     }
 
     fun refreshPlatformList(list: List<Platform>) {
-        logD("refreshPlatformList() started")
+        logD("refreshPlatformList() started -> list: [$list]")
         platformList.clear()
         platformList.addAll(list)
         notifyDataSetChanged()
