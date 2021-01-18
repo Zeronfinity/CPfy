@@ -1,8 +1,10 @@
 package com.zeronfinity.cpfy.broadcast
 
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.zeronfinity.core.logger.logD
@@ -18,6 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class NotificationBroadcast : BroadcastReceiver() {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
@@ -26,9 +29,12 @@ class NotificationBroadcast : BroadcastReceiver() {
         Locale.getDefault()
     )
 
-    @Inject lateinit var getContestUseCase: GetContestUseCase
-    @Inject lateinit var getPlatformUseCase: GetPlatformUseCase
-    @Inject lateinit var notificationHelper: NotificationHelper
+    @Inject
+    lateinit var getContestUseCase: GetContestUseCase
+    @Inject
+    lateinit var getPlatformUseCase: GetPlatformUseCase
+    @Inject
+    lateinit var notificationHelper: NotificationHelper
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val contestId = intent?.getIntExtra("contestId", -1)
@@ -41,7 +47,7 @@ class NotificationBroadcast : BroadcastReceiver() {
             contestId?.let { contestId ->
                 coroutineScope.launch {
                     getContestUseCase(contestId)?.let { contest ->
-                        getPlatformUseCase(contest.platformId)?.let { platform->
+                        getPlatformUseCase(contest.platformId)?.let { platform ->
                             if (platform.notificationPriority != "None") {
                                 notificationHelper.createNotificationChannel(
                                     "ch-${platform.id}",
@@ -50,11 +56,23 @@ class NotificationBroadcast : BroadcastReceiver() {
                                     platform.notificationPriority
                                 )
 
+                                val notificationIntent = PendingIntent.getActivity(
+                                    context,
+                                    contest.id,
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(contest.url)
+                                    ),
+                                    PendingIntent.FLAG_ONE_SHOT
+                                )
+
                                 val builder = NotificationCompat.Builder(ctx, "ch-${contest.platformId}")
-                                    .setSmallIcon(R.drawable.ic_stat_cpfy)
+                                    .setAutoCancel(true)
                                     .setContentTitle("${platform.shortName}: ${contest.name}")
                                     .setContentText("Starts at ${simpleDateFormat.format(contest.startTime)}!")
+                                    .setContentIntent(notificationIntent)
                                     .setPriority(getPriorityValue(platform.notificationPriority))
+                                    .setSmallIcon(R.drawable.ic_stat_cpfy)
 
                                 val notificationManager = NotificationManagerCompat.from(ctx)
 
