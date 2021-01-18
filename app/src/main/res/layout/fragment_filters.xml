@@ -305,18 +305,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tvPlatformsLabel"
+            android:id="@+id/tvEnabledPlatformsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fragment_filter_header_gap_double"
             android:layout_marginBottom="@dimen/fragment_filter_header_gap_half"
-            android:text="@string/platform_filters_heading"
+            android:text="@string/enabled_platform_filters_heading"
             android:textColor="@color/primaryDarkColor"
             android:textSize="@dimen/fragment_filter_header_text_size"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPlatforms"
+            android:id="@+id/rvEnabledPlatforms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -325,10 +325,36 @@
             android:scrollbars="vertical" />
 
         <ImageView
-            android:id="@+id/ivExpand"
+            android:id="@+id/ivExpandEnabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            app:srcCompat="@drawable/ic_baseline_expand_more_24"
+            android:contentDescription="@string/expand_contract_icon" />
+
+        <TextView
+            android:id="@+id/tvDisabledPlatformsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_filter_header_gap_double"
+            android:layout_marginBottom="@dimen/fragment_filter_header_gap_half"
+            android:text="@string/disabled_platform_filters_heading"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="@dimen/fragment_filter_header_text_size"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDisabledPlatforms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:scrollbars="vertical" />
+
+        <ImageView
+            android:id="@+id/ivExpandDisabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_expand_more_24"
             android:contentDescription="@string/expand_contract_icon" />
 
@@ -336,6 +362,7 @@
             android:id="@+id/btnAllPlatforms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/secondaryColor"
             android:text="@string/enable_all_platforms" />
 

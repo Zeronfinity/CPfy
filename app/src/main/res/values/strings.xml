@@ -16,7 +16,8 @@
     <string name="start_time_tv_label">Start Time</string>
     <string name="end_time_tv_label">End Time</string>
     <string name="duration_tv_label">Duration</string>
-    <string name="platform_filters_heading">Select platforms to enable/disable</string>
+    <string name="enabled_platform_filters_heading">Enabled platforms - select to disable</string>
+    <string name="disabled_platform_filters_heading">Disabled platforms - select to enable</string>
     <string name="disable_all_platforms">Disable all platforms</string>
     <string name="enable_all_platforms">Enable all platforms</string>
     <string name="reset">Reset</string>

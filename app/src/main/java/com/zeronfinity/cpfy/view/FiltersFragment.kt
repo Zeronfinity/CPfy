@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.DatePicker
-import android.widget.TimePicker
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.zeronfinity.core.entity.Platform
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.logger.logE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.*
@@ -22,10 +21,12 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeEnum.
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.END_TIME
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.START_TIME
 import com.zeronfinity.cpfy.R
+import com.zeronfinity.cpfy.common.Either
 import com.zeronfinity.cpfy.common.FILTER_DATE_TIME_FORMAT
 import com.zeronfinity.cpfy.common.makeDurationText
 import com.zeronfinity.cpfy.databinding.FragmentFiltersBinding
-import com.zeronfinity.cpfy.view.adapter.AdapterPlatformFilters
+import com.zeronfinity.cpfy.view.adapter.AdapterDisabledPlatformFilters
+import com.zeronfinity.cpfy.view.adapter.AdapterEnabledPlatformFilters
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +37,8 @@ import java.util.GregorianCalendar
 import java.util.Locale
 import javax.inject.Inject
 
+typealias AdapterPlatformFilters = Either<AdapterDisabledPlatformFilters, AdapterEnabledPlatformFilters>
+
 @AndroidEntryPoint
 class FiltersFragment : BaseFragment() {
     private var _binding: FragmentFiltersBinding? = null
@@ -45,7 +48,10 @@ class FiltersFragment : BaseFragment() {
     private lateinit var contentListViewModel: ContestListViewModel
 
     @Inject
-    lateinit var adapterPlatformFilters: AdapterPlatformFilters
+    lateinit var adapterDisabledPlatformFilters: AdapterDisabledPlatformFilters
+
+    @Inject
+    lateinit var adapterEnabledPlatformFilters: AdapterEnabledPlatformFilters
 
     private val simpleDateFormat = SimpleDateFormat(
         FILTER_DATE_TIME_FORMAT,
@@ -66,24 +72,16 @@ class FiltersFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         logD("onViewCreated() started")
 
-        binding.rvPlatforms.adapter = adapterPlatformFilters
-        binding.rvPlatforms.layoutManager = GridLayoutManager(activity, 3)
-        binding.rvPlatforms.setHasFixedSize(true)
-
-        contractRecyclerView()
-        binding.ivExpand.setOnClickListener {
-            when (it.tag) {
-                "contracted" -> {
-                    expandRecyclerView()
-                }
-                "expanded" -> {
-                    contractRecyclerView()
-                }
-                else -> {
-                    logE("Invalid ivExpand tag: " + it.tag.toString())
-                }
-            }
-        }
+        setUpRecyclerView(
+            binding.rvDisabledPlatforms,
+            binding.ivExpandDisabled,
+            Either.Left(adapterDisabledPlatformFilters)
+        )
+        setUpRecyclerView(
+            binding.rvEnabledPlatforms,
+            binding.ivExpandEnabled,
+            Either.Right(adapterEnabledPlatformFilters)
+        )
 
         contentListViewModel =
             ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
@@ -98,22 +96,128 @@ class FiltersFragment : BaseFragment() {
         setUpViews()
     }
 
-    private fun contractRecyclerView() {
-        binding.ivExpand.tag = "contracted"
-        binding.ivExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
-        adapterPlatformFilters.setMaxItemCount()
+    private fun setUpRecyclerView(
+        rvPlatforms: RecyclerView,
+        ivExpand: ImageView,
+        adapter: AdapterPlatformFilters
+    ) {
+        rvPlatforms.layoutManager = GridLayoutManager(activity, 3)
+        rvPlatforms.setHasFixedSize(true)
+        contractRecyclerView(ivExpand, adapter)
+
+        when (adapter) {
+            is Either.Left -> rvPlatforms.adapter = adapter.left
+            is Either.Right -> rvPlatforms.adapter = adapter.right
+        }
+
+        ivExpand.setOnClickListener {
+            when (it.tag) {
+                "contracted" -> {
+                    expandRecyclerView(
+                        ivExpand,
+                        adapter
+                    )
+                }
+                "expanded" -> {
+                    contractRecyclerView(
+                        ivExpand,
+                        adapter
+                    )
+                }
+                else -> {
+                    logE("Invalid ivExpand tag: " + it.tag.toString())
+                }
+            }
+        }
     }
 
-    private fun expandRecyclerView() {
-        binding.ivExpand.tag = "expanded"
-        binding.ivExpand.setImageResource(R.drawable.ic_baseline_expand_less_24)
-        adapterPlatformFilters.resetMaxItemCount()
+    private fun contractRecyclerView(
+        ivExpand: ImageView,
+        adapter: AdapterPlatformFilters
+    ) {
+        ivExpand.tag = "contracted"
+        ivExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
+        when (adapter) {
+            is Either.Left -> adapter.left.setMaxItemCount()
+            is Either.Right -> adapter.right.setMaxItemCount()
+        }
+    }
+
+    private fun expandRecyclerView(
+        ivExpand: ImageView,
+        adapter: AdapterPlatformFilters
+    ) {
+        ivExpand.tag = "expanded"
+        ivExpand.setImageResource(R.drawable.ic_baseline_expand_less_24)
+        when (adapter) {
+            is Either.Left -> adapter.left.resetMaxItemCount()
+            is Either.Right -> adapter.right.resetMaxItemCount()
+        }
+    }
+
+    private fun updateVisibility(
+        tvLabel: TextView,
+        rvPlatforms: RecyclerView,
+        ivExpand: ImageView,
+        visibility: Int
+    ) {
+        tvLabel.visibility = visibility
+        rvPlatforms.visibility = visibility
+        ivExpand.visibility = visibility
     }
 
     private fun observeContestListViewModel() {
         contentListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
             logD("platformListLiveData -> platformList[$it]")
-            adapterPlatformFilters.refreshPlatformList(it)
+            val disabledPlatforms = mutableListOf<Platform>()
+            val enabledPlatforms = mutableListOf<Platform>()
+
+            for (platform in it) {
+                when (platform.isEnabled) {
+                    true -> enabledPlatforms.add(platform)
+                    false -> disabledPlatforms.add(platform)
+                }
+            }
+
+            if (disabledPlatforms.size > 0) {
+                updateVisibility(
+                    binding.tvDisabledPlatformsLabel,
+                    binding.rvDisabledPlatforms,
+                    binding.ivExpandDisabled,
+                    View.VISIBLE
+                )
+                adapterDisabledPlatformFilters.refreshPlatformList(disabledPlatforms)
+            } else {
+                updateVisibility(
+                    binding.tvDisabledPlatformsLabel,
+                    binding.rvDisabledPlatforms,
+                    binding.ivExpandDisabled,
+                    View.GONE
+                )
+
+                binding.btnAllPlatforms.tag = 1
+                binding.btnAllPlatforms.text = getString(R.string.disable_all_platforms)
+            }
+
+            if (enabledPlatforms.size > 0) {
+                updateVisibility(
+                    binding.tvEnabledPlatformsLabel,
+                    binding.rvEnabledPlatforms,
+                    binding.ivExpandEnabled,
+                    View.VISIBLE
+                )
+                adapterEnabledPlatformFilters.refreshPlatformList(enabledPlatforms)
+            } else {
+                updateVisibility(
+                    binding.tvEnabledPlatformsLabel,
+                    binding.rvEnabledPlatforms,
+                    binding.ivExpandEnabled,
+                    View.GONE
+                )
+
+                binding.btnAllPlatforms.tag = 0
+                binding.btnAllPlatforms.text = getString(R.string.enable_all_platforms)
+            }
         })
     }
 
