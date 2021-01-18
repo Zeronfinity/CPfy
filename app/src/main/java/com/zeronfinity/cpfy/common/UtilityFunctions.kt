@@ -85,7 +85,7 @@ fun makeFullDurationText(durationInSeconds: Long): String {
         }
     }
 
-    if (hours != 0L || text.isNotEmpty()) {
+    if (hours > 0) {
         if (text.isNotEmpty()) {
             text += " "
         }
@@ -95,12 +95,14 @@ fun makeFullDurationText(durationInSeconds: Long): String {
         }
     }
 
-    if (text.isNotEmpty()) {
-        text += " "
-    }
-    text += "$minutes minute"
-    if (minutes > 1) {
-        text += "s"
+    if (minutes > 0 || text.isEmpty()) {
+        if (text.isNotEmpty()) {
+            text += " "
+        }
+        text += "$minutes minute"
+        if (minutes > 1) {
+            text += "s"
+        }
     }
 
     return text

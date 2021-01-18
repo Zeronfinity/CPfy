@@ -2,11 +2,13 @@ package com.zeronfinity.cpfy.view
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.R
@@ -46,7 +48,22 @@ class ClipboardFragment : BaseFragment() {
         viewModel.fetchClipboardText()
 
         binding.btnCopy.setOnClickListener {
-            clipboard.setPrimaryClip(ClipData.newPlainText(getString(R.string.contests), binding.etClipboard.text))
+            clipboard.setPrimaryClip(
+                ClipData.newPlainText(
+                    getString(R.string.contests),
+                    binding.etClipboard.text
+                )
+            )
+        }
+
+        binding.etClipboard.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                activity?.let {
+                    val imm: InputMethodManager =
+                        it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.etClipboard.windowToken, 0)
+                }
+            }
         }
     }
 

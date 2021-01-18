@@ -86,6 +86,10 @@ class ClipboardViewModel @ViewModelInject constructor(
                 clipboardText = TextUtils.concat(clipboardText, spannableString)
             }
 
+            if (clipboardText.isNotEmpty()) {
+                clipboardText = TextUtils.concat(clipboardText, "\n" + application.getString(R.string.generated_by_cpfy))
+            }
+
             _clipboardTextLiveData.postValue(clipboardText)
         }
     }
