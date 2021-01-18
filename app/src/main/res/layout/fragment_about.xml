@@ -65,6 +65,36 @@
             android:textSize="@dimen/fragment_about_subtext_size" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayoutGitHub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/fragment_about_padding_bottom"
+        android:paddingEnd="@dimen/fragment_about_padding_end"
+        android:paddingStart="@dimen/fragment_about_padding_start"
+        android:paddingTop="@dimen/fragment_about_padding_top"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvGitHubLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/github"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="@dimen/fragment_about_text_size" />
+
+        <TextView
+            android:id="@+id/tvGitHubLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_about_subtext_margin_top"
+            android:text="@string/github_link_cpfy"
+            android:textSize="@dimen/fragment_about_subtext_size" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tvGooglePlayLicenses"
         android:layout_width="match_parent"

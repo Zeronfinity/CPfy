@@ -88,6 +88,9 @@
     <string name="version">%s (%s)</string>
     <string name="developer">Developer</string>
     <string name="tahsin_masrur_zeronfinity">Tahsin Masrur (Zeronfinity)</string>
+    <string name="developer_portfolio_link">https://zeronfinity.github.io/</string>
+    <string name="github">GitHub</string>
+    <string name="github_link_cpfy">https://github.com/Zeronfinity/CPfy</string>
     <string-array name="notification_priority">
         <item>Default</item>
         <item>None</item>

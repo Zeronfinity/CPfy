@@ -35,11 +35,18 @@ class LicenseFragment : BaseFragment() {
             "https://github.com/WanghongLin/CRomAppWhitelist/blob/master/LICENSE"
         )
 
+        val clistLicense = License(
+            "clist",
+            "Aleksey Ropan",
+            "Apache License 2.0",
+            "https://github.com/aropan/clist/blob/master/LICENSE"
+        )
+
         binding.rvLicenseList.adapter = adapterLicenseList
         binding.rvLicenseList.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rvLicenseList.setHasFixedSize(true)
 
-        adapterLicenseList.refreshLicenseList(listOf(cRomWhitelistLicense))
+        adapterLicenseList.refreshLicenseList(listOf(cRomWhitelistLicense, clistLicense))
 
         return binding.root
     }

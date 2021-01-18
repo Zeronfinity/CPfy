@@ -53,7 +53,11 @@ class AboutFragment : BaseFragment() {
         }
 
         binding.linearLayoutDev.setOnClickListener {
-            launchDeveloperSite()
+            launchUrl(getString(R.string.developer_portfolio_link))
+        }
+
+        binding.linearLayoutGitHub.setOnClickListener {
+            launchUrl(getString(R.string.github_link_cpfy))
         }
 
         binding.tvGooglePlayLicenses.setOnClickListener {
@@ -67,8 +71,8 @@ class AboutFragment : BaseFragment() {
         }
     }
 
-    private fun launchDeveloperSite() {
-        val launchUrlIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://zeronfinity.github.io/"))
+    private fun launchUrl(url: String) {
+        val launchUrlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         try {
             startActivity(launchUrlIntent)
         } catch (ex: ActivityNotFoundException) {
