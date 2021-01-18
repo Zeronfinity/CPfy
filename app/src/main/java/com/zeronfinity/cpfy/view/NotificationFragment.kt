@@ -32,6 +32,8 @@ class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener 
     private lateinit var contentListViewModel: ContestListViewModel
     private lateinit var notificationViewModel: NotificationViewModel
 
+    private var onItemSelectedCnt: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -109,8 +111,12 @@ class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener 
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val notificationPriorityList = resources.getStringArray(R.array.notification_priority).toList()
-        notificationViewModel.setAllNotificationPriorityList(notificationPriorityList[position])
+        onItemSelectedCnt++
+        logD("onItemSelected() -> position: [$position], onItemSelectedCnt: [$onItemSelectedCnt]")
+        if (onItemSelectedCnt > 1) {
+            val notificationPriorityList = resources.getStringArray(R.array.notification_priority).toList()
+            notificationViewModel.setAllNotificationPriorityList(notificationPriorityList[position])
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
