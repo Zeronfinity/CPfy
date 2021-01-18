@@ -17,4 +17,4 @@ Feel free to fork the project and send a pull request or even open a new issue t
 ## License
 This open source project is licensed under the terms of the MIT license.
 
-For details, please check the [docs/LICENSE](https://github.com/Zeronfinity/CPfy/blob/master/LICENSE) file.
+For details, please check the [docs/LICENSE](https://github.com/Zeronfinity/CPfy/blob/master/docs/LICENSE) file.
