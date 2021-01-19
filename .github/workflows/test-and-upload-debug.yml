@@ -1,4 +1,4 @@
-name: Build & Upload Debug APK Artifact
+name: Test & Upload Debug APK Artifact
 
 on:
   push:
@@ -21,10 +21,8 @@ jobs:
     - name: Add executable permission to gradle wrapper
       run: chmod +x ./gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew build
-      env:
-          CLIST_API_KEY: ${{ secrets.CLIST_API_KEY }}
+    - name: Test with Gradle
+      run: ./gradlew testDebugUnitTest
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug --stacktrace

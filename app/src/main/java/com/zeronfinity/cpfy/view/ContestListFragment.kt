@@ -103,7 +103,10 @@ class ContestListFragment : BaseFragment() {
             contestListViewModel.fetchContestList()
         }
 
+        binding.progressBar.visibility = View.GONE
+
         if (isFirstTime || isTimeFilterChanged()) {
+            binding.progressBar.visibility = View.VISIBLE
             contestListViewModel.fetchContestList()
         }
 
@@ -138,14 +141,12 @@ class ContestListFragment : BaseFragment() {
                     Toast.makeText(fragmentActivity.applicationContext, it, Toast.LENGTH_SHORT)
                         .show()
                 }
-                binding.swipeRefresh.isRefreshing = false
             }
         })
 
         contestListViewModel.contestListLiveData.observe(viewLifecycleOwner, {
             logD("contestListLiveData -> contestList:[$it]")
             adapterContestList.refreshContestList(it)
-            binding.swipeRefresh.isRefreshing = false
         })
 
         contestListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
@@ -161,6 +162,16 @@ class ContestListFragment : BaseFragment() {
                         getString(R.string.clist_login_url)
                     )
                 findNavController().safeNavigate(action)
+            }
+        })
+
+        contestListViewModel.isProgressVisibleLiveDataEv.observe(viewLifecycleOwner, {
+            it.getContentIfNotHandled()?.let { value ->
+                logD("isProgressVisibleLiveDataEv observer -> value: [${value}]")
+                if (!value) {
+                    binding.swipeRefresh.isRefreshing = false
+                    binding.progressBar.visibility = View.GONE
+                }
             }
         })
     }

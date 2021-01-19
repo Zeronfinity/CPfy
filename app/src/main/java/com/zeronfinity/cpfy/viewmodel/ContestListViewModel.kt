@@ -56,6 +56,10 @@ class ContestListViewModel @ViewModelInject constructor(
         }
     }
 
+    private val _isProgressVisibleLiveDataEv = MutableLiveData<Event<Boolean>>()
+    val isProgressVisibleLiveDataEv: LiveData<Event<Boolean>>
+        get() = _isProgressVisibleLiveDataEv
+
     init {
         coroutineScope.launch {
             getFilteredContestListFlowUseCase().collect {
@@ -132,6 +136,8 @@ class ContestListViewModel @ViewModelInject constructor(
                     Event(true)
                 )
             }
+
+            _isProgressVisibleLiveDataEv.postValue(Event(false))
         }
     }
 

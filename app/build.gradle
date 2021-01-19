@@ -13,8 +13,8 @@ android {
         applicationId "com.zeronfinity.cpfy"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 15
-        versionName '0.9.0'
+        versionCode 16
+        versionName '0.9.2'
 
         kapt {
             arguments {
@@ -25,15 +25,41 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('../debug-keystore.jks')
+            storePassword '123456'
+            keyAlias 'debug'
+            keyPassword '123456'
+        }
+
+        release {
+            Properties properties = new Properties()
+            properties.load(rootProject.file('keystore.properties').newDataInputStream())
+
+            storeFile file(properties.getProperty('storeFile'))
+            storePassword properties.getProperty('storePassword')
+            keyAlias properties.getProperty('keyAlias')
+            keyPassword properties.getProperty('keyPassword')
+        }
+    }
+
     buildFeatures {
         viewBinding true
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+
         release {
+            shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+
         buildTypes.each {
             it.buildConfigField 'String', 'CLIST_API_KEY', "\"$System.env.CLIST_API_KEY\""
         }

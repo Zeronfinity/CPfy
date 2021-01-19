@@ -21,6 +21,10 @@ class AndroidLoggingHandler : Handler() {
     }
 
     override fun publish(record: LogRecord) {
+        if (!isLoggable(record)) {
+            return
+        }
+
         val tag = record.loggerName
         val level = getAndroidLevel(record.level)
         val message = record.thrown?.let { thrown ->
