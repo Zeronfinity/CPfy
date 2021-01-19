@@ -3,6 +3,7 @@ package com.zeronfinity.cpfy.view.adapter
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,7 +32,8 @@ class AdapterContestList @Inject constructor(
 ) : RecyclerView.Adapter<AdapterContestList.ContestViewHolder>() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    private var contestList = ArrayList<Contest>()
+    private val contestList = ArrayList<Contest>()
+    private val isContestSelected = mutableMapOf<Int, Boolean>()
 
     inner class ContestViewHolder(
         private val binding: ItemContestBinding
@@ -141,6 +143,31 @@ class AdapterContestList @Inject constructor(
                     ).show()
                 }
             }
+
+            setCardViewBgColor(isContestSelected[contest.id] == true)
+
+            binding.constraintLayout.setOnLongClickListener {
+                val contestId = contest.id
+                logD("constraintLayout.setOnLongClickListener -> contestId: [$contestId]")
+
+                setCardViewBgColor(isContestSelected[contest.id] != true)
+                isContestSelected[contest.id] = isContestSelected[contest.id] != true
+
+                return@setOnLongClickListener true
+            }
+        }
+
+        private fun setCardViewBgColor(isSelected: Boolean) {
+            if (isSelected) {
+                binding.cardView.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        binding.cardView.context,
+                        R.color.primaryColorBg
+                    )
+                )
+            } else {
+                binding.cardView.setCardBackgroundColor(Color.WHITE)
+            }
         }
     }
 
@@ -167,5 +194,11 @@ class AdapterContestList @Inject constructor(
         contestList.clear()
         contestList.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun getSelectedContests() = contestList.filter { isContestSelected[it.id] == true }
+
+    fun clearAllSelected() {
+        isContestSelected.clear()
     }
 }

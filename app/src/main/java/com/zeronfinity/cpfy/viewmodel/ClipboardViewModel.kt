@@ -13,15 +13,18 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zeronfinity.core.entity.Contest
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.usecase.GetFilteredContestListUseCase
 import com.zeronfinity.core.usecase.GetPlatformUseCase
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.common.makeDurationText
+import com.zeronfinity.cpfy.viewmodel.helpers.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.ArrayList
 import java.util.Locale
 
 class ClipboardViewModel @ViewModelInject constructor(
@@ -36,15 +39,26 @@ class ClipboardViewModel @ViewModelInject constructor(
         Locale.getDefault()
     )
 
+    private val selectedContests = ArrayList<Contest>()
+
     private val _clipboardTextLiveData = MutableLiveData<CharSequence>()
     val clipboardTextLiveData: LiveData<CharSequence>
         get() = _clipboardTextLiveData
 
+    private val _isProgressVisibleLiveDataEv = MutableLiveData<Event<Boolean>>()
+    val isProgressVisibleLiveDataEv: LiveData<Event<Boolean>>
+        get() = _isProgressVisibleLiveDataEv
+
     fun fetchClipboardText() {
         logD("fetchClipboardText() started")
+        _isProgressVisibleLiveDataEv.postValue(Event(true))
 
         coroutineScope.launch {
-            val contestList = getFilteredContestListUseCase()
+            val contestList = when (selectedContests.isEmpty()) {
+                true -> getFilteredContestListUseCase()
+                false -> selectedContests
+            }
+
             var clipboardText: CharSequence = ""
 
             for ((index, contest) in contestList.withIndex()) {
@@ -78,7 +92,7 @@ class ClipboardViewModel @ViewModelInject constructor(
                     )
                     .italic { append(application.getString(R.string.link_colon)) }
                     .append(" ")
-                    .color(getColor(application, R.color.secondaryTextColor)) {
+                    .color(getColor(application, R.color.primaryDarkColor)) {
                         append(contest.url, URLSpan(contest.url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                     }
                     .append("\n")
@@ -91,6 +105,12 @@ class ClipboardViewModel @ViewModelInject constructor(
             }
 
             _clipboardTextLiveData.postValue(clipboardText)
+            _isProgressVisibleLiveDataEv.postValue(Event(false))
         }
+    }
+
+    fun setSelectedContests(list: List<Contest>) {
+        selectedContests.clear()
+        selectedContests.addAll(list)
     }
 }

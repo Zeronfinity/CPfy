@@ -67,7 +67,7 @@ class WebViewFragment : BaseFragment() {
                 }
 
                 findNavController().addOnDestinationChangedListener { _, _, _ ->
-                    logD("addOnDestinationChangedListener called, destination: contestListFragment")
+                    logD("addOnDestinationChangedListener called")
                     getSessionCookieFromAppCookieManager(getString(R.string.clist_base_url))?.let {
                         cookieViewModel.setCookie(
                             getString(R.string.clist_session_cookie),
