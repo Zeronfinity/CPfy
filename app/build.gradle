@@ -13,8 +13,8 @@ android {
         applicationId "com.zeronfinity.cpfy"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 16
-        versionName '0.9.2'
+        versionCode 17
+        versionName '1.0.0'
 
         kapt {
             arguments {
@@ -34,13 +34,10 @@ android {
         }
 
         release {
-            Properties properties = new Properties()
-            properties.load(rootProject.file('keystore.properties').newDataInputStream())
-
-            storeFile file(properties.getProperty('storeFile'))
-            storePassword properties.getProperty('storePassword')
-            keyAlias properties.getProperty('keyAlias')
-            keyPassword properties.getProperty('keyPassword')
+            storeFile file("${System.getenv("ANDROID_KEYSTORE_FILE")}")
+            storePassword "${System.getenv("ANDROID_KEYSTORE_PASS")}"
+            keyAlias "${System.getenv("CPFY_KEY_ALIAS")}"
+            keyPassword "${System.getenv("CPFY_KEY_PASS")}"
         }
     }
 
