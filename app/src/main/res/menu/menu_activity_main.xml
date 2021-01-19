@@ -10,7 +10,7 @@
         android:title="@string/menu_clipboard"
         app:showAsAction="ifRoom" />
     <item android:id="@+id/notificationFragment"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:icon="@drawable/ic_baseline_notification_add_24"
         android:title="@string/menu_notification"
         app:showAsAction="ifRoom" />
     <item android:id="@+id/webViewFragment"
