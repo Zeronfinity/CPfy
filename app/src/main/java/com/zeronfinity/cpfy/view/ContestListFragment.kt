@@ -103,6 +103,8 @@ class ContestListFragment : BaseFragment() {
             contestListViewModel.fetchContestList()
         }
 
+        binding.progressBar.visibility = View.GONE
+
         if (isFirstTime || isTimeFilterChanged()) {
             binding.progressBar.visibility = View.VISIBLE
             contestListViewModel.fetchContestList()
