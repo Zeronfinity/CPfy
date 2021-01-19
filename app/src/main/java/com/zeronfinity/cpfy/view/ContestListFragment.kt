@@ -17,6 +17,7 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeE
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.FragmentContestListBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterContestList
+import com.zeronfinity.cpfy.viewmodel.ClipboardViewModel
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,7 @@ class ContestListFragment : BaseFragment() {
     private var _binding: FragmentContestListBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var clipboardViewModel: ClipboardViewModel
     private lateinit var contestListViewModel: ContestListViewModel
     private lateinit var filtersViewModel: FiltersViewModel
 
@@ -80,6 +82,8 @@ class ContestListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         logD("onViewCreated() started -> isFirstTime: [$isFirstTime]")
 
+        clipboardViewModel = ViewModelProvider(requireActivity()).get(ClipboardViewModel::class.java)
+
         contestListViewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
         observeContestListViewModel()
 
@@ -112,6 +116,15 @@ class ContestListFragment : BaseFragment() {
             filtersViewModel.setSaved(true)
         }
 
+        adapterContestList.clearAllSelected()
+
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            logD("addOnDestinationChangedListener -> destination: [$destination]")
+            if (destination.id == R.id.clipboardFragment) {
+                clipboardViewModel.setSelectedContests(adapterContestList.getSelectedContests())
+            }
+        }
+
         setPrevTimesToCurrentValues()
         isFirstTime = false
     }
@@ -125,8 +138,8 @@ class ContestListFragment : BaseFragment() {
                     Toast.makeText(fragmentActivity.applicationContext, it, Toast.LENGTH_SHORT)
                         .show()
                 }
+                binding.swipeRefresh.isRefreshing = false
             }
-            binding.swipeRefresh.isRefreshing = false
         })
 
         contestListViewModel.contestListLiveData.observe(viewLifecycleOwner, {

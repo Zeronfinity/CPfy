@@ -72,5 +72,16 @@ class ClipboardFragment : BaseFragment() {
             logD("clipboardTextLiveData observer -> value: [$it]")
             binding.etClipboard.setText(it)
         })
+
+        viewModel.isProgressVisibleLiveDataEv.observe(viewLifecycleOwner, { it ->
+            it.getContentIfNotHandled()?.let { value ->
+                logD("isProgressVisibleLiveDataEv observer -> value: [${value}]")
+                if (value) {
+                    binding.progressBar.visibility = View.VISIBLE
+                } else {
+                    binding.progressBar.visibility = View.GONE
+                }
+            }
+        })
     }
 }
