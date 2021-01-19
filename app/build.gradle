@@ -35,7 +35,7 @@ android {
 
         release {
             Properties properties = new Properties()
-            properties.load(rootProject.file('keystore.properties').newDataInputStream())
+            properties.load(rootProject.file('local.properties').newDataInputStream())
 
             storeFile file(properties.getProperty('storeFile'))
             storePassword properties.getProperty('storePassword')
