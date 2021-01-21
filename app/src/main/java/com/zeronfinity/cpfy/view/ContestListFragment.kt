@@ -138,7 +138,7 @@ class ContestListFragment : BaseFragment() {
             it.getContentIfNotHandled()?.let {
                 logD("errorToastIncomingLiveDataEv: creating error toast")
                 activity?.let { fragmentActivity ->
-                    Toast.makeText(fragmentActivity.applicationContext, it, Toast.LENGTH_SHORT)
+                    Toast.makeText(fragmentActivity.applicationContext, it, Toast.LENGTH_LONG)
                         .show()
                 }
             }

@@ -31,7 +31,7 @@ class FetchAndPersistServerContestsUseCase(
                         429 -> {
                             when (cookieRepository.getCookie("clist_session_cookie")) {
                                 null -> Result.UnauthorizedError(serverContestInfoResponse.errorCode)
-                                else -> Result.Error("API Limit Reached!\nPlease try again 1 minute later.")
+                                else -> Result.Error("API Limit Reached!\nGo to Web View menu and make sure you are logged into clist.by\nOtherwise, please try again 1 minute later.")
                             }
                         }
                         else -> Result.Error("Error ${serverContestInfoResponse.errorCode}: ${serverContestInfoResponse.errorDesc}")
