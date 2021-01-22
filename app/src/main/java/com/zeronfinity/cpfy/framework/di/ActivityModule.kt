@@ -192,4 +192,20 @@ class ActivityModule {
     ) = SetCookieUseCase(
         cookieRepository
     )
+
+    /* first run use cases */
+
+    @Provides
+    fun isFirstRunUseCase(
+        firstRunRepository: FirstRunRepository
+    ) = IsFirstRunUseCase(
+        firstRunRepository
+    )
+
+    @Provides
+    fun setFirstRunUseCase(
+        firstRunRepository: FirstRunRepository
+    ) = SetFirstRunUseCase(
+        firstRunRepository
+    )
 }

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CPfy</string>
     <string name="clist_api_username">Zeronfinity</string>
+
+    <!-- fragment_contest_list strings -->
     <string name="launch_icon_content_desc">Launch icon to go to contest website</string>
     <string name="platform_icon_content_desc">Contest platform icon</string>
     <string name="starts_at_colon_tv_label">Starts at:</string>
@@ -11,7 +13,7 @@
     <string name="contest_already_started">Contest already started!</string>
     <string name="contest_already_ended">Contest already ended!</string>
 
-    <!-- fragment_filters string -->
+    <!-- fragment_filters strings -->
     <string name="time_filters_heading">Press a date/time to change it</string>
     <string name="start_time_tv_label">Start Time</string>
     <string name="end_time_tv_label">End Time</string>
@@ -33,8 +35,8 @@
     <string name="less_than_or_equal_to">\u2264</string>
 
     <!-- shared preference file names and keys -->
-    <string name="shared_preferences_filters">com.zeronfinity.cpfy.filters</string>
     <string name="shared_preferences_cookies">com.zeronfinity.cpfy.cookies</string>
+    <string name="shared_preferences_filters">com.zeronfinity.cpfy.filters</string>
     <string name="s_pref_filters_is_saved">is_saved</string>
     <string name="s_pref_filters_key_start_time_lower_bound">start_time_lower_bound</string>
     <string name="s_pref_filters_key_start_time_lower_bound_today">start_time_lower_bound_today</string>
@@ -46,6 +48,9 @@
     <string name="s_pref_filters_key_end_time_upper_bound">end_time_upper_bound</string>
     <string name="s_pref_filters_key_duration_lower_bound">duration_lower_bound</string>
     <string name="s_pref_filters_key_duration_upper_bound">duration_upper_bound</string>
+
+    <string name="shared_preferences_first_run">com.zeronfinity.cpfy.first_run</string>
+    <string name="s_pref_is_first_run">is_saved</string>
 
     <!-- fragment_duration_picker string -->
     <string name="days">Days</string>
@@ -100,4 +105,16 @@
         <item>Low</item>
         <item>Min</item>
     </string-array>
+
+    <!-- popup_first_run string -->
+    <string name="ok">OK</string>
+    <string name="welcome_to_cpfy">Welcome to CPfy!</string>
+    <string name="first_run_web_view_explanation">If you are having problem with API limit, you can go to Web View menu and log into your own clist.by account for smoother experience.</string>
+    <string name="first_run_notification_explanation">Contest notifications may not appear in some custom ROMs like MIUI due to aggressively killing background services. Go to Notification menu for details of how to handle it.</string>
+    <string name="go_to_notification">Go to notification</string>
+    <string name="go_to_web_view">Go to web view</string>
+    <string name="web_view_required_error_msg">API limit reached or session expired!\nSign up or log into your own clist.by account to continue</string>
+    <string name="clist_by">clist.by</string>
+    <string name="first_run_web_view_explanation_1st_part">"If you are having problem with API limit, you can go to Web View menu and log into your own "</string>
+    <string name="first_run_web_view_explanation_last_part">" account for smoother experience."</string>
 </resources>

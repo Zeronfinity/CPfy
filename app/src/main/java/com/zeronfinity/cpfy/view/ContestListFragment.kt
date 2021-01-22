@@ -16,7 +16,10 @@ import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeE
 import com.zeronfinity.core.repository.FilterTimeRangeRepository.FilterTimeTypeEnum.START_TIME
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.FragmentContestListBinding
+import com.zeronfinity.cpfy.view.ContestListFragmentDirections.Companion.actionContestListFragmentToFirstRunDiaFrag
+import com.zeronfinity.cpfy.view.ContestListFragmentDirections.Companion.actionContestListFragmentToWebViewFragment
 import com.zeronfinity.cpfy.view.adapter.AdapterContestList
+import com.zeronfinity.cpfy.view.base.BaseFragment
 import com.zeronfinity.cpfy.viewmodel.ClipboardViewModel
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
@@ -128,6 +131,10 @@ class ContestListFragment : BaseFragment() {
             }
         }
 
+        if (contestListViewModel.isFirstRun()) {
+            findNavController().safeNavigate(actionContestListFragmentToFirstRunDiaFrag())
+        }
+
         setPrevTimesToCurrentValues()
         isFirstTime = false
     }
@@ -157,9 +164,9 @@ class ContestListFragment : BaseFragment() {
         contestListViewModel.clistWebViewLiveDataEv.observe(viewLifecycleOwner, {
             it.getContentIfNotHandled()?.let {
                 logD("clistWebViewLiveDataObserver: navigating to web view fragment")
-                val action =
-                    ContestListFragmentDirections.actionContestListFragmentToWebViewFragment(
-                        getString(R.string.clist_login_url)
+                val action = actionContestListFragmentToWebViewFragment(
+                        urlStringArg = getString(R.string.clist_login_url),
+                        errorMsgArg = true
                     )
                 findNavController().safeNavigate(action)
             }

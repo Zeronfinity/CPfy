@@ -27,6 +27,7 @@ import com.zeronfinity.cpfy.common.makeDurationText
 import com.zeronfinity.cpfy.databinding.FragmentFiltersBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterDisabledPlatformFilters
 import com.zeronfinity.cpfy.view.adapter.AdapterEnabledPlatformFilters
+import com.zeronfinity.cpfy.view.base.BaseFragment
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint

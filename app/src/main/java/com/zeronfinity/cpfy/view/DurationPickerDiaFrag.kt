@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zeronfinity.cpfy.databinding.FragmentDurationPickerBinding
+import com.zeronfinity.cpfy.view.base.BaseDialogFragment
 import com.zeronfinity.cpfy.viewmodel.FiltersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DurationPickerDiaFrag : DialogFragment() {
+class DurationPickerDiaFrag : BaseDialogFragment() {
     private var _binding: FragmentDurationPickerBinding? = null
     private val binding get() = _binding!!
 

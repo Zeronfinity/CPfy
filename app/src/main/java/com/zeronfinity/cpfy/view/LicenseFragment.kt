@@ -9,6 +9,7 @@ import com.zeronfinity.core.entity.License
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.databinding.FragmentLicenseBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterLicenseList
+import com.zeronfinity.cpfy.view.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

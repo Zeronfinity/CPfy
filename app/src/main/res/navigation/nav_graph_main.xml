@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_contestListFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_contestListFragment_to_firstRunDiaFrag"
+            app:destination="@id/firstRunDiaFrag" />
     </fragment>
     <fragment
         android:id="@+id/filtersFragment"
@@ -53,6 +56,10 @@
             android:name="urlStringArg"
             app:argType="string"
             android:defaultValue="https://clist.by" />
+        <argument
+            android:name="errorMsgArg"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/clipboardFragment"
@@ -84,4 +91,15 @@
         android:id="@+id/licenseFragment"
         android:name="com.zeronfinity.cpfy.view.LicenseFragment"
         android:label="Third Party Licenses" />
+    <dialog
+        android:id="@+id/firstRunDiaFrag"
+        android:name="com.zeronfinity.cpfy.view.FirstRunDiaFrag"
+        android:label="Welcome to CPfy" >
+        <action
+            android:id="@+id/action_firstRunDiaFrag_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_firstRunDiaFrag_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+    </dialog>
 </navigation>

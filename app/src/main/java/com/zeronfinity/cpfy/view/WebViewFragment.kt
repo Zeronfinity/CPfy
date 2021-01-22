@@ -15,6 +15,8 @@ import com.zeronfinity.core.logger.logD
 import com.zeronfinity.core.logger.logE
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.FragmentWebViewBinding
+import com.zeronfinity.cpfy.view.base.BaseFragment
+import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.CookieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URL
@@ -27,6 +29,7 @@ class WebViewFragment : BaseFragment() {
     private val args: WebViewFragmentArgs by navArgs()
 
     private lateinit var cookieViewModel: CookieViewModel
+    private lateinit var contestListViewModel: ContestListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +47,7 @@ class WebViewFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         logD("onViewCreated started")
 
+        contestListViewModel = ViewModelProvider(requireActivity()).get(ContestListViewModel::class.java)
         cookieViewModel = ViewModelProvider(this).get(CookieViewModel::class.java)
 
         binding.webView.settings.builtInZoomControls = false
@@ -58,15 +62,8 @@ class WebViewFragment : BaseFragment() {
             getString(R.string.clist_base_url),
             getString(R.string.clist_login_url) -> {
                 binding.webView.loadUrl(args.urlStringArg)
-                if (args.urlStringArg == getString(R.string.clist_login_url)) {
-                    Toast.makeText(
-                        activity?.applicationContext,
-                        "API limit reached or session expired!\nSign up or log into your own clist.by account to continue",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
 
-                findNavController().addOnDestinationChangedListener { _, _, _ ->
+                findNavController().addOnDestinationChangedListener { _, destination, _ ->
                     logD("addOnDestinationChangedListener called")
                     getSessionCookieFromAppCookieManager(getString(R.string.clist_base_url))?.let {
                         cookieViewModel.setCookie(
@@ -74,9 +71,23 @@ class WebViewFragment : BaseFragment() {
                             it
                         )
                     }
+                    if (destination.id == R.id.contestListFragment) {
+                        contestListViewModel.fetchContestList()
+                        contestListViewModel.fetchPlatformList()
+                    }
                 }
             }
             else -> logE("No url argument found!")
+        }
+
+        when (args.errorMsgArg) {
+            true -> {
+                Toast.makeText(
+                    activity?.applicationContext,
+                    getString(R.string.web_view_required_error_msg),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
