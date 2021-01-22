@@ -13,8 +13,8 @@ android {
         applicationId "com.zeronfinity.cpfy"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 18
-        versionName '1.0.3'
+        versionCode 19
+        versionName '1.0.4'
 
         kapt {
             arguments {

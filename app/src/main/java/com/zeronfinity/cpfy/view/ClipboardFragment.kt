@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.R
@@ -55,6 +56,14 @@ class ClipboardFragment : BaseFragment() {
                     binding.etClipboard.text
                 )
             )
+
+            activity?.let {
+                Toast.makeText(
+                    it,
+                    "Copied",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         binding.etClipboard.setOnFocusChangeListener { _, hasFocus ->
