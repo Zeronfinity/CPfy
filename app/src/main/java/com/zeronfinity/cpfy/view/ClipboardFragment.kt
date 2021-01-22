@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.FragmentClipboardBinding
+import com.zeronfinity.cpfy.view.base.BaseFragment
 import com.zeronfinity.cpfy.viewmodel.ClipboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

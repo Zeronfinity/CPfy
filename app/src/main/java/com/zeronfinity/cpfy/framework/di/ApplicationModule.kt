@@ -36,6 +36,15 @@ class ApplicationModule {
 
     @Singleton
     @Provides
+    fun provideFirstRunRepository(application: Application) =
+        FirstRunRepository(
+            FirstRunSharedPreferences(
+                application
+            )
+        )
+
+    @Singleton
+    @Provides
     fun providePlatformRepository(platformDao: PlatformDao) = PlatformRepository(
         PlatformDb(
             Dispatchers.IO, platformDao

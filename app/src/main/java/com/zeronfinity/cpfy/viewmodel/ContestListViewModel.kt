@@ -34,6 +34,8 @@ class ContestListViewModel @ViewModelInject constructor(
     private val getPlatformListUseCase: GetPlatformListUseCase,
     private val isFilterLowerBoundTodayUseCase: IsFilterLowerBoundTodayUseCase,
     private val getFilterDaysAfterTodayUseCase: GetFilterDaysAfterTodayUseCase,
+    private val isFirstRunUseCase: IsFirstRunUseCase,
+    private val setFirstRunUseCase: SetFirstRunUseCase
 ) : ViewModel() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -59,6 +61,10 @@ class ContestListViewModel @ViewModelInject constructor(
     private val _isProgressVisibleLiveDataEv = MutableLiveData<Event<Boolean>>()
     val isProgressVisibleLiveDataEv: LiveData<Event<Boolean>>
         get() = _isProgressVisibleLiveDataEv
+
+    private val _launchFirstRunWindowEv = MutableLiveData<Event<Boolean>>()
+    val launchFirstRunWindowEv: LiveData<Event<Boolean>>
+        get() = _launchFirstRunWindowEv
 
     init {
         coroutineScope.launch {
@@ -168,4 +174,8 @@ class ContestListViewModel @ViewModelInject constructor(
             _contestListLiveData.postValue(getFilteredContestListUseCase())
         }
     }
+
+    fun isFirstRun() = isFirstRunUseCase()
+
+    fun setFirstRun(value: Boolean) = setFirstRunUseCase(value)
 }

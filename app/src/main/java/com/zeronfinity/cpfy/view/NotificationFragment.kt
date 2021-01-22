@@ -3,12 +3,15 @@ package com.zeronfinity.cpfy.view
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
+import androidx.core.text.color
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wanghong.cromappwhitelist.AppWhitelist
@@ -16,6 +19,7 @@ import com.zeronfinity.core.logger.logD
 import com.zeronfinity.cpfy.R
 import com.zeronfinity.cpfy.databinding.FragmentNotificationBinding
 import com.zeronfinity.cpfy.view.adapter.AdapterNotificationPriorities
+import com.zeronfinity.cpfy.view.base.BaseFragment
 import com.zeronfinity.cpfy.viewmodel.ContestListViewModel
 import com.zeronfinity.cpfy.viewmodel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,9 +56,26 @@ class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener 
         val dontKillMyAppUrl = getString(R.string.dontkillmyapp_url)
         val spannableString = SpannableStringBuilder()
             .append(getString(R.string.notification_header_label) + " ")
-            .append(dontKillMyAppUrl, URLSpan(dontKillMyAppUrl), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        context?.let {
+            spannableString.color(ContextCompat.getColor(it, R.color.primaryDarkColor)) {
+                    append(
+                        dontKillMyAppUrl,
+                        URLSpan(dontKillMyAppUrl),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+        } ?: run {
+            spannableString.append(
+                dontKillMyAppUrl,
+                URLSpan(dontKillMyAppUrl),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
 
         binding.tvNotificationHeader.text = spannableString
+        binding.tvNotificationHeader.movementMethod = LinkMovementMethod.getInstance()
+
         binding.btnAutoStart.setOnClickListener {
             logD("btnAutoStart clicked!")
 
@@ -114,7 +135,8 @@ class NotificationFragment : BaseFragment(), AdapterView.OnItemSelectedListener 
         onItemSelectedCnt++
         logD("onItemSelected() -> position: [$position], onItemSelectedCnt: [$onItemSelectedCnt]")
         if (onItemSelectedCnt > 1) {
-            val notificationPriorityList = resources.getStringArray(R.array.notification_priority).toList()
+            val notificationPriorityList =
+                resources.getStringArray(R.array.notification_priority).toList()
             notificationViewModel.setAllNotificationPriorityList(notificationPriorityList[position])
         }
     }
