@@ -8,7 +8,10 @@ about: Create a report to help us improve
 ## Bug Report
 
 Bug: Some Sad Bug Title
+
 App version: Enter the app version here, like 0.7.0
+
+Device model: Enter what device and OS you are using e.g. Poco X3 with MIUI 12.0.5
 
 ### Description
 
