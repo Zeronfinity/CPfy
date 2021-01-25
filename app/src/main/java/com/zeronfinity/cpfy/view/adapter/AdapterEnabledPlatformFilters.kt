@@ -15,6 +15,7 @@ import javax.inject.Inject
 class AdapterEnabledPlatformFilters @Inject constructor(
     private val disablePlatformUseCase: DisablePlatformUseCase
 ) : RecyclerView.Adapter<AdapterEnabledPlatformFilters.PlatformViewHolder>() {
+    private var isMaxCountSet = true
     private var maxItemCount = PLATFORM_FILTER_MAX_COUNT
 
     private var platformList = ArrayList<Platform>()
@@ -57,15 +58,24 @@ class AdapterEnabledPlatformFilters @Inject constructor(
         logD("refreshPlatformList() started")
         platformList.clear()
         platformList.addAll(list)
+
+        maxItemCount = if (isMaxCountSet) {
+            PLATFORM_FILTER_MAX_COUNT
+        } else {
+            platformList.size
+        }
+
         notifyDataSetChanged()
     }
 
     fun setMaxItemCount() {
+        isMaxCountSet = true
         maxItemCount = PLATFORM_FILTER_MAX_COUNT
         notifyDataSetChanged()
     }
 
     fun resetMaxItemCount() {
+        isMaxCountSet = false
         maxItemCount = platformList.size
         notifyDataSetChanged()
     }
