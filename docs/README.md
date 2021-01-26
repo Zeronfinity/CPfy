@@ -1,5 +1,5 @@
 # CPfy
-[![version](https://img.shields.io/badge/Version-v1.1.0-informational)](https://github.com/Zeronfinity/CPfy/releases/tag/v1.1.0) [![PRs](https://img.shields.io/badge/PRs-welcome-success)](https://github.com/Zeronfinity/CPfy/blob/master/docs/CONTRIBUTING.md)
+[![version](https://img.shields.io/badge/Version-v1.1.5-informational)](https://github.com/Zeronfinity/CPfy/releases/tag/v1.1.5) [![PRs](https://img.shields.io/badge/PRs-welcome-success)](https://github.com/Zeronfinity/CPfy/blob/master/docs/CONTRIBUTING.md)
 
 CPfy started as an effort to help my university contestants share contest information in our social media group easier and more efficiently.
 
