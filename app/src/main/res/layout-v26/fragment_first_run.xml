@@ -1,64 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:gravity="center">
+    android:fadeScrollbars="false"
+    android:padding="16dp"
+    android:scrollbars="vertical"
+    tools:context=".view.FirstRunDiaFrag">
 
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/welcome_to_cpfy"
-        android:textColor="@color/primaryDarkColor"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvWebView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:justificationMode="inter_word"
-        android:text="@string/first_run_web_view_explanation"
-        android:textColor="@android:color/black" />
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/fragment_first_run_padding_vertical"
+            android:paddingBottom="@dimen/fragment_first_run_padding_vertical"
+            android:text="@string/welcome_to_cpfy"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnWebView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/secondaryColor"
-        android:text="@string/go_to_web_view" />
+        <TextView
+            android:id="@+id/tvWebView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/fragment_first_run_padding_vertical"
+            android:paddingBottom="@dimen/fragment_first_run_padding_vertical"
+            android:gravity="center"
+            android:justificationMode="inter_word"
+            android:text="@string/first_run_web_view_explanation"
+            android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/tvNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:justificationMode="inter_word"
-        android:text="@string/first_run_notification_explanation"
-        android:textColor="@android:color/black" />
+        <Button
+            android:id="@+id/btnWebView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/fragment_first_run_padding_vertical"
+            android:backgroundTint="@color/secondaryColor"
+            android:text="@string/go_to_web_view" />
 
-    <Button
-        android:id="@+id/btnNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/secondaryColor"
-        android:text="@string/go_to_notification" />
+        <TextView
+            android:id="@+id/tvNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/fragment_first_run_padding_vertical"
+            android:paddingBottom="@dimen/fragment_first_run_padding_vertical"
+            android:gravity="center"
+            android:justificationMode="inter_word"
+            android:text="@string/first_run_notification_explanation"
+            android:textColor="@android:color/black" />
 
-    <Button
-        android:id="@+id/btnOk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/secondaryColor"
-        android:text="@string/ok" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btnNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/fragment_first_run_padding_vertical"
+            android:backgroundTint="@color/secondaryColor"
+            android:text="@string/go_to_notification" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fragment_first_run_padding_vertical"
+            android:backgroundTint="@color/secondaryColor"
+            android:text="@string/ok" />
+    </LinearLayout>
+</ScrollView>
