@@ -81,9 +81,9 @@
     <string name="lift_battery_restrictions">Lift Battery Restrictions</string>
     <string name="notification_header_label">Some Android manufacturers, specially ones with chinese custom roms, kill any background process whenever app is closed. So, you may need to give some permissions manually for CPfy to show notifications, the following buttons will lead to the permission allowance screen if they exist in your phone. To learn more, visit</string>
     <string name="dontkillmyapp_url">https://dontkillmyapp.com/</string>
-    <string name="notification_auto_start_label">This will allow starting service to show notification</string>
-    <string name="notification_allow_label">This will allow showing notifications in case it\'s disabled</string>
-    <string name="notification_battery_saver_label">This will fix aggressive battery optimizations issues</string>
+    <string name="notification_auto_start_label">This may allow starting service to show notifications</string>
+    <string name="notification_allow_label">This may allow CPfy to display notifications.</string>
+    <string name="notification_battery_saver_label">This may fix aggressive battery optimization issues</string>
     <string name="notification_priorities">Notification Priorities</string>
     <string name="change_all">Change All</string>
 
