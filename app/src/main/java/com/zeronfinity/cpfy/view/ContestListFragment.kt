@@ -107,6 +107,8 @@ class ContestListFragment : BaseFragment() {
         }
 
         binding.progressBar.visibility = View.GONE
+        binding.rvContestList.visibility = View.GONE
+        binding.tvEmptyContestList.visibility = View.VISIBLE
 
         if (isFirstTime || isTimeFilterChanged()) {
             binding.progressBar.visibility = View.VISIBLE
@@ -153,7 +155,14 @@ class ContestListFragment : BaseFragment() {
 
         contestListViewModel.contestListLiveData.observe(viewLifecycleOwner, {
             logD("contestListLiveData -> contestList:[$it]")
-            adapterContestList.refreshContestList(it)
+            if (it.isNotEmpty()) {
+                binding.rvContestList.visibility = View.VISIBLE
+                binding.tvEmptyContestList.visibility = View.GONE
+                adapterContestList.refreshContestList(it)
+            } else {
+                binding.rvContestList.visibility = View.GONE
+                binding.tvEmptyContestList.visibility = View.VISIBLE
+            }
         })
 
         contestListViewModel.platformListLiveData.observe(viewLifecycleOwner, {
