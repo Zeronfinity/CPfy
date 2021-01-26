@@ -1,5 +1,5 @@
 # CPfy
-[![download](https://img.shields.io/badge/download-v1.1.0-informational)](https://github.com/Zeronfinity/CPfy/releases/tag/v1.1.0) [![PRs](https://img.shields.io/badge/PRs-welcome-success)](https://github.com/Zeronfinity/CPfy/blob/master/docs/CONTRIBUTING.md)
+[![version](https://img.shields.io/badge/Version-v1.1.0-informational)](https://github.com/Zeronfinity/CPfy/releases/tag/v1.1.0) [![PRs](https://img.shields.io/badge/PRs-welcome-success)](https://github.com/Zeronfinity/CPfy/blob/master/docs/CONTRIBUTING.md)
 
 CPfy started as an effort to help my university contestants share contest information in our social media group easier and more efficiently.
 
@@ -12,13 +12,13 @@ It basically allows you to see a list of programming contests based on the filte
 * Get a notification alert an hour before a contest starts
 * Set notification priorities based on contest platforms
 
+## Download
+<a href='https://play.google.com/store/apps/details?id=com.zeronfinity.cpfy&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height='80'/></a> 
+
 ## Screenshots
 <img alt="first_run_window" src="https://github.com/Zeronfinity/CPfy/blob/master/screenshots/first_run_window.png" width=250> &nbsp; <img alt="contest_list" src="https://github.com/Zeronfinity/CPfy/blob/master/screenshots/contest_list.png" width=250> &nbsp; <img alt="contest_list_selecteds" src="https://github.com/Zeronfinity/CPfy/blob/master/screenshots/contest_list_selecteds.png" width=250>
 
 <img alt="clipboard" src="https://github.com/Zeronfinity/CPfy/blob/master/screenshots/clipboard.png" width=250> &nbsp; <img alt="filters" src="https://github.com/Zeronfinity/CPfy/blob/master/screenshots/filters.png" width=250> &nbsp; <img alt="notification" src="https://github.com/Zeronfinity/CPfy/blob/master/screenshots/notification.png" width=250>
-
-## Download
-To get the app, you can download and install apk file from the [release page](https://github.com/Zeronfinity/CPfy/releases).
 
 ## Contribution
 Interested in contributing to this project? That's great news!
